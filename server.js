@@ -33,7 +33,9 @@ app.use((req, res, next) => {
     );  
     next();
 });
-
+// app.get('/', (res) => {
+//     res.statusCode(200).send('hello');
+// });
 app.listen(PORT, () => {  
     console.log(`Server listening on port ${PORT}.`);
 });
