@@ -15,12 +15,13 @@ app.use(cors());
 app.use(bodyParser.json());
 if (process.env.NODE_ENV === 'production') {  
     // Set static folder 
-    app.use(express.static('/frontend/build'));
+    //app.use(express.static('/frontend/build'));
+    app.use('/static', express.static(path.join(__dirname, 'frontend/build')));
     app.get('*', (req, res) =>  {    
         res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));  
     });
 }
-
+app.use('/static', express.static(path.join(__dirname, 'frontend/build')));
 app.use((req, res, next) => {  
     res.setHeader('Access-Control-Allow-Origin', '*');  
     res.setHeader(    
@@ -33,9 +34,10 @@ app.use((req, res, next) => {
     );  
     next();
 });
-// app.get('/', (res) => {
-//     res.statusCode(200).send('hello');
-// });
+
+app.get('/sayHello', (res) => {
+    res.statusCode(200).send('hello');
+});
 app.listen(PORT, () => {  
     console.log(`Server listening on port ${PORT}.`);
 });
