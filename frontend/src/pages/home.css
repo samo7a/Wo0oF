@@ -1,0 +1,78 @@
+.background {
+  background-color: #2b2d42;
+}
+
+.Home-logo {
+  height: 10vmin;
+  margin: 10px;
+}
+
+.header-color {
+  background-color: #edf2f4;
+}
+
+.dog-login-photo {
+  /* margin: 50px 50px; */
+  align-items: center;
+}
+
+.login-text {
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+
+.login-btn {
+  background-color: #ef233c !important;
+  color: white !important;
+  border: none !important;
+  font-size: 20px !important;
+  padding-right: 57px !important;
+  padding-left: 57px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  margin-top: 15px !important;
+  margin-bottom: 10px !important;
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+  border-radius: 30px !important;
+}
+
+.login-btn:hover {
+  background-color: #d62137 !important;
+  box-shadow: 0px 0px 2px black !important;
+}
+
+.signup-btn {
+  background-color: #8d99ae !important;
+  color: white !important;
+  border: none !important;
+  font-size: 20px !important;
+  padding-right: 50px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-left: 50px !important;
+  margin-top: 10px !important;
+  margin-bottom: 20px !important;
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+  border-radius: 30px !important;
+}
+.signup-btn:hover {
+  background-color: #6e7888 !important;
+  box-shadow: 0px 0px 2px black !important;
+}
+
+.frgtpwd {
+  color: black !important;
+  font-size: 12px !important;
+  background-color: white !important;
+  border: none !important;
+  outline: none !important;
+}
+
+:focus {
+  outline: none !important;
+}

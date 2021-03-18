@@ -2,6 +2,7 @@ import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 import Home from '../src/pages/home';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // const app_name = 'wo0of';
 // function buildPath(route){    
