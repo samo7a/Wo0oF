@@ -1,13 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var Int32 = require('mongoose-int32');
 
 //Create Schema
 const AdopterSchema = new Schema({
-  AdopterID: {
-    type: Int32,
-    required: true
-  },
   FirstName: {
     type: String,
     required: true
@@ -22,7 +17,6 @@ const AdopterSchema = new Schema({
   },
   Location: {
     type: String,
-    required: true
   },
   isOwner: {
     type: Boolean,
@@ -30,8 +24,7 @@ const AdopterSchema = new Schema({
   },
   ShortBio: {
     type: String,
-    required: true
   }
 });
 
-module.exports = adopter = mongoose.model("Adopters", AdopterSchema);
+module.exports = adopter = mongoose.model("adopters", AdopterSchema);
