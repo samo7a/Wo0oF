@@ -1,0 +1,26 @@
+.bkgd-color {
+  background-color: #2b2d42;
+}
+
+.center {
+  text-align: center;
+}
+
+.m-right {
+  margin-right: 20%;
+}
+
+.nav-btn {
+  background-color: inherit !important;
+  color: white !important;
+  border: none;
+  font-size: 18px;
+}
+
+.nav-btn:hover {
+  text-decoration: underline #ba5b5b;
+}
+
+.nav-btn::after {
+  text-decoration: underline #ba5b5b;
+}

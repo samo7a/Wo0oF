@@ -1,0 +1,30 @@
+.header-logo {
+  border-radius: 50%;
+  border-color: black;
+  border-style: solid;
+  max-width: 10%;
+  display: inline;
+  margin: 10px;
+}
+
+.profile-header-name {
+  font-size: 24px;
+  margin-left: 10px;
+  display: inline;
+  margin-top: 1%;
+}
+
+.header-name {
+  font-size: 24px;
+  align-items: center;
+  text-align: center;
+  margin-top: 1%;
+}
+
+.bkgd-color1 {
+  background-color: #ba5b5b;
+}
+
+.bkgd-color2 {
+  background-color: #ffffff;
+}
