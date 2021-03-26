@@ -1,0 +1,27 @@
+.bkgd-card-color {
+  background-color: #8d99ae;
+}
+
+.dog-card {
+  width: 20rem !important;
+  min-height: 28rem !important;
+  margin-top: 5%;
+  box-shadow: 0px 0px 20px black;
+}
+
+.dog-card-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.dog-card-text {
+  font-size: 12px;
+}
+
+.flip-btn {
+  /* display: inline !important; */
+  /* right: 50% !important; */
+  background-color: inherit !important;
+  color: rgb(0, 0, 0) !important;
+  border: none !important;
+}

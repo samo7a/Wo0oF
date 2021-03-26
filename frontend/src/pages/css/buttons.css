@@ -1,0 +1,23 @@
+.like-button {
+  border-radius: 50% !important;
+  display: inline !important;
+  background-color: white !important;
+  color: green !important;
+  /* border-color: black !important;
+  border-width: 2px !important; */
+  border: none;
+  box-shadow: 0px 0px 5px black;
+}
+
+.dislike-button {
+  border-radius: 50% !important;
+  /* width: 5% !important; */
+  display: inline !important;
+  background-color: white !important;
+  color: red !important;
+  /* border-color: black !important;
+  border-width: 2px !important; */
+  border: none;
+  box-shadow: 0px 0px 5px black;
+  float: right;
+}
