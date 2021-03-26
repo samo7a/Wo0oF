@@ -9,6 +9,7 @@ const client = new MongoClient(url);
 //client.connect(); // will throw an error localy.
 const PORT = process.env.PORT || 5000;
 const app = express();
+Task = require('./API/models.js'), //created model loading here
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
@@ -34,6 +35,9 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
+
+var routes = require('./API/routes.js'); //importing route
+routes(app); //register the route
 
 app.use((req, res, next) =>
 {
