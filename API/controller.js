@@ -40,37 +40,21 @@ exports.signup = function(req, res) {
 // Login Function
 exports.login = function(req, res) {
 	
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
+	const jwt = require('../createJWT');
+	
+	// incoming: login, password
+	// outgoing: id, firstName, lastName, error
 
- var error = '';
+	const { login, password } = req.body;
 
-  const { login, password } = req.body;
-  
-  //const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
-  //const results = await User.find({ Login: login, Password: password });
-  results = [];
+	User.findOne({Email: login, Password: password}, function(err, user) {
+		
+		if (err)
+			res.send(err);
+	});
+	
+	ret = jwt.createToken( user.FirstName, User.LastName, User.id );
 
-  var id = -1;
-  var fn = '';
-  var ln = '';
-
-  if (results.length > 0)
-  {
-    id = results[0].UserId;
-    fn = results[0].FirstName;
-    ln = results[0].LastName;
-  }
-
-  try
-  {
-    ret = jwt.createToken( fn, ln, id );
-  }
-  catch(e)
-  {
-    ret = {error:e.message};
-  }
-
-  res.status(200).json(ret);
+	res.status(200).json(ret);
 
 }
