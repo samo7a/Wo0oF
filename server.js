@@ -4,15 +4,16 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
-const MongoClient = require('mongodb').MongoClient; 
-const client = new MongoClient(url);
+mongoose = require('mongoose'),
+mongoose.Promise = global.Promise;
+mongoose.connect(url); 
 //client.connect(); // will throw an error localy.
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 const app = express();
+Task = require('./API/models.js'), //created model loading here
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
-
 
 /*
     Add
@@ -21,25 +22,25 @@ app.use(bodyParser.json());
     Here
 */
 
-
-
-
 ///////////////////////////////////////////////////
 // For Heroku deployment
 
 // Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
+if (process.env.NODE_ENV === 'production')
 {
   // Set static folder
   app.use(express.static('frontend/build'));
 
-  app.get('*', (req, res) => 
+  app.get('*', (req, res) =>
   {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
 
-app.use((req, res, next) => 
+var routes = require('./API/routes.js'); //importing route
+routes(app); //register the route
+
+app.use((req, res, next) =>
 {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -53,8 +54,7 @@ app.use((req, res, next) =>
   next();
 });
 
-app.listen(PORT, () => 
+app.listen(PORT, () =>
 {
   console.log(`Server listening on port ${PORT}`);
 });
-
