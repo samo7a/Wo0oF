@@ -8,12 +8,13 @@ exports.signup = function(req, res) {
 	
   const jwt = require('../createJWT');
 	
-  // incoming: login, password
+  // incoming: login, password	
   // outgoing: id, firstName, lastName, error
 
   var error = '';
 
   const { Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio } = req.body;
+  console.log(req.body);
 
 
   const newUser = new User({ Email : Email, Password: Password, Location: Location,

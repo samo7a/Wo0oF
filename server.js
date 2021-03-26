@@ -4,8 +4,9 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(url);
+mongoose = require('mongoose'),
+mongoose.Promise = global.Promise;
+mongoose.connect(url); 
 //client.connect(); // will throw an error localy.
 const PORT = process.env.PORT || 5000;
 const app = express();
