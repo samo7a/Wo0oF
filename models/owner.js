@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var Int32 = require('mongoose-int32');
 
 // Create Schema
 const OwnerSchema = new Schema({
-  OwnerID: {
-    type: Int32
-  },
   FirstName: {
     type: String,
     required: true
@@ -29,4 +25,4 @@ const OwnerSchema = new Schema({
   }
 });
 
-module.exports = owner = mongoose.model("Users", UserSchema);
+module.exports = owner = mongoose.model("owners", OwnerSchema);
