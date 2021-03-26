@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 var Int32 = require('mongoose-int32');
 
-//Create Schema
+//User Schema
 const UserSchema = new Schema({
   userID: {
     type: Int32,
@@ -38,4 +38,29 @@ const UserSchema = new Schema({
   }
 });
 
+// Chat Schema
+const ChatSchema = new Schema({
+  AdopterID: {
+    type: Int32,
+    required: true
+  },
+  OwnerID: {
+    type: Int32,
+    required: true
+  },
+  ChatID: {
+    type: Int32,
+    required: true
+  },
+  DogID: {
+    type: Int32,
+    required: true
+  },
+  isApproved: {
+    type: Boolean,
+    required: true
+  }
+});
+
+module.exports = adopter = mongoose.model("Chats", ChatSchema);
 module.exports = user = mongoose.model("User", UserSchema);

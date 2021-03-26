@@ -1,7 +1,8 @@
+
 var mongoose = require('mongoose');
-const User = require("../API/models.js");
-  //User = mongoose.model('UserSchema');
+var User = mongoose.model('User')
   
+
 
 exports.signup = function(req, res) {
 	
@@ -35,4 +36,40 @@ exports.signup = function(req, res) {
 };
 
 
+// Login Function
+exports.login = function(req, res) {
+	
+  // incoming: login, password
+  // outgoing: id, firstName, lastName, error
 
+ var error = '';
+
+  const { login, password } = req.body;
+  
+  //const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
+  //const results = await User.find({ Login: login, Password: password });
+  results = [];
+
+  var id = -1;
+  var fn = '';
+  var ln = '';
+
+  if (results.length > 0)
+  {
+    id = results[0].UserId;
+    fn = results[0].FirstName;
+    ln = results[0].LastName;
+  }
+
+  try
+  {
+    ret = jwt.createToken( fn, ln, id );
+  }
+  catch(e)
+  {
+    ret = {error:e.message};
+  }
+
+  res.status(200).json(ret);
+
+}
