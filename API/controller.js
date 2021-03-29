@@ -3,7 +3,9 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User')
   
 
+// Signup Function
 
+// TODO: Email confirmation
 exports.signup = function(req, res) {
 	
   const jwt = require('../createJWT');
