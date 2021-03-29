@@ -16,6 +16,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  Password: {
+    type: String,
+    required: true
+  },
   Location: {
     type: String,
   },
@@ -38,7 +42,18 @@ const UserSchema = new Schema({
   isVerified: {
     type: Boolean,
     default: false
-  }
+  },
+
+  Dogs: [{
+      Name: String,
+      Bio: String,
+      Breed: String,
+      Weight: mongoose.Schema.Types.Decimal128,
+      Height: Int32,
+      Age: Int32,
+      Sex: String,
+      DogID: String
+    }]
 });
 
 // Chat Schema

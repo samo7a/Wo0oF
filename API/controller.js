@@ -21,10 +21,6 @@ exports.signup = function(req, res) {
   var { Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio } = req.body;
   console.log(req.body);
 
-  const newUser = new User({ Email : Email, Password: Password, Location: Location,
-                             FirstName: FirstName, LastName: LastName,
-                             isOwner: isOwner, ProfilePicture: ProfilePicture, ShortBio: ShortBio});
-
   User.findOne({ Email: Email }, function (err, user)
   {
     // error occur
@@ -35,8 +31,9 @@ exports.signup = function(req, res) {
     // if email is exist into database i.e. email is associated with another user.
     else if (user)
     {
+      console.log("User exists already :(");
       // return res.status(500).send({msg:'This email address is already associated with another account.'});
-      return res.status(400);
+      return res.status(400).send({msg: "User exists already :("});
     }
     // if user does not exist into database then save the user into database for register account
     else
@@ -44,12 +41,16 @@ exports.signup = function(req, res) {
       // password hashing for saving it into databse
       Password = bcrypt.hashSync(Password, 10);
 
+      const newUser = new User({ Email : Email, Password: Password, Location: Location,
+                                 FirstName: FirstName, LastName: LastName,
+                                 isOwner: isOwner, ProfilePicture: ProfilePicture, ShortBio: ShortBio});
+
       // create and save user
       newUser.save(function (err)
       {
         if (err)
         {
-          return res.status(500).send({msg:err.message});
+          return res.status(500).send({msg: "Technical Error creating User :("});
         }
 
         // generate token and save
@@ -59,49 +60,49 @@ exports.signup = function(req, res) {
         {
           if (err)
           {
-            return res.status(500).send({msg:err.message});
+            return res.status(500).send({msg: "Technical Error creating Token :("});
+          }
+        });
+
+        // Send email (use credintials of in .env file)
+        var transporter = nodemailer.createTransport(
+        {
+          service: 'Hotmail',
+          auth:
+          {
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`,
+          }
+        });
+
+        var mailOptions = {
+          from: 'woofnoreply <woof4331@outlook.com>',
+          to: Email,
+          subject: 'Account Verification Link',
+          text: 'Hello '+ FirstName +',\n\n' +
+          'Please verify your account by clicking the link: \nhttp:\/\/' +
+          req.headers.host + '\/verifyEmail\/' +
+          Email + '\/' + token.token + '\n\nThank You!\n' };
+
+        transporter.sendMail(mailOptions, function (err)
+        {
+          if (err)
+          {
+            return res.status(500).send({msg: "Technical Error sending Email :("});
           }
 
-          // Send email (use credintials of in .env file)
-          var transporter = nodemailer.createTransport(
+          else
           {
-            service: 'Hotmail',
-            auth:
-            {
-              user: `${process.env.EMAIL_ADDRESS}`,
-              pass: `${process.env.EMAIL_PASSWORD}`,
-            }
-          });
-
-          console.log("TEST 1");
-
-          var mailOptions = {
-            from: 'woofnoreply <woof4331@outlook.com>',
-            to: Email,
-            subject: 'Account Verification Link',
-            text: 'Hello '+ FirstName +',\n\n' +
-            'Please verify your account by clicking the link: \nhttp:\/\/' +
-            req.headers.host + '\/verifyEmail\/' +
-            Email + '\/' + token.token + '\n\nThank You!\n' };
-
-          console.log("TEST 2");
-
-          transporter.sendMail(mailOptions, function (err)
-          {
-            if (err)
-            {
-              return res.status(500).send('Technical Issue!, Please re-verify your Email.');
-            }
-
             console.log('Verification Email sent: ' + info.response)
-            return res.status(200).send('A verification email has been sent to ' + Email + '. It will expire after one day.');
-          });
+            return res.status(200).send({msg: "Verification Email Sent! :)"});
+          }
         });
       });
      }
   });
-};
 
+  return res.status(200).send({msg: "Verification Email Sent! :)"});
+};
 
 // Login Function
 exports.login = function(req, res) {
@@ -111,49 +112,46 @@ exports.login = function(req, res) {
 	// incoming: login, password
 	// outgoing: id, firstName, lastName, error
 
-	const { login, password } = req.body;
+	const { Email, Password } = req.body;
 
-	User.findOne({Email: login, Password: password}, function(err, user)
+	User.findOne({Email: Email}, function(err, user)
   {
     // error occur
     if (err)
     {
-      return res.status(500).send("Technical error, Please try logging in again");
+      return res.status(500).send({msg: "Technical error, Please try logging in again"});
     }
     // user is not found in database i.e. user is not registered yet.
     else if (user === null)
     {
       // This line of code gives a header error.
-      // return res.status(401).send('This email address is not associated with any account.');
+      return res.status(500).send({msg: 'This email address is not associated with any account'});
     }
     // comapre user's password if user is find in above step
-    else if(!bcrypt.compareSync(password, user.password))
+    else if(!bcrypt.compareSync(Password, user.Password))
     {
-      return res.status(401).send('Wrong Password!');
+      return res.status(500).send({msg: 'Wrong Password!'});
     }
     // check user is verified or not
     else if (!user.isVerified)
     {
-      return res.status(401).send('Your Email has not been verified. Please click on resend');
+      return res.status(500).send({msg: 'Your Email has not been verified. Please click on resend'});
     }
     // user successfully logged in
     else
     {
-      console.log('User successfully logged in.');
+      const ret = jwt.createToken( user.FirstName, user.LastName, user._id );
+      console.log(jwt);
+
+      res.status(200).json(ret);
     }
 	});
-
-	ret = jwt.createToken( user.FirstName, user.LastName, user.id );
-  console.log(jwt);
-
-	res.status(200).json(ret);
-
 };
 
 // Working pretty well, haven't found bugs....yet
 exports.verifyEmail = function(req, res) {
 
-  Token.findOne({ token: req.body.token }, function (err, token)
+  Token.findOne({ token: req.params.token }, function (err, token)
   {
     // token is not found into database then the token may have expired
     if (!token)
@@ -194,7 +192,7 @@ exports.verifyEmail = function(req, res) {
             // account successfully verified
             else
             {
-              return res.status(200).send('Your account has been successfully verified');
+              return res.status(200).send(`${user.Email}` + ' has been successfully verified');
             }
           });
         }
@@ -206,31 +204,30 @@ exports.verifyEmail = function(req, res) {
 // WIP
 exports.resetPassword = function(req, res) {
 
+  // incoming: Email
+  // outcoming: email
+
   const { Email } = req.body;
 
-  User.findOne(
+  User.findOne({ Email: Email }, function (err, user)
   {
-    where:
+    if (user === null)
     {
-      email: req.body.email,
-    },
-  }).then((user) =>
+      res.status(403).send('email not in db');
+    }
+    
+    else
     {
-      if (user === null)
-      {
-        console.error('email not in database');
-        res.status(403).send('email not in db');
-      }
-      else
-      {
-        const token = crypto.randomBytes(20).toString('hex');
-        user.update(
-        {
-          ResetPasswordToken: token,
-          ResetPasswordExpires: Date.now() + 3600000,
-        });
 
-      var transporter = nodemailer.createTransport({
+      const token = crypto.randomBytes(20).toString('hex');
+
+      user.ResetPasswordToken = token;
+      user.ResetPasswordExpires = Date.now() + 3600000;
+
+      user.save();
+
+      var transporter = nodemailer.createTransport(
+      {
         service:'Hotmail',
         auth: {
             user: `${process.env.EMAIL_ADDRESS}`,
@@ -238,47 +235,58 @@ exports.resetPassword = function(req, res) {
        },
       });
 
-      var mailOptions = {
+      var mailOptions =
+      {
           from:'woofnoreply <woof4331@outlook.com>',
           to: Email,
           subject: 'Reset Password for Woof',
           text: 'Hi,\nWe have received a request to reset the password for Woof account ' + Email +
                 ' You can reset your password by clicking the link below within one hour\n' + `http://localhost:5000/confirmPassword/${token}\n\n` +
-                'If you did not rquest this, please ignore this email and your password will remain unchanged.\n'
+                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       }
 
       console.log("Sending mail");
 
-      transporter.sendMail(mailOptions, function(error, info) {
-          if (error)
-          {
-              console.log(error);
-          }
-          else
-          {
-              console.log('Recovery Email sent: ' + info.response)
-          }
+      transporter.sendMail(mailOptions, function(error, info)
+      {
+        if (error)
+        {
+            console.log(error);
+        }
+        else
+        {
+            console.log('Recovery Email sent: ' + info.response);
+            return res.status(200).send({msg: 'A password recovery email has been sent. It will expire after one hour.'});
+        }
       });
     }
-  })
+  });
 };
 
 // WIP
 exports.confirmPassword = function(req, res) {
 
-  const {newPassword, confirmPassword} = req.body;
+  var { newPassword } = req.body;
 
-  User.findOne({ ResetPasswordToken: req.param.token }, function (err, user)
+  User.findOne({ ResetPasswordToken: req.params.token }, function (err, user)
   {
     // token is not found into database then the token may have expired
-    if (!user.ResetPasswordToken)
+    if (!user)
     {
-      return res.status(400).send('Your verification link may have expired. Please reset your password again.');
+      return res.status(500).send({msg: 'Your verification link may have expired. Please resend your email.'});
     }
     // if token is found then reset password
     else
     {
-      // Stuff
+      // password hashing for saving it into databse
+      newPassword = bcrypt.hashSync(newPassword, 10);
+      console.log(user.Email);
+      user.Password = newPassword;
+      user.ResetPasswordToken = '';
+      user.ResetPasswordExpires = Date.now();
+      user.save();
     }
   });
+
+  return res.status(200).send('Password successfully reset!');
 };

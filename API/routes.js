@@ -13,7 +13,11 @@ module.exports = function(app) {
   app.route('/resetPassword')
   .post(controller.resetPassword);
 
+  // Reset Password route
+  app.route('/confirmPassword/:token')
+  .post(controller.confirmPassword);
+
   // Verify Email route
-  app.route('/verifyEmail')
-  .post(controller.verifyEmail);
+  app.route('/verifyEmail/:email/:token')
+  .get(controller.verifyEmail);
 }
