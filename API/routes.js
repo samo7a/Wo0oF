@@ -8,4 +8,12 @@ module.exports = function(app) {
   // Login route
   app.route('/login')
 	.post(controller.login);
+
+  // Reset Password route
+  app.route('/resetPassword')
+  .post(controller.resetPassword);
+
+  // Verify Email route
+  app.route('/verifyEmail')
+  .post(controller.verifyEmail);
 }
