@@ -24,4 +24,8 @@ module.exports = function(app) {
   // Verify Email route
   app.route('/verifyEmail/:email/:token')
   .get(controller.verifyEmail);
+
+  // Create Dog Route
+  app.route('/createDog')
+  .post(controller.createDog);
 }
