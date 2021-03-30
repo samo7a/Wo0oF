@@ -7,8 +7,8 @@ var User = mongoose.model('User');
 var Token = mongoose.model('Token');
 const crypto = require('crypto');
 ObjectId = require('mongodb').ObjectID;
-// Signup Function
 
+// Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
 exports.signup = function(req, res) {
 
