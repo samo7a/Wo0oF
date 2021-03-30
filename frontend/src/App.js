@@ -1,24 +1,26 @@
 import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
+import ResetPassword from './pages/resetPassword';
 import Login from './pages/login';
 import Home from './pages/home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // const app_name = 'wo0of';
-// function buildPath(route){    
+// function buildPath(route){
 // 	if (process.env.NODE_ENV === 'production') return 'https://' + app_name +  '.herokuapp.com/' + route;
-// 	else return 'http://localhost:5000/' + route;    
-					
+// 	else return 'http://localhost:5000/' + route;
+
 
 function App() {
   return (
-    <Router> 
+    <Router>
       <div className="App">
         <Switch>
           <Route exact path="/" component={Login}></Route>
-          <Route path="/home" component={Home}></Route> 
+					<Route path="/resetPassword" component={ResetPassword}></Route>
+          <Route path="/home" component={Home}></Route>
         </Switch>
       </div>
     </Router>

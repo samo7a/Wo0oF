@@ -4,10 +4,6 @@ var Int32 = require('mongoose-int32');
 
 //User Schema
 const UserSchema = new Schema({
-  userID: {
-    type: Int32,
-    required: true
-  },
   FirstName: {
     type: String,
     required: true
@@ -20,9 +16,12 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  Location: {
+  Password: {
     type: String,
     required: true
+  },
+  Location: {
+    type: String,
   },
   isOwner: {
     type: Boolean,
@@ -30,12 +29,37 @@ const UserSchema = new Schema({
   },
   ShortBio: {
     type: String,
-    required: true
+  },
+  ResetPasswordToken: {
+    type: String
+  },
+  ResetPasswordExpires: {
+    type: Date
   },
   ProfilePicture: {
     type: String,
-    required: true
-  }
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+
+  SpamReports: [{
+    Description: String,
+    Date: Date,   
+  }],
+
+  Dogs: [{
+      Name: String,
+      UserID: String,
+      Bio: String,
+      Breed: String,
+      Weight: mongoose.Schema.Types.Decimal128,
+      Height: Int32,
+      Age: Int32,
+      Sex: String,
+      DogID: String
+    }]
 });
 
 // Chat Schema
@@ -62,5 +86,27 @@ const ChatSchema = new Schema({
   }
 });
 
+// Token Schema
+const TokenSchema = new Schema({
+    _userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User'
+    },
+    token: {
+      type: String,
+      required: true
+    },
+    expireAt: {
+      type: Date,
+      default: Date.now,
+      index:
+      {
+        expires: 86400000
+      }
+    }
+});
+
 module.exports = adopter = mongoose.model("Chats", ChatSchema);
 module.exports = user = mongoose.model("User", UserSchema);
+module.exports = token = mongoose.model("Token", TokenSchema);
