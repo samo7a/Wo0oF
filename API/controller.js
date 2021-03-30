@@ -311,7 +311,6 @@ exports.confirmPassword = function(req, res) {
     {
       // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
-      console.log(user.Email);
       user.Password = newPassword;
       user.ResetPasswordToken = '';
       user.ResetPasswordExpires = Date.now();
