@@ -9,9 +9,13 @@ module.exports = function(app) {
   app.route('/login')
 	.post(controller.login);
 
-  // Login route
+  // Edit User route
   app.route('/editUser')
   .post(controller.editUser);
+
+  // Edit User route
+  app.route('/reportAccounts')
+  .post(controller.reportAccounts);
 
   // Reset Password route
   app.route('/resetPassword')

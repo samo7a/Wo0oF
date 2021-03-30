@@ -311,7 +311,6 @@ exports.confirmPassword = function(req, res) {
     {
       // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
-      console.log(user.Email);
       user.Password = newPassword;
       user.ResetPasswordToken = '';
       user.ResetPasswordExpires = Date.now();
@@ -320,4 +319,57 @@ exports.confirmPassword = function(req, res) {
   });
 
   return res.status(200).send('Password successfully reset!');
+};
+
+// Complete confirmPassword API
+exports.reportAccounts = function(req, res) {
+
+  var { UserID, Description } = req.body;
+
+  const newReport = { Description: Description, Date: Date.now() }
+
+  // Forgive me Papa Szum for going over 100 characters
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport}, function(err, user)
+  {
+    // Check for any technical errors
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to update User information.');
+    }
+    // Update JWT and send confirmation message.
+    else
+    {
+      return res.status(200).send('Report successfully inserted!');
+    }
+  });
+};
+
+// Create Dog Function
+exports.createDog = function(req, res)
+{
+  // incoming: Dog Name, password
+  // outgoing: id, firstName, lastName, error
+
+	var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
+
+  console.log("Json package: " + req.body + "UserID: " + UserID);
+  // Complete reportAccounts API
+
+  var DogID = DogCounter++;
+  const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age, Sex: Sex };
+
+  // Forgive me Papa Szum for going over 100 characters
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { Dogs: newDog}}, function(err, user)
+  {
+    // Check for any technical errors
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to update User information.');
+    }
+    // Update JWT and send confirmation message.
+    else
+    {
+      return res.status(200).send('Doge Successfully Inserted!');
+    }
+  });
 };
