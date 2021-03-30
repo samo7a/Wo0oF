@@ -51,6 +51,7 @@ const UserSchema = new Schema({
 
   Dogs: [{
       Name: String,
+      UserID: String,
       Bio: String,
       Breed: String,
       Weight: mongoose.Schema.Types.Decimal128,
