@@ -329,7 +329,7 @@ exports.reportAccounts = function(req, res) {
   const newReport = { Description: Description, Date: Date.now() }
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport}, function(err, user)
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport} }, function(err, user)
   {
     // Check for any technical errors
     if (err)
