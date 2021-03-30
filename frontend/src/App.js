@@ -1,7 +1,6 @@
 import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-// import ResetPassword from './pages/resetPassword';
 import Login from './pages/login';
 import Home from './pages/home';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,7 +18,6 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Login}></Route>
-					// <Route path="/resetPassword" component={ResetPassword}></Route>
           <Route path="/home" component={Home}></Route>
         </Switch>
       </div>
