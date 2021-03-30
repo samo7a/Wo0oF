@@ -1,19 +1,23 @@
 module.exports = function(app) {
   var controller = require('../API/controller.js');
 
-  // signup route
+  // Signup route
   app.route('/signup')
-    .post(controller.signup);
+  .post(controller.signup);
 
   // Login route
   app.route('/login')
 	.post(controller.login);
 
+  // Login route
+  app.route('/editUser')
+  .post(controller.editUser);
+
   // Reset Password route
   app.route('/resetPassword')
   .post(controller.resetPassword);
 
-  // Reset Password route
+  // Confirm Password route
   app.route('/confirmPassword/:token')
   .post(controller.confirmPassword);
 

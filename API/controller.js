@@ -6,9 +6,10 @@ var url = require('url');
 var User = mongoose.model('User');
 var Token = mongoose.model('Token');
 const crypto = require('crypto');
+ObjectId = require('mongodb').ObjectID;
 // Signup Function
 
-// WIP, kinda
+// Almost complete, need to use GridFS to upload ProfilePicture
 exports.signup = function(req, res) {
 
   const jwt = require('../createJWT');
@@ -18,12 +19,12 @@ exports.signup = function(req, res) {
 
   var error = '';
 
-  var { Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio } = req.body;
+  var { Email, Password, Location, FirstName, LastName, isOwner, ProfilePicture, ShortBio } = req.body;
   console.log(req.body);
 
   User.findOne({ Email: Email }, function (err, user)
   {
-    // error occur
+    // Check if error occurs
     if (err)
     {
       return res.status(500).send({msg: err.message});
@@ -104,7 +105,7 @@ exports.signup = function(req, res) {
   return res.status(200).send({msg: "Verification Email Sent! :)"});
 };
 
-// Login Function
+// Complete Login API
 exports.login = function(req, res) {
 
 	const jwt = require('../createJWT');
@@ -116,7 +117,7 @@ exports.login = function(req, res) {
 
 	User.findOne({Email: Email}, function(err, user)
   {
-    // error occur
+    // Check if error occurs
     if (err)
     {
       return res.status(500).send({msg: "Technical error, Please try logging in again"});
@@ -148,12 +149,42 @@ exports.login = function(req, res) {
 	});
 };
 
-// Working pretty well, haven't found bugs....yet
+// Complete editUser API
+exports.editUser = function(req, res) {
+
+  const jwt = require('../createJWT');
+
+  // incoming: FirstName, LastName, isOwner, ProfilePicture, ShortBio
+  // outgoing: error, jwt
+
+  var { UserID, FirstName, LastName, isOwner, ProfilePicture, ShortBio } = req.body;
+  console.log(req.body);
+
+  // Forgive me Papa Szum for going over 100 characters
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $set: {FirstName: FirstName, LastName: LastName, isOwner: isOwner, ProfilePicture: ProfilePicture, ShortBio: ShortBio}}, function(err, user)
+  {
+    // Check for any technical errors
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to update User information.');
+    }
+    // Update JWT and send confirmation message.
+    else
+    {
+      const ret = jwt.createToken( user.FirstName, user.LastName, user._id );
+      console.log(jwt);
+
+      res.status(200).json(ret);
+    }
+  });
+};
+
+// Complete Verify Email API
 exports.verifyEmail = function(req, res) {
 
   Token.findOne({ token: req.params.token }, function (err, token)
   {
-    // token is not found into database then the token may have expired
+    // Token is not found in the database then the token may have expired
     if (!token)
     {
       return res.status(400).send('Your verification link may have expired. Please re-verify your Email.');
@@ -164,32 +195,32 @@ exports.verifyEmail = function(req, res) {
 
       User.findOne({ _id: token._userId }, function (err, user)
       {
-        // not valid user
+        // User does not exist in database
         if (user === null)
         {
           console.log(user);
           return res.status(401).send('We were unable to find a user for this verification.');
         }
-        // user is already verified
+        // User is already verified
         else if (user.isVerified)
         {
           return res.status(200).send('User has already been verified.');
         }
 
-        // verify user
+        // Verify user
         else
         {
-          // change isVerified to true
+          // Change isVerified to true
           user.isVerified = true;
 
           user.save(function (err)
           {
-            // error occur
-            if(err)
+            // Technical error occured
+            if (err)
             {
               return res.status(500).send({msg: err.message});
             }
-            // account successfully verified
+            // Account successfully verified
             else
             {
               return res.status(200).send(`${user.Email}` + ' has been successfully verified');
@@ -201,7 +232,7 @@ exports.verifyEmail = function(req, res) {
   });
 };
 
-// WIP
+// Complete Reset Password API
 exports.resetPassword = function(req, res) {
 
   // incoming: Email
@@ -215,7 +246,7 @@ exports.resetPassword = function(req, res) {
     {
       res.status(403).send('email not in db');
     }
-    
+
     else
     {
 
@@ -263,22 +294,22 @@ exports.resetPassword = function(req, res) {
   });
 };
 
-// WIP
+// Complete confirmPassword API
 exports.confirmPassword = function(req, res) {
 
   var { newPassword } = req.body;
 
   User.findOne({ ResetPasswordToken: req.params.token }, function (err, user)
   {
-    // token is not found into database then the token may have expired
+    // User is not found into database then the token may have expired
     if (!user)
     {
       return res.status(500).send({msg: 'Your verification link may have expired. Please resend your email.'});
     }
-    // if token is found then reset password
+    // If token is found then reset password
     else
     {
-      // password hashing for saving it into databse
+      // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
       console.log(user.Email);
       user.Password = newPassword;

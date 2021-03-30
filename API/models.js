@@ -44,6 +44,11 @@ const UserSchema = new Schema({
     default: false
   },
 
+  SpamReports: [{
+    Description: String,
+    Date: Date,   
+  }],
+
   Dogs: [{
       Name: String,
       Bio: String,
