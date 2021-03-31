@@ -15,7 +15,10 @@ function Home() {
     return(
         <Container fluid className="vh-100 overflow-hidden">
             <Header name="Iwanna Dog" />
-            <NavbarProfile />   
+            <NavbarProfile /> 
+            <Row>
+                <DogCard name="Max" />  
+            </Row>
         </Container>
     );
 }
