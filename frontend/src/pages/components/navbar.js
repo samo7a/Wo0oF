@@ -1,15 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import '../css/navbar.css';
+import { Link } from 'react-router-dom';
 
 function NavbarProfile() {
     return(
-        <div className="bkgd-color w-100">
-            <div className="center">
-                <Button className="nav-btn m-right" onclick="">Profile</Button>
-                <Button className="nav-btn" onclick="">Messages</Button>
-            </div>
-        </div>
+        <Row className="bkgd-color vw-100 justify-content-center">
+            <Link className="nav-btn" to="/home">Home</Link>
+            <Link className="nav-btn" to="/dogmanager">Dog Manager</Link>
+            <Link className="nav-btn" to="/messages">Messages</Link>
+            <Link className="nav-btn" to="/profile">Profile</Link>
+        </Row>
     );
 }
 

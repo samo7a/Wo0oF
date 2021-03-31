@@ -5,7 +5,7 @@ import '../css/header.css';
 
 function ProfileHeader(props) {
     return(
-        <Col sm={4} className="bkgd-color1">
+        <Col className="bkgd-color1">
             <img src={goodDog} className="header-logo" />
             <p className="profile-header-name">{props.name}</p>
         </Col>

@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from "../img/logo.png";
 import { Form, Button } from "react-bootstrap";
 import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import { useState } from "react";
@@ -7,35 +8,14 @@ import Header from './components/header';
 import NavbarProfile from './components/navbar';
 import DogCard from './components/dogCard';
 import EditProfile from './components/editProfile';
+import DogManager from './components/dogManager';
+import EditDog from './components/editDog';
 
 function Home() {
     return(
         <Container fluid className="vh-100 overflow-hidden">
-            <Row>
-                <ProfileHeader name="Chris"/>
-                <Header name="Home"/>
-            </Row>
-            <Row>
-                <Col sm={4}>
-                    <Row>
-                        <NavbarProfile />
-                    </Row>
-                    <Row>
-                        <EditProfile />
-                    </Row>
-                </Col>
-                <Col sm={8}>
-                    <Row>
-                        <DogCard name="Max" />
-                    </Row>
-                </Col>
-            </Row>
-
-            {/* 
-                Dynamically create messages with
-                profile header 
-            */}
-
+            <Header name="Iwanna Dog" />
+            <NavbarProfile />   
         </Container>
     );
 }

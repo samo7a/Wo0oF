@@ -24,10 +24,6 @@ function EditProfile() {
             <Form.Group className ="email">
                 <Form.Control placeholder="Email" />
             </Form.Group>
-
-            <Form.Group className ="location">
-                <Form.Control placeholder="Location" />
-            </Form.Group>
             
             <Form.Group className ="biography">
                 <Form.Control placeholder="Biography" />

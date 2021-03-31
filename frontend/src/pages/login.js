@@ -149,9 +149,6 @@ function Login() {
           <p>
             Enter your confirmation code to reset your password.
           </p>
-          <Form.Group className ="confirmationCode" controlId="formBasicEmail">
-            <Form.Control type="text" placeholder="Confirmation Code" />
-          </Form.Group>
 
           <Form.Group className ="newPasswordTextbox" controlId="formPassword">
             <Form.Control type="password" placeholder="New Password" />

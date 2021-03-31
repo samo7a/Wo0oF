@@ -3,6 +3,7 @@ import React from 'react';
 // import './App.css';
 import Login from './pages/login';
 import Home from './pages/home';
+import EditDog from './pages/components/editDog';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -19,6 +20,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login}></Route>
           <Route path="/home" component={Home}></Route>
+          <Route path="/dogprofile" component={EditDog}></Route>
         </Switch>
       </div>
     </Router>
