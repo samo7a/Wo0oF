@@ -8,7 +8,7 @@ import goodDog from "../../img/good-dog.jpeg";
 
 function EditProfile() {
     return(
-        <Container fluid className="vh-100"> 
+        <> 
             <Row className="justify-content-center">
                 <img className="profile-pic" src={goodDog}/>
             </Row>
@@ -24,19 +24,11 @@ function EditProfile() {
             <Form.Group className ="email">
                 <Form.Control placeholder="Email" />
             </Form.Group>
-
-            <Form.Group className ="location">
-                <Form.Control placeholder="Location" />
-            </Form.Group>
             
             <Form.Group className ="biography">
                 <Form.Control placeholder="Biography" />
             </Form.Group>
-            
-            <Row className="justify-content-center">
-                <Button className="update_profile_button">Update Profile</Button>
-            </Row>
-        </Container>
+        </>
     );
 }
 

@@ -1,10 +1,12 @@
-import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/login';
 import Home from './pages/home';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NavbarProfile from './pages/components/navbar';
+import Header from './pages/components/header';
+import Profile from './pages/profile';
+import DogManager from './pages/dogManager';
 
 // const app_name = 'wo0of';
 // function buildPath(route){
@@ -13,12 +15,20 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
 function App() {
+  const [isOwner, setisOwner] = useState(false);
+  const handleIsOwner = () => setisOwner(!isOwner); // somehow figure out if owner
+
   return (
     <Router>
       <div className="App">
         <Switch>
           <Route exact path="/" component={Login}></Route>
-          <Route path="/home" component={Home}></Route>
+          {/* <Header/>
+          <NavbarProfile /> */}
+          <Route path="/home" >
+            {isOwner ? <DogManager /> : <Home />}
+          </Route>
+          <Route path="/profile" component={Profile}></Route>
         </Switch>
       </div>
     </Router>
