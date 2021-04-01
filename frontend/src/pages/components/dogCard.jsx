@@ -13,7 +13,7 @@ function DogCard(props) {
 
     if (!isFlipped) {
         return(
-            <Container fluid className="vh-100 bkgd-card-color"> 
+            <Container fluid className=" bkgd-card-color"> 
                 <Row className="justify-content-center">
                     <Card border="light" bg="light" className="dog-card">
                         <Card.Img variant="top" src={goodDog}/>
@@ -37,7 +37,7 @@ function DogCard(props) {
         );
     } else {
         return(
-            <Container fluid className="vh-100 bkgd-card-color"> 
+            <Container fluid className=" bkgd-card-color"> 
                 <Row className="justify-content-center">
                     <Card border="light" bg="light" className="dog-card">
                         <ListGroup className="dog-card-text">

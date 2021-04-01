@@ -18,6 +18,24 @@
   font-size: 24px;
 }
 
+@media only screen and (max-height: 1080px) {
+  .dog-card {
+    width: 18rem !important;
+    min-height: 28rem !important;
+    margin-top: 2%;
+    box-shadow: 0px 0px 20px black;
+  }
+
+  .dog-card-title {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .dog-card-text {
+    font-size: 16px;
+  }
+}
+
 .flip-btn {
   /* display: inline !important; */
   /* right: 50% !important; */

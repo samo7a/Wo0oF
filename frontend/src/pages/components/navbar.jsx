@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 function NavbarProfile() {
     return(
-        <Row className="bkgd-color vw-100 justify-content-center">
+        <Row className="bkgd-color  justify-content-center">
             <Link className="nav-btn" to="/home">Home</Link>
-            <Link className="nav-btn" to="/dogmanager">Dog Manager</Link>
+            {/* <Link className="nav-btn" to="/dogmanager">Dog Manager</Link> */}
             <Link className="nav-btn" to="/messages">Messages</Link>
             <Link className="nav-btn" to="/profile">Profile</Link>
         </Row>
