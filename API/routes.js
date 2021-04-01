@@ -32,4 +32,12 @@ module.exports = function(app) {
   // Create Dog Route
   app.route('/createDog')
   .post(controller.createDog);
+
+  // Create Dog Route
+  app.route('/editDog')
+  .post(controller.editDog);
+
+  // Create Dog Route
+  app.route('/deleteDog')
+  .post(controller.deleteDog);
 }
