@@ -3,10 +3,13 @@ var nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt');
 var http = require('http');
 var url = require('url');
+var Chat = mongoose.model('Chats');
 var User = mongoose.model('User');
 var Token = mongoose.model('Token');
 const crypto = require('crypto');
 ObjectId = require('mongodb').ObjectID;
+
+var DogCounter = 0;
 
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
@@ -329,7 +332,7 @@ exports.reportAccounts = function(req, res) {
   const newReport = { Description: Description, Date: Date.now() }
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport} }, function(err, user)
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport}}, function(err, user)
   {
     // Check for any technical errors
     if (err)
@@ -370,6 +373,48 @@ exports.createDog = function(req, res)
     else
     {
       return res.status(200).send('Doge Successfully Inserted!');
+    }
+  });
+};
+
+// Complete deleteDog API
+exports.deleteDog = function(req, res) {
+
+  var { UserID, DogID } = req.body;
+
+  // Forgive me Papa Szum for going over 100 characters
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $pull: { Dogs: {_id: ObjectId(DogID)}}}, function(err, user)
+  {
+    // Check for any technical errors
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to update User information.');
+    }
+    // Update delete message
+    else
+    {
+      return res.status(200).send('Dog successfully deleted!');
+    }
+  });
+};
+
+// Complete editUser API
+exports.editDog = function(req, res) {
+
+  var { Name, UserID, DogID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
+
+  // Find user then find the dog and update
+  User.findOneAndUpdate(
+  { _id: ObjectId(UserID), "Dogs._id": ObjectId(DogID)},
+  { $set: {"Dogs.$.Name": Name, "Dogs.$.Bio": Bio, "Dogs.$.Breed": Breed, "Dogs.$.Weight": Weight, "Dogs.$.Height": Height, "Dogs.$.Age": Age, "Dogs.$.Sex": Sex }}, function(err, owner)
+  {
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to find User information.');
+    }
+    else
+    {
+      return res.status(200).send('Dog successfully updated!');
     }
   });
 };

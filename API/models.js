@@ -46,7 +46,7 @@ const UserSchema = new Schema({
 
   SpamReports: [{
     Description: String,
-    Date: Date,   
+    Date: Date,
   }],
 
   Dogs: [{
@@ -107,6 +107,6 @@ const TokenSchema = new Schema({
     }
 });
 
-module.exports = adopter = mongoose.model("Chats", ChatSchema);
+module.exports = chat = mongoose.model("Chats", ChatSchema);
 module.exports = user = mongoose.model("User", UserSchema);
 module.exports = token = mongoose.model("Token", TokenSchema);
