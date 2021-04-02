@@ -1,16 +1,33 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 import '../css/navbar.css';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Container, Row } from 'reactstrap';
+import EditProfile from './editProfile';
+import Chat from './chat';
 
 function NavbarProfile() {
-    return(
-        <Row className="bkgd-color  justify-content-center">
-            <Link className="nav-btn" to="/home">Home</Link>
-            {/* <Link className="nav-btn" to="/dogmanager">Dog Manager</Link> */}
-            <Link className="nav-btn" to="/messages">Messages</Link>
-            <Link className="nav-btn" to="/profile">Profile</Link>
-        </Row>
+
+    const [showChat, setShowChat] = useState(true);
+
+    return (
+        <Container fluid className="">
+            <Row>
+                <div className="bkgd-color w-100">
+                    <div className="center">
+                        <Button className="nav-btn m-right" onClick={() => { setShowChat(false) }}>
+                            Profile
+                        </Button>
+                        <Button className="nav-btn" onClick={() => { setShowChat(true) }}>
+                            Messages
+                        </Button>
+                    </div>
+                </div >
+            </Row>
+            <Row>
+                {showChat ? <Chat /> : <EditProfile />}
+            </Row>
+        </Container >
     );
 }
 

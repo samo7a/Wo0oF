@@ -14,12 +14,7 @@
   background-color: inherit !important;
   color: white !important;
   border: none;
-  font-size: 20px;
-  display: inline !important;
-  margin-right: 3.5% !important;
-  margin-top: 0.4% !important;
-  margin-left: 3.5% !important;
-  margin-bottom: 0.4% !important;
+  font-size: 18px;
 }
 
 .nav-btn:hover {
