@@ -12,15 +12,20 @@
 
 .nav-btn {
   background-color: inherit !important;
-  color: white !important;
-  border: none;
-  font-size: 18px;
+  color: rgb(196, 196, 196) !important;
+  border: none !important;
+  font-size: 24px;
+  outline: none !important;
 }
 
 .nav-btn:hover {
-  text-decoration: underline #ba5b5b;
+  color: white !important;
 }
 
-.nav-btn::after {
-  text-decoration: underline #ba5b5b;
+.nav-btn-clicked {
+  background-color: inherit !important;
+  color: white !important;
+  border: none !important;
+  font-size: 24px;
+  text-decoration: underline #D25151 !important;
 }

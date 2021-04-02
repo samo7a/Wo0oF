@@ -2,29 +2,49 @@
   border-radius: 50%;
   border-color: black;
   border-style: solid;
-  max-width: 10%;
-  display: inline;
-  margin: 10px;
+  width: 50px;
+  margin: 10px 10px;
+  position: relative;
 }
 
 .profile-header-name {
-  font-size: 24px;
-  margin-left: 10px;
-  display: inline;
-  margin-top: 1%;
+  font-size: 28px;
+  align-items: center;
+  text-align: center;
+  display: inline-block;
 }
 
 .header-name {
-  font-size: 24px;
+  font-size: 28px;
+  color: white;
   align-items: center;
   text-align: center;
-  margin-top: 1%;
 }
 
 .bkgd-color1 {
-  background-color: #ba5b5b;
+  background-color: #D25151;
 }
 
 .bkgd-color2 {
   background-color: #ffffff;
+}
+
+.sign-out-btn {
+  color: white;
+  background-color: inherit;
+  padding: 5px 10px;
+  margin: 10px 10px;
+  border-color: white;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  float: right;
+  display: inline;
+}
+
+.sign-out-btn:hover {
+  transition: 0.25s;
+  text-decoration: none !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  border-color: rgba(255, 255, 255, 0.76) !important;
 }

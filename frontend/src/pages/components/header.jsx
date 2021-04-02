@@ -1,8 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Col } from 'react-bootstrap';
 import '../css/header.css';
-import goodDog from "../../img/good-dog.jpeg";
 
 function Header(props) {
     return (

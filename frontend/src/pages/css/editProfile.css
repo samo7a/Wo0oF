@@ -9,8 +9,8 @@
 }
 
 .edit-prof-btn {
-  background-color: #ba5b5b !important;
-  color: black !important;
+  background-color: #D25151 !important;
+  color: white !important;
   border: none !important;
   font-size: 20px !important;
   padding-right: 57px !important;
@@ -26,6 +26,6 @@
 }
 
 .edit-prof-btn:hover {
-  background-color: #d62137 !important;
-  box-shadow: 0px 0px 2px black !important;
+  background-color: rgb(204, 27, 48) !important;
+  box-shadow: 0px 0px 5px black !important;
 }

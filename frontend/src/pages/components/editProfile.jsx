@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button } from "react-bootstrap";
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useState } from "react";
 import '../css/editProfile.css';
-import goodDog from "../../img/good-dog.jpeg";
+import profilePic from "../../img/def-pic.jpg";
 
 
 function EditProfile() {
@@ -14,7 +14,7 @@ function EditProfile() {
             {isEditing ?
                 <>
                     <Row className="justify-content-center">
-                        <img className="profile-pic" src={goodDog} />
+                        <img className="profile-pic" src={profilePic} />
                     </Row>
 
                     <Form.Group className="first_name">
@@ -41,7 +41,7 @@ function EditProfile() {
                 :
                 <>
                     <Row className="justify-content-center">
-                        <img className="profile-pic" src={goodDog} />
+                        <img className="profile-pic" src={profilePic} />
                     </Row>
                     <p>Name: </p>
                     <br />
