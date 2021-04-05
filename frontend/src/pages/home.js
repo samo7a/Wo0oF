@@ -21,8 +21,8 @@ function Home() {
                 {/* Right Column showing home for owner or adopter*/}
                 <Col sm={8}>
                     <Row>
-                        {/* <DogCard name="Murry" /> */}
-                        <DogManager />
+                        <DogCard name="Murry" />
+                        {/* <DogManager /> */}
                     </Row>
                 </Col>
             </Row>
