@@ -3,13 +3,14 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from './components/profileHeader';
 import NavbarProfile from './components/navbar';
 import DogCard from './components/dogCard';
+import DogManager from './components/dogManager';
 
 function Home() {
 
     return (
         <Container fluid className="vh-100 overflow-hidden">
             <Row>
-                <ProfileHeader name="Chris" page="Home" />
+                <ProfileHeader name="Name" page="Home" />
             </Row>
             <Row>
                 {/* Left column displaying The navigation bar
@@ -20,7 +21,8 @@ function Home() {
                 {/* Right Column showing home for owner or adopter*/}
                 <Col sm={8}>
                     <Row>
-                        <DogCard name="Murry" />
+                        {/* <DogCard name="Murry" /> */}
+                        <DogManager />
                     </Row>
                 </Col>
             </Row>
