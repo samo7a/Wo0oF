@@ -58,7 +58,8 @@ const UserSchema = new Schema({
       Height: Int32,
       Age: Int32,
       Sex: String,
-      DogID: String
+      DogID: String,
+      isLiked: Boolean
     }]
 });
 
