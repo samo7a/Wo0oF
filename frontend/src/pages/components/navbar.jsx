@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/navbar.css';
 import { useState } from 'react';
-import { Row, Button } from 'reactstrap';
+import { Row, Button } from 'react-bootstrap';
 import EditProfile from './editProfile';
 import Chat from './chat';
-import { set } from 'mongoose';
+// import { set } from 'mongoose';
 
 function NavbarProfile() {
 

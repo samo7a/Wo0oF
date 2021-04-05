@@ -2,27 +2,30 @@
   border-radius: 50%;
   border-color: black;
   border-style: solid;
-  width: 50px;
+  width: 30px;
   margin: 10px 10px;
-  position: relative;
 }
 
 .profile-header-name {
-  font-size: 28px;
+  font-size: 20px;
   align-items: center;
   text-align: center;
   display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .header-name {
-  font-size: 28px;
+  font-size: 20px;
   color: white;
   align-items: center;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .bkgd-color1 {
-  background-color: #D25151;
+  background-color: #ef233c;
 }
 
 .bkgd-color2 {
@@ -33,9 +36,9 @@
   color: white;
   background-color: inherit;
   padding: 5px 10px;
-  margin: 10px 10px;
+  margin-top: 2px;
   border-color: white;
-  font-size: 20px;
+  font-size: 15px;
   border-style: solid;
   border-radius: 5px;
   float: right;

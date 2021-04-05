@@ -12,15 +12,15 @@ function ProfileHeader(props) {
                     <Col sm={1}>
                         <img src={profilePic} className="header-logo" />
                     </Col>
-                    <Col sm={4} className="profile-header-name">
-                        <p className="pt-3">{props.name}</p>
+                    <Col sm={4} >
+                        <p className="profile-header-name">{props.name}</p>
                     </Col>
                 </Row>
             </Col>
             <Col sm={8} className="bkgd-color1">
                 <Row className="justify-content-end h-100">
-                    <Col sm={4} className="header-name">
-                        <p className="pt-3">{props.page}</p>
+                    <Col sm={4} >
+                        <p className="header-name">{props.page}</p>
                     </Col>
                     <Col sm={4} className="pt-1">
                         <Link to="/" className="sign-out-btn">Sign Out</Link>
