@@ -21,8 +21,6 @@ function Login() {
   var lastName;
   var profilePicture;
   var shortBio;
-  var newPassword;
-  var confirmPassword;
 
   const doLogin = async (event) => {
     event.preventDefault();
@@ -102,7 +100,6 @@ function Login() {
   };
 
   const doResetPassword = async (event) => {
-
     var obj = { Email: email.value };
 
     var js = JSON.stringify(obj);
@@ -145,14 +142,6 @@ function Login() {
   const [showResetPassword, setShowResetPassword] = useState(false);
   const handleCloseResetPassword = () => setShowResetPassword(false);
   const handleShowResetPassword = () => setShowResetPassword(true);
-
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const handleCloseConfirmation = () => setShowConfirmation(false);
-  const handleShowConfirmation = () => {
-    setShowConfirmation(true);
-    setShowResetPassword(false);
-    doResetPassword();
-  };
 
   const [checked, setChecked] = useState(false);
   const handleClick = () => setChecked(!checked);
@@ -240,7 +229,7 @@ function Login() {
           </Form.Group>
 
           <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="I Am An Owner" onClick={handleClick} checked={checked}/>
+            <Form.Check type="checkbox" label="I Am An Owner" onClick={handleClick} checked={checked} />
           </Form.Group>
         </Modal.Body>
 
@@ -265,33 +254,14 @@ function Login() {
         </Modal.Body>
 
         <Modal.Footer className="justify-content-center">
-          <Button className="signup-btn" onClick={handleShowConfirmation}>
+          <Button
+            className="signup-btn"
+            onClick={() => {
+              handleCloseResetPassword();
+              doResetPassword();
+            }}
+          >
             Reset Password
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Confirmation Modal */}
-      <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Password Reset</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>Enter your new password.</p>
-
-          <Form.Group className="newPasswordTextbox" controlId="formPassword">
-            <Form.Control type="password" placeholder="New Password" ref={(c) => (newPassword = c)} />
-          </Form.Group>
-
-          <Form.Group className="confirmNewPasswordTextbox" controlId="formPassword">
-            <Form.Control type="password" placeholder="Confirm New Password" ref={(c) => (confirmPassword = c)} />
-          </Form.Group>
-        </Modal.Body>
-
-        <Modal.Footer className="justify-content-center">
-          <Button className="signup-btn" onClick={handleCloseConfirmation}>
-            Confirm Password
           </Button>
         </Modal.Footer>
       </Modal>
