@@ -1,27 +1,27 @@
 .header-logo {
   border-radius: 50%;
-  border-color: black;
+  border-color: white;
   border-style: solid;
   width: 30px;
   margin: 10px 10px;
 }
 
 .profile-header-name {
+  color: white;
   font-size: 20px;
   align-items: center;
   text-align: center;
   display: inline-block;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0%;
 }
 
 .header-name {
-  font-size: 20px;
+  font-size: 30px;
   color: white;
-  align-items: center;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .bkgd-color1 {
@@ -36,7 +36,7 @@
   color: white;
   background-color: inherit;
   padding: 5px 10px;
-  margin-top: 2px;
+  margin-top: 5px;
   border-color: white;
   font-size: 15px;
   border-style: solid;

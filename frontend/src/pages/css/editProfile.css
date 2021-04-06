@@ -9,10 +9,18 @@
   background-color: white;
 }
 
+.profile-button {
+  background-color: inherit !important;
+  border: none !important;
+  margin-top: 4% !important;
+}
+
 .profile-text {
   color: black;
   font-size: 18px;
   margin-left: 5%;
+  margin-right: 5%;
+  border-bottom: 1px black solid;
 }
 
 .forms-margin {
@@ -41,4 +49,8 @@
 .edit-prof-btn:hover {
   background-color: rgb(204, 27, 48) !important;
   box-shadow: 0px 0px 10px black !important;
+}
+
+.edit-prof-btn:focus {
+  box-shadow: none !important;
 }
