@@ -1,23 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import '../css/header.css';
-import goodDog from "../../img/good-dog.jpeg";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Col } from "react-bootstrap";
+import "../css/header.css";
 
 function Header(props) {
-    return(
-        <Row className="bkgd-color2">
-            <Link className="signout" to='/'>Sign Out</Link>
-            <Col className="app-title">
-                <h1>Woof</h1>
-                {/* <img src={logo} className="Login-logo"/> */}
-            </Col>
-            <Col>
-                <img src={goodDog} className="header-logo" />
-                <p className="header-name">{props.name}</p>
-            </Col>
-        </Row>
-    );
+  return (
+    <Col sm={8} className="bkgd-color2">
+      {/* Dog Name or Person you are talking to*/}
+      <div>
+        <p className="header-name">{props.name}</p>
+      </div>
+    </Col>
+  );
 }
 
 export default Header;

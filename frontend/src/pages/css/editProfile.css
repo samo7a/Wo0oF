@@ -4,13 +4,34 @@
   border-radius: 50% !important;
 }
 
-.first_name {
-  margin-top: 5%;
+.profile-color {
+  /* background-color: #2b2d42; */
+  background-color: white;
 }
 
-.update_profile_button {
-  background-color: #ba5b5b !important;
-  color: black !important;
+.profile-button {
+  background-color: inherit !important;
+  border: none !important;
+  margin-top: 4% !important;
+}
+
+.profile-text {
+  color: black;
+  font-size: 18px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-bottom: 1px black solid;
+}
+
+.forms-margin {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.edit-prof-btn {
+  background-color: #ef233c !important;
+  color: white !important;
   border: none !important;
   font-size: 20px !important;
   padding-right: 57px !important;
@@ -22,9 +43,14 @@
   margin-right: 15px !important;
   margin-left: 15px !important;
   border-radius: 30px !important;
+  text-align: center !important;
 }
 
-.update_profile_button-btn:hover {
-  background-color: #d62137 !important;
-  box-shadow: 0px 0px 2px black !important;
+.edit-prof-btn:hover {
+  background-color: rgb(204, 27, 48) !important;
+  box-shadow: 0px 0px 10px black !important;
+}
+
+.edit-prof-btn:focus {
+  box-shadow: none !important;
 }

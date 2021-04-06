@@ -2,7 +2,7 @@
   border-radius: 50% !important;
   display: inline !important;
   background-color: white !important;
-  color: green !important;
+  color: #dd3838 !important;
   /* border-color: black !important;
   border-width: 2px !important; */
   border: none;
@@ -12,18 +12,31 @@
   padding-right: 16px;
 }
 
+.like-button:hover {
+  transition-duration: 0.25s;
+  background-color: #dd3838 !important;
+  color: white !important;
+  box-shadow: 0px 0px 10px black;
+}
+
 .dislike-button {
   border-radius: 50% !important;
   /* width: 5% !important; */
   display: inline !important;
   background-color: white !important;
-  color: red !important;
+  color: #2b2d42 !important;
   /* border-color: black !important;
   border-width: 2px !important; */
   border: none;
+  margin-left: 40px;
   box-shadow: 0px 0px 5px black;
-  float: right;
   font-size: 35px;
   padding-left: 19px;
-  padding-right: 19px;
+  padding-right: 17px;
+}
+
+.dislike-button:hover {
+  transition-duration: 0.2s;
+  background-color: #2b2d42 !important;
+  color: white !important;
 }

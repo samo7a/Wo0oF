@@ -3,17 +3,14 @@ var nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt');
 var http = require('http');
 var url = require('url');
-var Chat = mongoose.model('Chats');
 var User = mongoose.model('User');
 var Token = mongoose.model('Token');
 const crypto = require('crypto');
 ObjectId = require('mongodb').ObjectID;
 
-var DogCounter = 0;
-
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
-exports.signup = function(req, res) {
+exports.signup = async function(req, res) {
 
   const jwt = require('../createJWT');
 
@@ -22,7 +19,7 @@ exports.signup = function(req, res) {
 
   var error = '';
 
-  var { Email, Password, Location, FirstName, LastName, isOwner, ProfilePicture, ShortBio } = req.body;
+  var { Email, Password, Location, FirstName, LastName, isOwner } = req.body;
   console.log(req.body);
 
   User.findOne({ Email: Email }, function (err, user)
@@ -30,14 +27,16 @@ exports.signup = function(req, res) {
     // Check if error occurs
     if (err)
     {
-      return res.status(500).send({msg: err.message});
+      console.log("err error");
+      // return res.status(500).send({msg: err.message});
+      return res.status(500);
     }
     // if email is exist into database i.e. email is associated with another user.
     else if (user)
     {
       console.log("User exists already :(");
-      // return res.status(500).send({msg:'This email address is already associated with another account.'});
-      return res.status(400).send({msg: "User exists already :("});
+      // return res.status(400).send({msg: "User exists already :("});
+      return res.status(500);
     }
     // if user does not exist into database then save the user into database for register account
     else
@@ -45,16 +44,24 @@ exports.signup = function(req, res) {
       // password hashing for saving it into databse
       Password = bcrypt.hashSync(Password, 10);
 
-      const newUser = new User({ Email : Email, Password: Password, Location: Location,
+      if (isOwner === 'on')
+        isOwner = true;
+      else
+        isOwner = false;
+
+      console.log("isOwner: " + isOwner);
+
+      const newUser = new User({ Email : Email, Password: Password,
                                  FirstName: FirstName, LastName: LastName,
-                                 isOwner: isOwner, ProfilePicture: ProfilePicture, ShortBio: ShortBio});
+                                 isOwner: isOwner});
 
       // create and save user
       newUser.save(function (err)
       {
         if (err)
         {
-          return res.status(500).send({msg: "Technical Error creating User :("});
+          // return res.status(500).send({msg: "Technical Error creating User :("});
+          return res.status(500);
         }
 
         // generate token and save
@@ -92,13 +99,14 @@ exports.signup = function(req, res) {
         {
           if (err)
           {
-            return res.status(500).send({msg: "Technical Error sending Email :("});
+            // return res.status(500).send({msg: "Technical Error sending Email :("});
+            return res.status(500);
           }
 
           else
           {
             console.log('Verification Email sent: ' + info.response)
-            return res.status(200).send({msg: "Verification Email Sent! :)"});
+            res.status(200).send({msg: "Verification Email Sent! :)"});
           }
         });
       });
@@ -226,7 +234,7 @@ exports.verifyEmail = function(req, res) {
             // Account successfully verified
             else
             {
-              return res.status(200).send(`${user.Email}` + ' has been successfully verified');
+              res.status(200).send(`${user.Email}` + ' has been successfully verified');
             }
           });
         }
@@ -290,7 +298,7 @@ exports.resetPassword = function(req, res) {
         else
         {
             console.log('Recovery Email sent: ' + info.response);
-            return res.status(200).send({msg: 'A password recovery email has been sent. It will expire after one hour.'});
+            res.status(200).send({msg: 'A password recovery email has been sent. It will expire after one hour.'});
         }
       });
     }
@@ -318,10 +326,10 @@ exports.confirmPassword = function(req, res) {
       user.ResetPasswordToken = '';
       user.ResetPasswordExpires = Date.now();
       user.save();
+
+      res.status(200).send('Password successfully reset!');
     }
   });
-
-  return res.status(200).send('Password successfully reset!');
 };
 
 // Complete confirmPassword API
@@ -332,7 +340,7 @@ exports.reportAccounts = function(req, res) {
   const newReport = { Description: Description, Date: Date.now() }
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport}}, function(err, user)
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $push: { SpamReports: newReport} }, function(err, user)
   {
     // Check for any technical errors
     if (err)
@@ -342,7 +350,7 @@ exports.reportAccounts = function(req, res) {
     // Update JWT and send confirmation message.
     else
     {
-      return res.status(200).send('Report successfully inserted!');
+      res.status(200).send('Report successfully inserted!');
     }
   });
 };
