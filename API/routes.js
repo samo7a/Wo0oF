@@ -40,4 +40,12 @@ module.exports = function(app) {
   // Create Dog Route
   app.route('/deleteDog')
   .post(controller.deleteDog);
+
+  // Display Dogs Route
+  app.route('/displayDogs')
+  .post(controller.displayDogs);
+
+  // Display Dogs Route
+  app.route('/likeDog')
+  .post(controller.likeDog);
 }

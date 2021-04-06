@@ -19,7 +19,6 @@ function Login() {
   var location;
   var firstName;
   var lastName;
-  var isOwner;
   var profilePicture;
   var shortBio;
   var newPassword;
@@ -67,9 +66,8 @@ function Login() {
   const doSignUp = async (event) => {
     event.preventDefault();
 
-    var obj = { Email: email.value, Password: password.value, FirstName: firstName.value, LastName: lastName.value, isOwner: isOwner.value };
+    var obj = { Email: email.value, Password: password.value, FirstName: firstName.value, LastName: lastName.value, isOwner: checked };
 
-    // console.log("isOwner: " + isOwner.value);
     var js = JSON.stringify(obj);
 
     try {
@@ -91,7 +89,43 @@ function Login() {
           if (res.error) {
             console.log(res);
           } else {
-            storage.storeToken(res);
+            window.location.href = "/";
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
+  const doResetPassword = async (event) => {
+
+    var obj = { Email: email.value };
+
+    var js = JSON.stringify(obj);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("resetPassword"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: js,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+
+          if (res.error) {
+            console.log(res);
+          } else {
             window.location.href = "/";
           }
         })
@@ -117,7 +151,11 @@ function Login() {
   const handleShowConfirmation = () => {
     setShowConfirmation(true);
     setShowResetPassword(false);
+    doResetPassword();
   };
+
+  const [checked, setChecked] = useState(false);
+  const handleClick = () => setChecked(!checked);
 
   return (
     <Container fluid className="vh-100 overflow-hidden">
@@ -202,7 +240,7 @@ function Login() {
           </Form.Group>
 
           <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="I Am An Owner" ref={(c) => (isOwner = c)} />
+            <Form.Check type="checkbox" label="I Am An Owner" onClick={handleClick} checked={checked}/>
           </Form.Group>
         </Modal.Body>
 

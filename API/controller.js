@@ -44,11 +44,6 @@ exports.signup = async function(req, res) {
       // password hashing for saving it into databse
       Password = bcrypt.hashSync(Password, 10);
 
-      if (isOwner === 'on')
-        isOwner = true;
-      else
-        isOwner = false;
-
       console.log("isOwner: " + isOwner);
 
       const newUser = new User({ Email : Email, Password: Password,
@@ -86,14 +81,33 @@ exports.signup = async function(req, res) {
           }
         });
 
-        var mailOptions = {
-          from: 'woofnoreply <woof4331@outlook.com>',
-          to: Email,
-          subject: 'Account Verification Link',
-          text: 'Hello '+ FirstName +',\n\n' +
-          'Please verify your account by clicking the link: \nhttp:\/\/' +
-          req.headers.host + '\/verifyEmail\/' +
-          Email + '\/' + token.token + '\n\nThank You!\n' };
+        if (process.env.NODE_ENV === 'production')
+        {
+          var mailOptions =
+          {
+            from: 'woofnoreply <woof4331@outlook.com>',
+            to: Email,
+            subject: 'Account Verification Link',
+            text: 'Hello '+ FirstName +',\n\n' +
+            'Please verify your account by clicking the link: \nhttps:\/\/' +
+            req.headers.host + '.com' + '\/verifyEmail\/' +
+            Email + '\/' + token.token + '\n\nThank You!\n'
+          };
+        }
+
+        else
+        {
+          var mailOptions =
+          {
+            from: 'woofnoreply <woof4331@outlook.com>',
+            to: Email,
+            subject: 'Account Verification Link',
+            text: 'Hello '+ FirstName +',\n\n' +
+            'Please verify your account by clicking the link: \nhttp:\/\/' +
+            req.headers.host + '\/verifyEmail\/' +
+            Email + '\/' + token.token + '\n\nThank You!\n'
+          };
+        }
 
         transporter.sendMail(mailOptions, function (err)
         {
@@ -165,14 +179,14 @@ exports.editUser = function(req, res) {
 
   const jwt = require('../createJWT');
 
-  // incoming: FirstName, LastName, isOwner, ProfilePicture, ShortBio
+  // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
   // outgoing: error, jwt
 
-  var { UserID, FirstName, LastName, isOwner, ProfilePicture, ShortBio } = req.body;
+  var { UserID, FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio } = req.body;
   console.log(req.body);
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $set: {FirstName: FirstName, LastName: LastName, isOwner: isOwner, ProfilePicture: ProfilePicture, ShortBio: ShortBio}}, function(err, user)
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $set: {FirstName: FirstName, LastName: LastName, Email: Email, Phone: Phone, ProfilePicture: ProfilePicture, ShortBio: ShortBio}}, function(err, user)
   {
     // Check for any technical errors
     if (err)
@@ -255,7 +269,7 @@ exports.resetPassword = function(req, res) {
   {
     if (user === null)
     {
-      res.status(403).send('email not in db');
+      res.status(403).send('Email not in database');
     }
 
     else
@@ -277,14 +291,33 @@ exports.resetPassword = function(req, res) {
        },
       });
 
-      var mailOptions =
+      // 'Please verify your account by clicking the link: \nhttp:\/\/' +
+      // req.headers.host + '\/verifyEmail\/' +
+
+      if (process.env.NODE_ENV === 'production')
       {
-          from:'woofnoreply <woof4331@outlook.com>',
-          to: Email,
-          subject: 'Reset Password for Woof',
-          text: 'Hi,\nWe have received a request to reset the password for Woof account ' + Email +
-                ' You can reset your password by clicking the link below within one hour\n' + `http://localhost:5000/confirmPassword/${token}\n\n` +
-                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        var mailOptions =
+        {
+            from:'woofnoreply <woof4331@outlook.com>',
+            to: Email,
+            subject: 'Reset Password for Woof',
+            text: 'Hi,\nWe have received a request to reset the password for Woof account ' + Email +
+                  ' You can reset your password by clicking the link below within one hour\n' + `https://wo0of.herokuapp.com/confirmPassword/${token}\n\n` +
+                  'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        }
+      }
+
+      else
+      {
+        var mailOptions =
+        {
+            from:'woofnoreply <woof4331@outlook.com>',
+            to: Email,
+            subject: 'Reset Password for Woof',
+            text: 'Hi,\nWe have received a request to reset the password for Woof account ' + Email +
+                  ' You can reset your password by clicking the link below within one hour\n' + `http://localhost:5000/confirmPassword/${token}\n\n` +
+                  'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        }
       }
 
       console.log("Sending mail");
@@ -310,7 +343,7 @@ exports.confirmPassword = function(req, res) {
 
   var { newPassword } = req.body;
 
-  User.findOne({ ResetPasswordToken: req.params.token }, function (err, user)
+  User.findOne({ ResetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user)
   {
     // User is not found into database then the token may have expired
     if (!user)
@@ -423,6 +456,47 @@ exports.editDog = function(req, res) {
     else
     {
       return res.status(200).send('Dog successfully updated!');
+    }
+  });
+};
+
+// Complete displayDogs API
+exports.displayDogs = function(req, res) {
+
+  var { UserID } = req.body;
+
+  // Find user then find the dog and update
+  User.findById(ObjectId(UserID) , function(err, user)
+  {
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to find User information.');
+    }
+    else
+    {
+      var dogList = user.Dogs;
+      return res.status(200).send(dogList);
+    }
+  });
+};
+
+// Complete editDog API
+exports.likeDog = function(req, res) {
+
+  var { UserID, DogID, isLiked } = req.body;
+
+  // Find user then find the dog and update the isLiked attribute
+  User.findOneAndUpdate(
+  { _id: ObjectId(UserID), "Dogs._id": ObjectId(DogID)},
+  { $set: {"Dogs.$.isLiked": isLiked }}, function(err, owner)
+  {
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to find User information.');
+    }
+    else
+    {
+      return res.status(200).send('Dog successfully liked!');
     }
   });
 };

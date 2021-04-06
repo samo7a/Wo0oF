@@ -4,8 +4,58 @@ import { useState } from "react";
 import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
+import axios from "axios";
 
 function EditProfile() {
+
+  const bp = require("../../bp.js");
+  const storage = require("../../tokenStorage.js");
+  const jwt = require("jsonwebtoken");
+
+  var tok = storage.retrieveToken();
+  var ud = jwt.decode(tok,{complete:true});
+
+  var userID = ud.payload.userId;
+  var tokenFirstName = ud.payload.firstName;
+  var tokenLastName = ud.payload.lastName;
+
+  const doEditUser = async (event) => {
+
+    var obj = { UserID: userID, FirstName: setFirstName, LastName: setLastName, Email: setEmail, Phone: setPhone, ProfilePicture: setImages, ShortBio: setBio };
+
+    var js = JSON.stringify(obj);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("editUser"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: js,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+
+          if (res.error) {
+            console.log(res);
+          } else {
+            window.location.href = "/";
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   const [isEditing, setEditMode] = useState(false);
 
   const [images, setImages] = useState([]);
@@ -14,6 +64,13 @@ function EditProfile() {
     setImages(image);
     setImageChanged(true);
   };
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [location, setLocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState("");
 
   return (
     <Container fluid className="profile-color vh-100">
@@ -32,27 +89,27 @@ function EditProfile() {
           </Row>
           <Form>
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="First Name" />
+              <Form.Control placeholder="First Name" onChange={e => setFirstName(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Last Name" />
+              <Form.Control placeholder="Last Name" onChange={e => setLastName(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Email" />
+              <Form.Control placeholder="Email" onChange={e => setEmail(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Phone" />
+              <Form.Control placeholder="Phone" onChange={e => setPhone(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Location" />
+              <Form.Control placeholder="Location" onChange={e => setLocation(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Biography" />
+              <Form.Control placeholder="Biography" onChange={e => setBio(e.target.value)}/>
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
