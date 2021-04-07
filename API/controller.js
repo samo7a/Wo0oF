@@ -450,7 +450,7 @@ exports.displayDogs = function (req, res) {
   });
 };
 
-// Complete editDog API
+// Complete likeDog API
 exports.likeDog = function (req, res) {
   var { UserID, DogID, isLiked } = req.body;
 
