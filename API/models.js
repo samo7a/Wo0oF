@@ -83,29 +83,26 @@ const UserSchema = new Schema({
 // Chat Schema
 const ChatSchema = new Schema({
   AdopterID: {
-    type: Int32,
+    type: String,
     required: true
   },
 
   OwnerID: {
-    type: Int32,
+    type: String,
     required: true
   },
-
-  ChatID: {
-    type: Int32,
-    required: true
-  }
-  ,
+  
   DogID: {
-    type: Int32,
+    type: String,
     required: true
   },
-
-  isApproved: {
-    type: Boolean,
-    required: true
-  }
+  
+  Messages: [{
+    text: String,
+    createdAt: Int32,
+    userID: String
+  }]
+  
 });
 
 // Token Schema
@@ -131,6 +128,6 @@ const TokenSchema = new Schema({
     }
 });
 
-module.exports = chat = mongoose.model("Chats", ChatSchema);
+module.exports = chat = mongoose.model("Chat", ChatSchema);
 module.exports = user = mongoose.model("User", UserSchema);
 module.exports = token = mongoose.model("Token", TokenSchema);
