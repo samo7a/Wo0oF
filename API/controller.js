@@ -438,17 +438,47 @@ exports.editDog = function (req, res) {
 
 // Complete displayDogs API
 exports.displayDogs = function (req, res) {
-  var { UserID } = req.body;
+  var { Location } = req.body;
+  
+  
+  Usernum = 0;
+  dogarray = [];
+  var i, j;
+  
+	  
+	// Find the next owner in the same area
+	User.find({Location: Location, isOwner : true}, function (err, owners) {
+		if (err) {
+			console.log(err);
+			return res.status(500).send("Technical error while attempting to find User information.");
+		} 
+		else
+		{
+			// Loop through the users
+			
+			for(j=0; j< owners.length; j++)
+			{
+				foundowner = owners[j];
+				
+				// Loop through the dogs of the user and ensure that they have not been seen before and then add them to array
+				for(i=0; i<foundowner.Dogs.length; i++)
+				{
+					// TODO: Make sure that they have not already been seen by this user
+					if(dogarray.length < 10)
+					{
+						dogarray.push(foundowner.Dogs[i]);
+					}
 
-  // Find user then find the dog and update
-  User.findById(ObjectId(UserID), function (err, user) {
-    if (err) {
-      return res.status(500).send("Technical error while attempting to find User information.");
-    } else {
-      var dogList = user.Dogs;
-      return res.status(200).send(dogList);
-    }
-  });
+					else
+					{
+						res.send(dogarray);
+						return;
+					}
+				}
+			}
+		}
+		res.send(dogarray);
+	})
 };
 
 // Complete likeDog API
