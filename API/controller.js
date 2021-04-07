@@ -5,6 +5,7 @@ var http = require("http");
 var url = require("url");
 var User = mongoose.model("User");
 var Token = mongoose.model("Token");
+var Chat = mongoose.model("Chat");
 ObjectId = require("mongodb").ObjectID;
 
 const crypto = require("crypto");
@@ -452,14 +453,27 @@ exports.displayDogs = function (req, res) {
 
 // Complete likeDog API
 exports.likeDog = function (req, res) {
-  var { UserID, DogID, isLiked } = req.body;
+	
+	// Imports: UserID, OwnerID, DogID, isLiked
+	var { UserID, OwnerID, DogID, isLiked } = req.body;
+	
+	console.log(req.body);
 
-  // Find user then find the dog and update the isLiked attribute
-  User.findOneAndUpdate({ _id: ObjectId(UserID), "Dogs._id": ObjectId(DogID) }, { $set: { "Dogs.$.isLiked": isLiked } }, function (err, owner) {
-    if (err) {
-      return res.status(500).send("Technical error while attempting to find User information.");
-    } else {
-      return res.status(200).send("Dog successfully liked!");
-    }
-  });
+	// Create a new chat with that user's information
+	const newChat = new Chat({ AdopterID: UserID, DogID: DogID, OwnerID: OwnerID});
+	
+	// create and save user
+	newChat.save(function (err) {
+	if (err) {
+		console.log(err);
+		return res.status(500);
+	}
+	
+	else {
+	  return res.end('ended');
+	}
+	
+	console.log("saving done");
+	});
+
 };
