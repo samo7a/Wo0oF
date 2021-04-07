@@ -10,6 +10,8 @@ ObjectId = require('mongodb').ObjectID;
 const crypto = require('crypto');
 const jwt = require('../createJWT');
 
+var DogCounter = 0;
+
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
 exports.signup = async function(req, res) {
@@ -218,7 +220,7 @@ exports.verifyEmail = function(req, res) {
         if (user === null)
         {
           console.log(user);
-          return res.status(401).send('We were unable to find a user for this verification.');
+          return res.status(404).send('We were unable to find a user for this verification.');
         }
         // User is already verified
         else if (user.isVerified)
@@ -263,7 +265,7 @@ exports.resetPassword = function(req, res) {
   {
     if (user === null)
     {
-      res.status(403).send('Email not in database');
+      res.status(404).send('Email not in database');
     }
 
     else
@@ -330,7 +332,7 @@ exports.resetPassword = function(req, res) {
   });
 };
 
-// Complete confirmPassword API
+// Complete confirmResetPassword API
 exports.confirmResetPassword = function(req, res) {
 
   var { resetToken, newPassword } = req.body;
@@ -348,6 +350,7 @@ exports.confirmResetPassword = function(req, res) {
     {
 
       console.log("Resetting password now");
+
       // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
       user.Password = newPassword;
@@ -392,7 +395,7 @@ exports.confirmResetPassword = function(req, res) {
   });
 };
 
-// Complete confirmPassword API
+// Complete reportAccounts API
 exports.reportAccounts = function(req, res) {
 
   var { UserID, Description } = req.body;
@@ -423,8 +426,7 @@ exports.createDog = function(req, res)
 
 	var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
 
-  console.log("Json package: " + req.body + "UserID: " + UserID);
-  // Complete reportAccounts API
+  //console.log("Json package: " + req.body + "UserID: " + UserID);
 
   var DogID = DogCounter++;
   const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age, Sex: Sex };
@@ -440,7 +442,9 @@ exports.createDog = function(req, res)
     // Update JWT and send confirmation message.
     else
     {
-      return res.status(200).send('Doge Successfully Inserted!');
+      // For the FE ppl, attach DogID to the dog profile.
+      var jsonReturn = {dogID: ObjectId(newDog._id)};
+      return res.status(200).send(jsonReturn);
     }
   });
 };
