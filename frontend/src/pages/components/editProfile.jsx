@@ -14,19 +14,18 @@ function EditProfile() {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
 
-  var userID = ud.payload.userId;
-  var tokenFirstName = ud.payload.firstName;
-  var tokenLastName = ud.payload.lastName;
+  var userID = ud.payload.userId
 
   const doEditUser = async (event) => {
     var obj = {
       UserID: userID,
-      FirstName: setFirstName,
-      LastName: setLastName,
-      Email: setEmail,
-      Phone: setPhone,
-      ProfilePicture: setImages,
-      ShortBio: setBio,
+      FirstName: firstName,
+      LastName: lastName,
+      Email: email,
+      Phone: phone,
+      Location: location,
+      ProfilePicture: "save us GridFS",
+      ShortBio: bio,
     };
 
     var js = JSON.stringify(obj);
@@ -50,6 +49,7 @@ function EditProfile() {
           if (res.error) {
             console.log(res);
           } else {
+            storage.storeToken(jwt.refresh(res));
             window.location.href = "/";
           }
         })
@@ -69,6 +69,11 @@ function EditProfile() {
   const onUpload = (image) => {
     setImages(image);
     setImageChanged(true);
+  };
+
+  const callEdit = () => {
+    setEditMode(false)
+    doEditUser();
   };
 
   const [firstName, setFirstName] = useState("");
@@ -119,7 +124,7 @@ function EditProfile() {
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
-            <Button className="edit-prof-btn" onClick={() => setEditMode(false)}>
+            <Button className="edit-prof-btn" onClick={callEdit}>
               Confirm
             </Button>
           </Row>

@@ -13,6 +13,7 @@ exports.storeToken = function ( tok )
 exports.retrieveToken = function ()
 {
     var ud;
+    
     try
     {
       ud = localStorage.getItem('user_data');

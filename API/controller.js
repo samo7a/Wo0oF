@@ -5,14 +5,14 @@ var http = require('http');
 var url = require('url');
 var User = mongoose.model('User');
 var Token = mongoose.model('Token');
-const crypto = require('crypto');
 ObjectId = require('mongodb').ObjectID;
+
+const crypto = require('crypto');
+const jwt = require('../createJWT');
 
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
 exports.signup = async function(req, res) {
-
-  const jwt = require('../createJWT');
 
   // incoming: Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio
   // outgoing: error, email
@@ -43,8 +43,6 @@ exports.signup = async function(req, res) {
     {
       // password hashing for saving it into databse
       Password = bcrypt.hashSync(Password, 10);
-
-      console.log("isOwner: " + isOwner);
 
       const newUser = new User({ Email : Email, Password: Password,
                                  FirstName: FirstName, LastName: LastName,
@@ -133,8 +131,6 @@ exports.signup = async function(req, res) {
 // Complete Login API
 exports.login = function(req, res) {
 
-	const jwt = require('../createJWT');
-
 	// incoming: login, password
 	// outgoing: id, firstName, lastName, error
 
@@ -166,7 +162,7 @@ exports.login = function(req, res) {
     // user successfully logged in
     else
     {
-      const ret = jwt.createToken( user.FirstName, user.LastName, user._id );
+      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner);
       console.log(jwt);
 
       res.status(200).json(ret);
@@ -176,8 +172,6 @@ exports.login = function(req, res) {
 
 // Complete editUser API
 exports.editUser = function(req, res) {
-
-  const jwt = require('../createJWT');
 
   // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
   // outgoing: error, jwt
@@ -196,7 +190,7 @@ exports.editUser = function(req, res) {
     // Update JWT and send confirmation message.
     else
     {
-      const ret = jwt.createToken( user.FirstName, user.LastName, user._id );
+      const ret = jwt.createToken( user._id, user.FirstName, user.LastName, user.isOwner);
       console.log(jwt);
 
       res.status(200).json(ret);
@@ -291,9 +285,6 @@ exports.resetPassword = function(req, res) {
        },
       });
 
-      // 'Please verify your account by clicking the link: \nhttp:\/\/' +
-      // req.headers.host + '\/verifyEmail\/' +
-
       if (process.env.NODE_ENV === 'production')
       {
         var mailOptions =
@@ -315,8 +306,9 @@ exports.resetPassword = function(req, res) {
             to: Email,
             subject: 'Reset Password for Woof',
             text: 'Hi,\nWe have received a request to reset the password for Woof account ' + Email +
-                  ' You can reset your password by clicking the link below within one hour\n' + `http://localhost:5000/confirmPassword/${token}\n\n` +
-                  'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                  ' You can reset your password by clicking the link below within one hour\n' + `http://localhost:3000/confirmPassword\n\n` +
+                  'Make sure to copy and paste the following confirmation code into the reset form.\n' + `${token}` +
+                  '\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n'
         }
       }
 
@@ -339,28 +331,63 @@ exports.resetPassword = function(req, res) {
 };
 
 // Complete confirmPassword API
-exports.confirmPassword = function(req, res) {
+exports.confirmResetPassword = function(req, res) {
 
-  var { newPassword } = req.body;
+  var { resetToken, newPassword } = req.body;
 
-  User.findOne({ ResetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user)
+  User.findOne({ ResetPasswordToken: resetToken }, function (err, user)
   {
     // User is not found into database then the token may have expired
     if (!user)
     {
+      console.log("Could not find user");
       return res.status(500).send({msg: 'Your verification link may have expired. Please resend your email.'});
     }
     // If token is found then reset password
     else
     {
+
+      console.log("Resetting password now");
       // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
       user.Password = newPassword;
       user.ResetPasswordToken = '';
       user.ResetPasswordExpires = Date.now();
+
       user.save();
 
-      res.status(200).send('Password successfully reset!');
+      var transporter = nodemailer.createTransport(
+      {
+        service:'Hotmail',
+        auth: {
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`,
+       },
+      });
+
+      var mailOptions =
+      {
+          from:'woofnoreply <woof4331@outlook.com>',
+          to: user.Email,
+          subject: 'Confirmation of Password Reset for Woof',
+          text: 'Hi,\nWe would like to confirm that the following Woof account, ' + user.Email +
+                ' has had their password reset recently.\n'
+      }
+
+      console.log("Sending mail");
+
+      transporter.sendMail(mailOptions, function(error, info)
+      {
+        if (error)
+        {
+            console.log(error);
+        }
+        else
+        {
+            console.log('Recovery Email sent: ' + info.response);
+            res.status(200).send({msg: 'Password successfully reset!'});
+        }
+      });
     }
   });
 };

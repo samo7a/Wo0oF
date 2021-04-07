@@ -22,8 +22,8 @@ module.exports = function(app) {
   .post(controller.resetPassword);
 
   // Confirm Password route
-  app.route('/confirmPassword/:token')
-  .post(controller.confirmPassword);
+  app.route('/confirmResetPassword')
+  .post(controller.confirmResetPassword);
 
   // Verify Email route
   app.route('/verifyEmail/:email/:token')
@@ -45,7 +45,7 @@ module.exports = function(app) {
   app.route('/displayDogs')
   .post(controller.displayDogs);
 
-  // Display Dogs Route
+  // Like Dogs Route
   app.route('/likeDog')
   .post(controller.likeDog);
 }

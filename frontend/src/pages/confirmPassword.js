@@ -8,23 +8,28 @@ import logo from "../img/logo.png";
 function ConfirmPassword() {
   let newPassword;
   let confirmPassword;
+  let resetToken;
 
   const [isMatching, setMatching] = useState(true);
 
   const doConfirmPwd = async (event) => {
     event.preventDefault();
 
-    if (newPassword !== confirmPassword) {
+    if (newPassword.value !== confirmPassword.value)
+    {
       setMatching(false);
-    } else {
-      var obj = { newPassword: newPassword.value };
+    }
+
+    else
+    {
+      var obj = { resetToken: resetToken.value, newPassword: newPassword.value };
       var js = JSON.stringify(obj);
 
       try {
         // Axios code follows
         var config = {
           method: "post",
-          url: bp.buildPath("confirmPassword"),
+          url: bp.buildPath("confirmResetPassword"),
           headers: {
             "Content-Type": "application/json",
           },
@@ -64,6 +69,10 @@ function ConfirmPassword() {
           </Row>
           <Row className="justify-content-center">
             <Form>
+              <Form.Group className="confirmCodeTextbox" controlId="formPassword">
+                <Form.Control type="text" placeholder="Confirmation Code" ref={(c) => (resetToken = c)} />
+              </Form.Group>
+
               <Form.Group className="newPasswordTextbox" controlId="formPassword">
                 <Form.Control type="password" placeholder="New Password" ref={(c) => (newPassword = c)} />
               </Form.Group>
@@ -78,7 +87,7 @@ function ConfirmPassword() {
             </Form>
           </Row>
           <Row className="justify-content-center">
-            {isMatching ? <span></span> : <span className="instructions-alert">Passwords d not match </span>}
+            {isMatching ? <span></span> : <span className="instructions-alert">Passwords do not match </span>}
           </Row>
         </Container>
       </Row>

@@ -1,8 +1,16 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/header.css";
 import profilePic from "../../img/def-pic.jpg";
+
+const doLogout = event =>
+{
+  event.preventDefault();
+
+  localStorage.removeItem("user_data")
+  window.location.href = '/';
+};
 
 function ProfileHeader(props) {
   return (
@@ -16,9 +24,9 @@ function ProfileHeader(props) {
             <p className="header-name">{props.page}</p>
           </Col>
           <Col sm={4} className="pt-1">
-            <Link to="/" className="sign-out-btn">
+            <Button className="sign-out-btn" onClick={doLogout}>
               Sign Out
-            </Link>
+            </Button>
           </Col>
         </Row>
       </Col>

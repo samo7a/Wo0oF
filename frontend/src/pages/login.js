@@ -16,11 +16,8 @@ function Login() {
   // Input variables to be sent via JSON
   var email;
   var password;
-  var location;
   var firstName;
   var lastName;
-  var profilePicture;
-  var shortBio;
 
   const doLogin = async (event) => {
     event.preventDefault();

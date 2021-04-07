@@ -8,37 +8,47 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+
   LastName: {
     type: String,
     required: true
   },
+
   Email: {
     type: String,
     required: true
   },
+
   Password: {
     type: String,
     required: true
   },
+
   Location: {
     type: String,
   },
+
   isOwner: {
     type: Boolean,
     required: true
   },
+
   ShortBio: {
     type: String,
   },
+
   ResetPasswordToken: {
     type: String
   },
+
   ResetPasswordExpires: {
     type: Date
   },
+
   ProfilePicture: {
     type: String,
   },
+
   isVerified: {
     type: Boolean,
     default: false
@@ -48,6 +58,13 @@ const UserSchema = new Schema({
     Description: String,
     Date: Date,
   }],
+
+  jwtToken: {
+    UserID: String,
+    FirstName: String,
+    LastName: String,
+    isOwner: Boolean
+  },
 
   Dogs: [{
       Name: String,
@@ -69,18 +86,22 @@ const ChatSchema = new Schema({
     type: Int32,
     required: true
   },
+
   OwnerID: {
     type: Int32,
     required: true
   },
+
   ChatID: {
     type: Int32,
     required: true
-  },
+  }
+  ,
   DogID: {
     type: Int32,
     required: true
   },
+
   isApproved: {
     type: Boolean,
     required: true
@@ -94,10 +115,12 @@ const TokenSchema = new Schema({
       required: true,
       ref: 'User'
     },
+
     token: {
       type: String,
       required: true
     },
+
     expireAt: {
       type: Date,
       default: Date.now,
