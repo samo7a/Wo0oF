@@ -9,7 +9,6 @@ import ImageUploading from "react-images-uploading";
 import axios from "axios";
 
 function DogManager() {
-
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -17,7 +16,7 @@ function DogManager() {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
 
-  var userID = ud.payload.userId
+  var userID = ud.payload.userId;
 
   const doCreateDog = async (event) => {
     var obj = {
@@ -52,7 +51,46 @@ function DogManager() {
           if (res.error) {
             console.log(res);
           } else {
-            storage.storeToken(jwt.refresh(res));
+            window.location.href = "/home";
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
+  const doDisplayDogs = async (event) => {
+    var obj = {
+      UserID: userID,
+    };
+
+    var js = JSON.stringify(obj);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("displayDogs"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: js,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          const dogArray = res;
+
+          if (res.error) {
+            console.log(res);
+          } else {
+            // Do stuff with dogArray, dogArray contains the Dog array
             window.location.href = "/home";
           }
         })
@@ -99,18 +137,7 @@ function DogManager() {
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
-          <DogProfile />
+          <DogProfile id="1" name="Dog" breed="Husky" sex="M" weight="19 lbs" height="2 ft" bio="Something" age="5" />
         </Row>
         <Row>
           <div>
@@ -142,27 +169,27 @@ function DogManager() {
           </Row>
           <br />
           <Form.Group className="dog-name">
-            <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
+            <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-sex">
-            <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)}/>
+            <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-breed">
-            <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)}/>
+            <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-age">
-            <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)}/>
+            <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-weight">
-            <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)}/>
+            <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-height">
-            <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)}/>
+            <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-bio">
@@ -171,7 +198,9 @@ function DogManager() {
         </Modal.Body>
 
         <Modal.Footer className="justify-content-center">
-          <Button className="edit-prof-btn" onClick={doCreateDog}>Add</Button>
+          <Button className="edit-prof-btn" onClick={doCreateDog}>
+            Add
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

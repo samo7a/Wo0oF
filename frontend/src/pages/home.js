@@ -6,6 +6,15 @@ import DogCard from "./components/dogCard";
 import DogManager from "./components/dogManager";
 
 function Home() {
+  const storage = require("../tokenStorage.js");
+  const jwt = require("jsonwebtoken");
+
+  var tok = storage.retrieveToken();
+  var ud = jwt.decode(tok, { complete: true });
+
+  var userID = ud.payload.userId;
+  var isOwner = ud.payload.isOwner;
+
   return (
     <Container fluid className="vh-100 overflow-hidden">
       <Row>

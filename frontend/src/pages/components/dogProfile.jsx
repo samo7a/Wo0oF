@@ -8,16 +8,17 @@ import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
 import axios from "axios";
 
-function DogProfile() {
-
+function DogProfile(props) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
 
+  const dogID = props.id;
+
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
 
-  var userID = ud.payload.userId
+  var userID = ud.payload.userId;
 
   const doEditDog = async (event) => {
     var obj = {
@@ -87,7 +88,7 @@ function DogProfile() {
   };
 
   const onEdit = () => {
-    setEditingDog(false)
+    setEditingDog(false);
     doEditDog();
   };
 
@@ -119,27 +120,27 @@ function DogProfile() {
               </Row>
               <br />
               <Form.Group className="dog-name">
-                <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
+                <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-sex">
-                <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)}/>
+                <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-breed">
-                <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)}/>
+                <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-age">
-                <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)}/>
+                <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-weight">
-                <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)}/>
+                <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-height">
-                <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)}/>
+                <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-bio">
@@ -166,19 +167,19 @@ function DogProfile() {
               </Row>
               <div>
                 <br />
-                <p className="profile-text">Name: </p>
+                <p className="profile-text">Name: {props.name}</p>
                 <br />
-                <p className="profile-text">Sex: </p>
+                <p className="profile-text">Sex: {props.sex}</p>
                 <br />
-                <p className="profile-text">Breed: </p>
+                <p className="profile-text">Breed: {props.breed}</p>
                 <br />
-                <p className="profile-text">Age: </p>
+                <p className="profile-text">Age: {props.age}</p>
                 <br />
-                <p className="profile-text">Weight: </p>
+                <p className="profile-text">Weight: {props.weight}</p>
                 <br />
-                <p className="profile-text">Height: </p>
+                <p className="profile-text">Height: {props.height}</p>
                 <br />
-                <p className="bio-text">Bio: </p>
+                <p className="bio-text">Bio: {props.bio}</p>
                 <br />
               </div>
             </Modal.Body>

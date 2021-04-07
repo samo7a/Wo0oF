@@ -14,7 +14,14 @@ function EditProfile() {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
 
-  var userID = ud.payload.userId
+  const userID = ud.payload.userId;
+  const UDfirstName = ud.payload.firstName;
+  const UDlastName = ud.payload.lastName;
+  const UDisOwner = ud.payload.isOwner;
+  const UDemail = ud.payload.email;
+  const UDphone = ud.payload.phone;
+  const UDlocation = ud.payload.location;
+  const UDbio = ud.payload.bio;
 
   const doEditUser = async (event) => {
     var obj = {
@@ -27,6 +34,9 @@ function EditProfile() {
       ProfilePicture: "save us GridFS",
       ShortBio: bio,
     };
+    console.log(firstName);
+    console.log(lastName);
+    console.log(bio);
 
     var js = JSON.stringify(obj);
 
@@ -72,7 +82,7 @@ function EditProfile() {
   };
 
   const callEdit = () => {
-    setEditMode(false)
+    setEditMode(false);
     doEditUser();
   };
 
@@ -100,27 +110,33 @@ function EditProfile() {
           </Row>
           <Form>
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} />
+              <Form.Label>First Name:</Form.Label>
+              <Form.Control placeholder={UDfirstName} onChange={(e) => setFirstName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} />
+              <Form.Label>Last Name:</Form.Label>
+              <Form.Control placeholder={UDlastName} onChange={(e) => setLastName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+              <Form.Label>Email:</Form.Label>
+              <Form.Control placeholder={UDemail} onChange={(e) => setEmail(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Phone" onChange={(e) => setPhone(e.target.value)} />
+              <Form.Label>Phone:</Form.Label>
+              <Form.Control placeholder={UDphone} onChange={(e) => setPhone(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
+              <Form.Label>Location:</Form.Label>
+              <Form.Control placeholder={UDlocation} onChange={(e) => setLocation(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <textarea className="form-control" rows="5" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
+              <Form.Label>Bio:</Form.Label>
+              <textarea className="form-control" rows="3" type="text" placeholder={UDbio} onChange={(e) => setBio(e.target.value)}></textarea>
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
@@ -136,15 +152,15 @@ function EditProfile() {
           </Row>
           <div>
             <br />
-            <p className="profile-text">Name: </p>
+            <p className="profile-text">Name: {UDfirstName + " " + UDlastName}</p>
             <br />
-            <p className="profile-text">Email: </p>
+            <p className="profile-text">Email: {UDemail}</p>
             <br />
-            <p className="profile-text">Phone: </p>
+            <p className="profile-text">Phone: {UDphone}</p>
             <br />
-            <p className="profile-text">Location: </p>
+            <p className="profile-text">Location: {UDlocation}</p>
             <br />
-            <p className="bio-text">Bio: </p>
+            <p className="bio-text">Bio: {UDbio}</p>
             <br />
           </div>
           <Row className="justify-content-center">
