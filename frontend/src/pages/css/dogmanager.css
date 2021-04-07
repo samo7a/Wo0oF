@@ -3,22 +3,35 @@
 }
 
 .add-button {
-  background-color: #ba5b5b !important;
+  background-color: #2b2d42 !important;
   float: right !important;
   display: inline !important;
-  margin-top: 1% !important;
+  margin-top: 15px !important;
   box-shadow: none !important;
 }
 
 .dog-profile-btn {
   background-color: inherit !important;
   border: none;
+  box-shadow: none !important;
 }
 
 .dog-profile-card {
   width: 20rem !important;
-  /* min-height: 28rem !important; */
+  min-height: 20rem !important;
   margin-top: 5%;
   margin-bottom: 5%;
   box-shadow: 0px 0px 20px black;
+}
+
+.dog-profile-card-img {
+  width: 100% !important;
+  /* height: 100% !important; */
+  min-height: 20rem !important;
+}
+
+.title-text-dm {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
 }

@@ -23,6 +23,13 @@
   border-bottom: 1px black solid;
 }
 
+.bio-text {
+  color: black;
+  font-size: 18px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .forms-margin {
   margin-top: 5%;
   margin-left: 10%;

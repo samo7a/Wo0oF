@@ -7,21 +7,27 @@ import ImageUploading from "react-images-uploading";
 import axios from "axios";
 
 function EditProfile() {
-
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
 
   var tok = storage.retrieveToken();
-  var ud = jwt.decode(tok,{complete:true});
+  var ud = jwt.decode(tok, { complete: true });
 
   var userID = ud.payload.userId;
   var tokenFirstName = ud.payload.firstName;
   var tokenLastName = ud.payload.lastName;
 
   const doEditUser = async (event) => {
-
-    var obj = { UserID: userID, FirstName: setFirstName, LastName: setLastName, Email: setEmail, Phone: setPhone, ProfilePicture: setImages, ShortBio: setBio };
+    var obj = {
+      UserID: userID,
+      FirstName: setFirstName,
+      LastName: setLastName,
+      Email: setEmail,
+      Phone: setPhone,
+      ProfilePicture: setImages,
+      ShortBio: setBio,
+    };
 
     var js = JSON.stringify(obj);
 
@@ -89,27 +95,27 @@ function EditProfile() {
           </Row>
           <Form>
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="First Name" onChange={e => setFirstName(e.target.value)}/>
+              <Form.Control placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Last Name" onChange={e => setLastName(e.target.value)}/>
+              <Form.Control placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+              <Form.Control placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Phone" onChange={e => setPhone(e.target.value)}/>
+              <Form.Control placeholder="Phone" onChange={(e) => setPhone(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Location" onChange={e => setLocation(e.target.value)}/>
+              <Form.Control placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Biography" onChange={e => setBio(e.target.value)}/>
+              <textarea className="form-control" rows="5" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
@@ -133,7 +139,7 @@ function EditProfile() {
             <br />
             <p className="profile-text">Location: </p>
             <br />
-            <p className="profile-text">Bio: </p>
+            <p className="bio-text">Bio: </p>
             <br />
           </div>
           <Row className="justify-content-center">

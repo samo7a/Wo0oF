@@ -14,14 +14,14 @@ function Home() {
       <Row>
         {/* Left column displaying The navigation bar
                 and profile or chat under it*/}
-        <Col sm={4}>
+        <Col sm={3}>
           <NavbarProfile />
         </Col>
         {/* Right Column showing home for owner or adopter*/}
-        <Col sm={8}>
+        <Col sm={9}>
           <Row>
-            <DogCard name="Murry" />
-            {/* <DogManager /> */}
+            {/* <DogCard name="Murry" /> */}
+            <DogManager />
           </Row>
         </Col>
       </Row>
