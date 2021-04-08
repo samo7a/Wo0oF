@@ -123,66 +123,73 @@ exports.signup = async function (req, res) {
 };
 
 // Complete Login API
-exports.login = function (req, res) {
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
+exports.login = function(req, res) {
 
-  const { Email, Password } = req.body;
+	// incoming: login, password
+	// outgoing: id, firstName, lastName, error
 
-  User.findOne({ Email: Email }, function (err, user) {
+	const { Email, Password } = req.body;
+
+	User.findOne({Email: Email}, function(err, user)
+  {
     // Check if error occurs
-    if (err) {
-      return res.status(500).send({ msg: "Technical error, Please try logging in again" });
+    if (err)
+    {
+      return res.status(500).send({msg: "Technical error, Please try logging in again"});
     }
     // user is not found in database i.e. user is not registered yet.
-    else if (user === null) {
+    else if (user === null)
+    {
       // This line of code gives a header error.
-      return res.status(500).send({ msg: "This email address is not associated with any account" });
+      return res.status(500).send({msg: 'This email address is not associated with any account'});
     }
     // comapre user's password if user is find in above step
-    else if (!bcrypt.compareSync(Password, user.Password)) {
-      return res.status(500).send({ msg: "Wrong Password!" });
+    else if(!bcrypt.compareSync(Password, user.Password))
+    {
+      return res.status(500).send({msg: 'Wrong Password!'});
     }
     // check user is verified or not
-    else if (!user.isVerified) {
-      return res.status(500).send({ msg: "Your Email has not been verified. Please click on resend" });
+    else if (!user.isVerified)
+    {
+      return res.status(500).send({msg: 'Your Email has not been verified. Please click on resend'});
     }
     // user successfully logged in
-    else {
-      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email, user.Phone, user.Location, user.Bio);
-      console.log(jwt);
+    else
+    {
+      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email);
+      console.log("Inside of Login: " + JSON.stringify(ret));
+
+      res.status(200).json(ret);
+    }
+	});
+};
+
+// Complete editUser API
+exports.editUser = function(req, res) {
+
+  // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
+  // outgoing: error, jwt
+
+  var { UserID, FirstName, LastName, Phone, Location, ProfilePicture, ShortBio } = req.body;
+  console.log(req.body);
+
+  // Forgive me Papa Szum for going over 100 characters
+  User.findOneAndUpdate({ _id : ObjectId(UserID) }, { $set: {FirstName: FirstName, LastName: LastName, Location: Location, Phone: Phone, ProfilePicture: ProfilePicture, ShortBio: ShortBio}}, function(err, user)
+  {
+    // Check for any technical errors
+    if (err)
+    {
+      return res.status(500).send('Technical error while attempting to update User information.');
+    }
+    // Update JWT and send confirmation message.
+    else
+    {
+      const ret = jwt.createToken( UserID, FirstName, LastName, user.isOwner, user.Email, Phone, Location, ShortBio);
+      console.log(JSON.stringify(ret));
 
       res.status(200).json(ret);
     }
   });
-};
-
-// Complete editUser API
-exports.editUser = function (req, res) {
-  // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
-  // outgoing: error, jwt
-
-  var { UserID, FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio } = req.body;
-  console.log(req.body);
-
-  // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate(
-    { _id: ObjectId(UserID) },
-    { $set: { FirstName: FirstName, LastName: LastName, Email: Email, Phone: Phone, ProfilePicture: ProfilePicture, ShortBio: ShortBio } },
-    function (err, user) {
-      // Check for any technical errors
-      if (err) {
-        return res.status(500).send("Technical error while attempting to update User information.");
-      }
-      // Update JWT and send confirmation message.
-      else {
-        const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email, user.Phone, user.Location, user.Bio);
-        console.log(jwt);
-
-        res.status(200).json(ret);
-      }
-    }
-  );
 };
 
 // Complete Verify Email API
@@ -439,27 +446,27 @@ exports.editDog = function (req, res) {
 // Complete displayDogs API
 exports.displayDogs = function (req, res) {
   var { Location } = req.body;
-  
-  
+
+
   Usernum = 0;
   dogarray = [];
   var i, j;
-  
-	  
+
+
 	// Find the next owner in the same area
 	User.find({Location: Location, isOwner : true}, function (err, owners) {
 		if (err) {
 			console.log(err);
 			return res.status(500).send("Technical error while attempting to find User information.");
-		} 
+		}
 		else
 		{
 			// Loop through the users
-			
+
 			for(j=0; j< owners.length; j++)
 			{
 				foundowner = owners[j];
-				
+
 				// Loop through the dogs of the user and ensure that they have not been seen before and then add them to array
 				for(i=0; i<foundowner.Dogs.length; i++)
 				{
@@ -483,26 +490,26 @@ exports.displayDogs = function (req, res) {
 
 // Complete likeDog API
 exports.likeDog = function (req, res) {
-	
+
 	// Imports: UserID, OwnerID, DogID, isLiked
 	var { UserID, OwnerID, DogID, isLiked } = req.body;
-	
+
 	console.log(req.body);
 
 	// Create a new chat with that user's information
 	const newChat = new Chat({ AdopterID: UserID, DogID: DogID, OwnerID: OwnerID});
-	
+
 	// create and save user
 	newChat.save(function (err) {
 	if (err) {
 		console.log(err);
 		return res.status(500);
 	}
-	
+
 	else {
 	  return res.end('ended');
 	}
-	
+
 	console.log("saving done");
 	});
 

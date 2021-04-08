@@ -7,36 +7,31 @@ import ImageUploading from "react-images-uploading";
 import axios from "axios";
 
 function EditProfile() {
+
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
 
   var tok = storage.retrieveToken();
-  var ud = jwt.decode(tok, { complete: true });
+  var ud = jwt.decode(tok,{complete:true});
 
-  const userID = ud.payload.userId;
-  const UDfirstName = ud.payload.firstName;
-  const UDlastName = ud.payload.lastName;
-  const UDisOwner = ud.payload.isOwner;
-  const UDemail = ud.payload.email;
-  const UDphone = ud.payload.phone;
-  const UDlocation = ud.payload.location;
-  const UDbio = ud.payload.bio;
+  var userID = ud.payload.userId;
+  var tokenFirstName = ud.payload.firstName;
+  var tokenLastName = ud.payload.lastName;
+  var tokenEmail = ud.payload.email;
+  var tokenPhone = ud.payload.phone;
+  var tokenLocation = ud.payload.location;
+  var tokenBio = ud.payload.bio;
 
   const doEditUser = async (event) => {
-    var obj = {
-      UserID: userID,
-      FirstName: firstName,
-      LastName: lastName,
-      Email: email,
-      Phone: phone,
-      Location: location,
-      ProfilePicture: "save us GridFS",
-      ShortBio: bio,
-    };
-    console.log(firstName);
-    console.log(lastName);
-    console.log(bio);
+
+    var obj = { UserID: userID,
+                FirstName: firstName,
+                LastName: lastName,
+                Location: location,
+                Phone: phone,
+                ProfilePicture: "GridFS shit",
+                ShortBio: bio };
 
     var js = JSON.stringify(obj);
 
@@ -59,8 +54,9 @@ function EditProfile() {
           if (res.error) {
             console.log(res);
           } else {
-            storage.storeToken(jwt.refresh(res));
-            window.location.href = "/";
+            localStorage.removeItem("user_data");
+            storage.storeToken(res);
+            window.location.href = "/home";
           }
         })
         .catch(function (error) {
@@ -81,17 +77,16 @@ function EditProfile() {
     setImageChanged(true);
   };
 
-  const callEdit = () => {
-    setEditMode(false);
-    doEditUser();
-  };
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [bio, setBio] = useState("");
+
+  const onEdit = () => {
+    setEditMode(false)
+    doEditUser();
+  };
 
   return (
     <Container fluid className="profile-color vh-100">
@@ -110,37 +105,27 @@ function EditProfile() {
           </Row>
           <Form>
             <Form.Group className="forms-margin">
-              <Form.Label>First Name:</Form.Label>
-              <Form.Control placeholder={UDfirstName} onChange={(e) => setFirstName(e.target.value)} />
+              <Form.Control placeholder="First Name" onChange={e => setFirstName(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Label>Last Name:</Form.Label>
-              <Form.Control placeholder={UDlastName} onChange={(e) => setLastName(e.target.value)} />
+              <Form.Control placeholder="Last Name" onChange={e => setLastName(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Label>Email:</Form.Label>
-              <Form.Control placeholder={UDemail} onChange={(e) => setEmail(e.target.value)} />
+              <Form.Control placeholder="Phone" onChange={e => setPhone(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Label>Phone:</Form.Label>
-              <Form.Control placeholder={UDphone} onChange={(e) => setPhone(e.target.value)} />
+              <Form.Control placeholder="Location" onChange={e => setLocation(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Label>Location:</Form.Label>
-              <Form.Control placeholder={UDlocation} onChange={(e) => setLocation(e.target.value)} />
-            </Form.Group>
-
-            <Form.Group className="forms-margin">
-              <Form.Label>Bio:</Form.Label>
-              <textarea className="form-control" rows="3" type="text" placeholder={UDbio} onChange={(e) => setBio(e.target.value)}></textarea>
+              <Form.Control placeholder="Biography" onChange={e => setBio(e.target.value)}/>
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
-            <Button className="edit-prof-btn" onClick={callEdit}>
+            <Button className="edit-prof-btn" onClick={onEdit}>
               Confirm
             </Button>
           </Row>
@@ -152,15 +137,15 @@ function EditProfile() {
           </Row>
           <div>
             <br />
-            <p className="profile-text">Name: {UDfirstName + " " + UDlastName}</p>
+            <p className="profile-text">Name: {tokenFirstName + " " + tokenLastName}</p>
             <br />
-            <p className="profile-text">Email: {UDemail}</p>
+            <p className="profile-text">Email: {tokenEmail}</p>
             <br />
-            <p className="profile-text">Phone: {UDphone}</p>
+            <p className="profile-text">Phone: {(tokenPhone == null) ? " " : tokenPhone}</p>
             <br />
-            <p className="profile-text">Location: {UDlocation}</p>
+            <p className="profile-text">Location: {(tokenLocation == null) ? " " : tokenLocation}</p>
             <br />
-            <p className="bio-text">Bio: {UDbio}</p>
+            <p className="profile-text">Bio: {(tokenBio == null) ? " " : tokenBio} </p>
             <br />
           </div>
           <Row className="justify-content-center">
