@@ -9,10 +9,11 @@
   background-color: white;
 }
 
-.profile-button {
+.pic-button {
   background-color: inherit !important;
   border: none !important;
   margin-top: 4% !important;
+  border-radius: 50%;
 }
 
 .profile-text {
@@ -60,4 +61,13 @@
 
 .edit-prof-btn:focus {
   box-shadow: none !important;
+}
+
+.profile-htext {
+  color: #ef233c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1%;
+  margin-top: 0%;
+  margin-left: 1%;
 }

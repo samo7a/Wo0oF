@@ -4,7 +4,7 @@ import dogLogin from "../img/good-dog.jpeg";
 import "./css/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
-import { Container, Row, Col, Card, Modal } from "react-bootstrap";
+import { Container, Row, Col, Card, Modal, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -196,6 +196,17 @@ function Login() {
           <div className="w-50 h-100 mx-auto">
             <img src={dogLogin} className="w-100 h-100" />
           </div>
+          {/* <Carousel fade>
+            <Carousel.Item>
+              <img src={dogLogin} className="w-100 h-100" />  
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src={} className="w-100 h-100" />  
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src={dogLogin} className="w-100 h-100" />  
+            </Carousel.Item>
+          </Carousel> */}
         </Col>
       </Row>
 

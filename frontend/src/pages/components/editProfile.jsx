@@ -13,7 +13,7 @@ function EditProfile() {
   const jwt = require("jsonwebtoken");
 
   var tok = storage.retrieveToken();
-  var ud = jwt.decode(tok,{complete:true});
+  var ud = jwt.decode(tok, { complete: true });
 
   var userID = ud.payload.userId;
   var tokenFirstName = ud.payload.firstName;
@@ -25,13 +25,15 @@ function EditProfile() {
 
   const doEditUser = async (event) => {
 
-    var obj = { UserID: userID,
-                FirstName: firstName,
-                LastName: lastName,
-                Location: location,
-                Phone: phone,
-                ProfilePicture: "GridFS shit",
-                ShortBio: bio };
+    var obj = {
+      UserID: userID,
+      FirstName: firstName,
+      LastName: lastName,
+      Location: location,
+      Phone: phone,
+      ProfilePicture: "GridFS shit",
+      ShortBio: bio
+    };
 
     var js = JSON.stringify(obj);
 
@@ -56,7 +58,7 @@ function EditProfile() {
           } else {
             localStorage.removeItem("user_data");
             storage.storeToken(res);
-            window.location.href = "/home";
+            setEditMode(false);
           }
         })
         .catch(function (error) {
@@ -77,16 +79,16 @@ function EditProfile() {
     setImageChanged(true);
   };
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [location, setLocation] = useState("");
-  const [phone, setPhone] = useState("");
-  const [bio, setBio] = useState("");
+  const [firstName, setFirstName] = useState(tokenFirstName);
+  const [lastName, setLastName] = useState(tokenLastName);
+  const [location, setLocation] = useState(tokenLocation);
+  const [phone, setPhone] = useState(tokenPhone);
+  const [bio, setBio] = useState(tokenBio);
 
   const onEdit = () => {
-    setEditMode(false)
     doEditUser();
   };
+
 
   return (
     <Container fluid className="profile-color vh-100">
@@ -96,7 +98,7 @@ function EditProfile() {
             <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
               {({ onImageUpload }) => (
                 <>
-                  <button className="profile-button" onClick={onImageUpload}>
+                  <button className="pic-button" onClick={onImageUpload}>
                     <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} />
                   </button>
                 </>
@@ -105,23 +107,28 @@ function EditProfile() {
           </Row>
           <Form>
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="First Name" onChange={e => setFirstName(e.target.value)}/>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control defaultValue={tokenFirstName} onChange={e => setFirstName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Last Name" onChange={e => setLastName(e.target.value)}/>
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control defaultValue={tokenLastName} onChange={e => setLastName(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Phone" onChange={e => setPhone(e.target.value)}/>
+              <Form.Label>Phone</Form.Label>
+              <Form.Control defaultValue={tokenPhone} onChange={e => setPhone(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Location" onChange={e => setLocation(e.target.value)}/>
+              <Form.Label>Location</Form.Label>
+              <Form.Control defaultValue={tokenLocation} onChange={e => setLocation(e.target.value)} />
             </Form.Group>
 
             <Form.Group className="forms-margin">
-              <Form.Control placeholder="Biography" onChange={e => setBio(e.target.value)}/>
+              <Form.Label>Bio</Form.Label>
+              <Form.Control defaultValue={tokenBio} as="textarea" onChange={e => setBio(e.target.value)} />
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
@@ -137,15 +144,20 @@ function EditProfile() {
           </Row>
           <div>
             <br />
-            <p className="profile-text">Name: {tokenFirstName + " " + tokenLastName}</p>
+            <p className="profile-htext">Name</p>
+            <p className="profile-text">{tokenFirstName + " " + tokenLastName}</p>
             <br />
-            <p className="profile-text">Email: {tokenEmail}</p>
+            <p className="profile-htext">Email</p>
+            <p className="profile-text">{tokenEmail}</p>
             <br />
-            <p className="profile-text">Phone: {(tokenPhone == null) ? " " : tokenPhone}</p>
+            <p className="profile-htext">Phone</p>
+            <p className="profile-text">{(tokenPhone == null) ? " " : tokenPhone}</p>
             <br />
-            <p className="profile-text">Location: {(tokenLocation == null) ? " " : tokenLocation}</p>
+            <p className="profile-htext">Location</p>
+            <p className="profile-text">{(tokenLocation == null) ? " " : tokenLocation}</p>
             <br />
-            <p className="profile-text">Bio: {(tokenBio == null) ? " " : tokenBio} </p>
+            <p className="profile-htext">Bio</p>
+            <p className="profile-text">{(tokenBio == null) ? " " : tokenBio} </p>
             <br />
           </div>
           <Row className="justify-content-center">
