@@ -7,72 +7,74 @@ import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
 import axios from "axios";
+import { ACTIONS } from "./dogManager";
 
-function DogProfile(props) {
-  const bp = require("../../bp.js");
-  const storage = require("../../tokenStorage.js");
-  const jwt = require("jsonwebtoken");
+function DogProfile({ dog, dispatch }) {
+  // const bp = require("../../bp.js");
+  // const storage = require("../../tokenStorage.js");
+  // const jwt = require("jsonwebtoken");
 
-  const dogID = props.id;
+  // const dogID = dog.id;
 
-  var tok = storage.retrieveToken();
-  var ud = jwt.decode(tok, { complete: true });
+  // var tok = storage.retrieveToken();
+  // var ud = jwt.decode(tok, { complete: true });
 
-  var userID = ud.payload.userId;
+  // var userID = ud.payload.userId;
 
-  const doEditDog = async (event) => {
-    var obj = {
-      UserID: userID,
-      Name: name,
-      Bio: bio,
-      Breed: breed,
-      Weight: weight,
-      Height: height,
-      Age: age,
-      Sex: sex,
-    };
+  // const doEditDog = async (event) => {
+  //   var obj = {
+  //     UserID: userID,
+  //     Name: name,
+  //     Bio: bio,
+  //     Breed: breed,
+  //     Weight: weight,
+  //     Height: height,
+  //     Age: age,
+  //     Sex: sex,
+  //   };
 
-    var js = JSON.stringify(obj);
+  //   var js = JSON.stringify(obj);
 
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("editDog"),
-        headers: {
-          "Content-Type": "application/json",
-        },
+  //   try {
+  //     // Axios code follows
+  //     var config = {
+  //       method: "post",
+  //       url: bp.buildPath("editDog"),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
 
-        data: js,
-      };
+  //       data: js,
+  //     };
 
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
+  //     axios(config)
+  //       .then(function (response) {
+  //         var res = response.data;
 
-          if (res.error) {
-            console.log(res);
-          } else {
-            storage.storeToken(jwt.refresh(res));
-            window.location.href = "/home";
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
+  //         if (res.error) {
+  //           console.log(res);
+  //         } else {
+  //           storage.storeToken(jwt.refresh(res));
+  //           window.location.href = "/home";
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         // setMessage(error);
+  //       });
+  //   } catch (e) {
+  //     alert(e.toString());
+  //     return;
+  //   }
+  // };
 
-  const [name, setName] = useState("");
-  const [sex, setSex] = useState("");
-  const [breed, setBreed] = useState("");
-  const [age, setAge] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [bio, setBio] = useState("");
+  // Dog state variables
+  const [name, setName] = useState(dog.name);
+  const [sex, setSex] = useState(dog.sex);
+  const [breed, setBreed] = useState(dog.breed);
+  const [age, setAge] = useState(dog.age);
+  const [weight, setWeight] = useState(dog.weight);
+  const [height, setHeight] = useState(dog.height);
+  const [bio, setBio] = useState(dog.bio);
 
   const [details, setShow] = useState(false);
   const showDetails = () => setShow(true);
@@ -87,9 +89,22 @@ function DogProfile(props) {
     setImageChanged(true);
   };
 
-  const onEdit = () => {
+  const handleEditDog = () => {
     setEditingDog(false);
-    doEditDog();
+    // doEditDog();
+    dispatch({
+      type: ACTIONS.EDIT_DOG,
+      payload: {
+        id: dog.id,
+        name: name,
+        breed: breed,
+        sex: sex,
+        age: age,
+        weight: weight,
+        height: height,
+        bio: bio,
+      },
+    });
   };
 
   return (
@@ -105,7 +120,6 @@ function DogProfile(props) {
             <Modal.Header closeButton onClick={() => setEditingDog(false)}>
               <Modal.Title>Edit Details</Modal.Title>
             </Modal.Header>
-
             <Modal.Body>
               <Row className="justify-content-center">
                 <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
@@ -120,36 +134,42 @@ function DogProfile(props) {
               </Row>
               <br />
               <Form.Group className="dog-name">
-                <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                <Form.Control type="text" defaultValue={dog.name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-sex">
-                <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
+                <Form.Control type="text" defaultValue={dog.sex} placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-breed">
-                <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
+                <Form.Control type="text" defaultValue={dog.breed} placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-age">
-                <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+                <Form.Control type="number" defaultValue={dog.age} placeholder="Age" onChange={(e) => setAge(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-weight">
-                <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
+                <Form.Control type="number" defaultValue={dog.weight} placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-height">
-                <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
+                <Form.Control type="text" defaultValue={dog.height} placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-bio">
-                <textarea className="form-control" rows="5" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  type="text"
+                  defaultValue={dog.bio}
+                  placeholder="Bio"
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
               </Form.Group>
             </Modal.Body>
-
             <Modal.Footer className="justify-content-center">
-              <Button className="edit-prof-btn" onClick={onEdit}>
+              <Button className="edit-prof-btn" onClick={handleEditDog}>
                 Confirm
               </Button>
             </Modal.Footer>
@@ -167,19 +187,19 @@ function DogProfile(props) {
               </Row>
               <div>
                 <br />
-                <p className="profile-text">Name: {props.name}</p>
+                <p className="profile-text">Name: {dog.name}</p>
                 <br />
-                <p className="profile-text">Sex: {props.sex}</p>
+                <p className="profile-text">Sex: {dog.sex}</p>
                 <br />
-                <p className="profile-text">Breed: {props.breed}</p>
+                <p className="profile-text">Breed: {dog.breed}</p>
                 <br />
-                <p className="profile-text">Age: {props.age}</p>
+                <p className="profile-text">Age: {dog.age}</p>
                 <br />
-                <p className="profile-text">Weight: {props.weight}</p>
+                <p className="profile-text">Weight: {dog.weight}</p>
                 <br />
-                <p className="profile-text">Height: {props.height}</p>
+                <p className="profile-text">Height: {dog.height}</p>
                 <br />
-                <p className="bio-text">Bio: {props.bio}</p>
+                <p className="bio-text">Bio: {dog.bio}</p>
                 <br />
               </div>
             </Modal.Body>
@@ -187,7 +207,9 @@ function DogProfile(props) {
               <Button className="edit-prof-btn" onClick={() => setEditingDog(true)}>
                 Update
               </Button>
-              <Button className="edit-prof-btn">Delete</Button>
+              <Button className="edit-prof-btn" onClick={() => dispatch({ type: ACTIONS.DELETE_DOG, payload: { id: dog.id } })}>
+                Delete
+              </Button>
             </Row>
           </>
         )}
