@@ -11,17 +11,26 @@
   background-color: #edf2f4;
 }
 
-.dog-login-photo {
-  /* margin: 50px 50px; */
-  align-items: center;
-}
-
 .login-text {
-  font-size: 14px;
+  font-size: 20px;
   text-align: center;
   color: white;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  padding-left: 12%;
+  padding-right: 12%;
+  margin-bottom: 5vh;
+  padding-top: 0vh;
+}
+
+@media only screen and (max-height: 1000px) {
+  .login-text {
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    padding-left: 12%;
+    padding-right: 12%;
+    margin-bottom: 2vh;
+    padding-top: 0vh;
+  }
 }
 
 .login-btn {
@@ -78,14 +87,14 @@
 
 .frgtpwd {
   color: black !important;
-  font-size: 18px !important;
+  font-size: 15px !important;
   background-color: white !important;
   border: none !important;
   outline: none !important;
 }
 
 .frgtpwd:hover {
-  color: #a51c2c !important;
+  color: #ef233c !important;
 }
 
 .frgtpwd:focus {
@@ -95,4 +104,25 @@
 
 :focus {
   outline: none !important;
+}
+
+.caro {
+  width: 65% !important;
+  border-radius: 5% !important;
+  box-shadow: 0px 0px 25px black !important;
+  top: 10vh;
+}
+
+.dog-login-photo {
+  align-items: center;
+  border-radius: 5%;
+  width: 100%;
+  height: 100%;
+}
+
+.card-style {
+  width: 50% !important;
+  /* height: 100% !important; */
+  margin: auto !important;
+  border-radius: 2% !important;
 }

@@ -1,13 +1,16 @@
 // import React from "react";
-import logo from "../img/logo.png";
-import dogLogin from "../img/good-dog.jpeg";
-import "./css/login.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Form, Button } from "react-bootstrap";
-import { Container, Row, Col, Card, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col, Card, Modal, Carousel, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/login.css";
+import logo from "../img/logo.png";
+import dogPic1 from "../img/good-dog.jpeg";
+import dogPic2 from "../img/dogPic2.jpg";
+import dogPic3 from "../img/dogPic3.jpg";
+import dogPic4 from "../img/dogPic4.jpg";
+import dogPic5 from "../img/dogPic5.jpg";
+import dogPic6 from "../img/dogPic6.jpg";
 
 function Login() {
   const bp = require("../bp.js");
@@ -149,53 +152,71 @@ function Login() {
       <Row className="justify-content-center header-color">
         <img src={logo} className="Login-logo" />
       </Row>
-
-      {/* Description */}
       <Row className="background justify-content-center">
-        <p className="login-text">
-          Let us help you find your new best friend. Woof helps connect dogs with the people that can provide them a loving home.
-        </p>
-      </Row>
-
-      <Row className="background">
         {/* Card Form */}
         <Col className="justify-content-center">
-          <Card className="w-50 h-100 mx-auto">
-            <Card.Body>
-              <Form>
-                <Form.Group className="emailTextbox" controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Email Address " ref={(c) => (email = c)} />
-                </Form.Group>
+          {/* Description */}
+          <Row style={{marginTop: "10vh"}}></Row>
+          <Row className="background justify-content-center">
+            <p className="login-text">
+              Let us help you find your new best friend. Woof helps connect dogs with the people that can provide them a loving home.
+            </p>
+            <Card className="card-style">
+              <Card.Body>
+                <Form>
+                  <Form.Group className="emailTextbox" controlId="formBasicEmail" style={{margin: "5% 2%"}}>
+                    <Form.Control type="email" placeholder="Email Address " ref={(c) => (email = c)} />
+                  </Form.Group>
 
-                <Form.Group className="passwordTextbox" controlId="formBasicPassword">
-                  <Form.Control type="password" placeholder="Password" ref={(c) => (password = c)} />
-                </Form.Group>
+                  <Form.Group className="passwordTextbox" controlId="formBasicPassword" style={{margin: "5% 2%"}}>
+                    <Form.Control type="password" placeholder="Password" ref={(c) => (password = c)} />
+                  </Form.Group>
 
-                <Row className="justify-content-center">
-                  <Button className="login-btn" onClick={doLogin}>
-                    Login
-                  </Button>
-                </Row>
-                <Row className="justify-content-center">
-                  <Button className="signup-btn" onClick={handleShowSignUp}>
-                    Sign Up
-                  </Button>
-                </Row>
-                <Row className="justify-content-center">
-                  <Button className="frgtpwd" onClick={handleShowResetPassword}>
-                    Forgot your password?
-                  </Button>
-                </Row>
-              </Form>
-            </Card.Body>
-          </Card>
+                  <Row className="justify-content-center">
+                    <Button className="login-btn" onClick={doLogin}>
+                      Login
+                    </Button>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Button className="signup-btn" onClick={handleShowSignUp}>
+                      Sign Up
+                    </Button>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Button className="frgtpwd" onClick={handleShowResetPassword}>
+                      Forgot your password?
+                    </Button>
+                  </Row>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Row>
         </Col>
 
-        {/* Dog Photo */}
+        {/* Dog Photos */}
         <Col className="justify-content-center">
-          <div className="w-50 h-100 mx-auto">
-            <img src={dogLogin} className="w-100 h-100" />
-          </div>
+          <Row className="justify-content-center">
+            <Carousel fade controls={false} indicators={false} className="caro">
+              <Carousel.Item>
+                <img src={dogPic1} className="dog-login-photo" />  
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={dogPic2} className="dog-login-photo" />  
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={dogPic3} className="dog-login-photo" />  
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={dogPic4} className="dog-login-photo" />  
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={dogPic5} className="dog-login-photo" />  
+              </Carousel.Item>
+              <Carousel.Item>
+                <img src={dogPic6} className="dog-login-photo" />  
+              </Carousel.Item>
+            </Carousel>
+          </Row>
         </Col>
       </Row>
 
