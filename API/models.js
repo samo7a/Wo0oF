@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     required: true
   },
 
+  Phone: {
+    type: String
+  },
+
   ShortBio: {
     type: String,
   },
@@ -91,18 +95,18 @@ const ChatSchema = new Schema({
     type: String,
     required: true
   },
-  
+
   DogID: {
     type: String,
     required: true
   },
-  
+
   Messages: [{
     text: String,
     createdAt: Int32,
     userID: String
   }]
-  
+
 });
 
 // Token Schema
