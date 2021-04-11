@@ -156,7 +156,7 @@ exports.login = function(req, res) {
     // user successfully logged in
     else
     {
-      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email);
+      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email, user.Phone, user.Location, user.ShortBio);
       console.log("Inside of Login: " + JSON.stringify(ret));
 
       res.status(200).json(ret);
