@@ -6,6 +6,12 @@ exports.createToken = function ( id, fn, ln, isOwner, email, phone, location, bi
     try
     {
       const expiration = new Date();
+if (phone === undefined)
+        phone = "";
+      if (location === undefined)
+        location = "";
+      if (bio === undefined)
+        bio = "";
       const user = {userId: id, firstName: fn, lastName: ln, isOwner: isOwner, email: email, phone: phone, location: location, bio: bio};
 
       console.log("Inside createJWT: " + JSON.stringify(user));
