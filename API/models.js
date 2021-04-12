@@ -84,7 +84,7 @@ const UserSchema = new Schema({
       Sex: String,
       isPottyTrained: Boolean,
       isFixed: Boolean,
-      isLiked: Boolean,
+      isLiked: Boolean
     },
   ],
 });

@@ -14,19 +14,19 @@ function DogAdopter() {
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
   var zipCode = ud.payload.location;
-  
+
   // State variables
   const [dogs, setDogs] = useState([]);
-  
+
   // Loading dogs from database
   useEffect(() => {
     const getDogs = async (event) => {
       var obj = {
         Location: zipCode,
       };
-      
+
       var js = JSON.stringify(obj);
-      
+
       try {
         // Axios code follows
         var config = {
@@ -35,14 +35,14 @@ function DogAdopter() {
           headers: {
             "Content-Type": "application/json",
           },
-          
+
           data: js,
         };
-        
+
         axios(config)
         .then(function (response) {
           var res = response.data;
-          
+
           if (res.error) {
             console.log(res);
           } else {
@@ -58,7 +58,7 @@ function DogAdopter() {
         return;
       }
     };
-    
+
     getDogs();
   }, []);
 
@@ -72,14 +72,14 @@ function DogAdopter() {
   return (
     <Container fluid className="vh-100 bkgd-card-color">
       <Row className="justify-content-center">
-        { dogs.length !== 0 ? 
+        { dogs.length !== 0 ?
           (dogs.map((dog) => (
             <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
-          ))) 
+          )))
           :
           <div className="no-dogs">
             <i class="fa fa-frown-o sad-face"></i>
-            <p>Sorry there are no more dogs for adoption in your area.</p>  
+            <p>Sorry there are no more dogs for adoption in your area.</p>
             <p>Expand your area or come back later.</p>
           </div>
         }
