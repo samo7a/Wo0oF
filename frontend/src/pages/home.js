@@ -2,8 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileHeader from "./components/profileHeader";
 import NavbarProfile from "./components/navbar";
-import DogCard from "./components/dogCard";
+import DogAdopter from "./components/dogAdopter";
 import DogManager from "./components/dogManager";
+
 
 function Home() {
   const storage = require("../tokenStorage.js");
@@ -13,12 +14,15 @@ function Home() {
   var ud = jwt.decode(tok, { complete: true });
 
   var userID = ud.payload.userId;
+  var firstName = ud.payload.firstName;
+  var lastName = ud.payload.lastName;
+  const fullName = firstName + " " + lastName;
   var isOwner = ud.payload.isOwner;
 
   return (
     <Container fluid className="vh-100 overflow-hidden">
       <Row>
-        <ProfileHeader name="Name" page="Woof" />
+        <ProfileHeader name={fullName} page="Woof" />
       </Row>
       <Row>
         {/* Left column displaying The navigation bar
@@ -28,10 +32,7 @@ function Home() {
         </Col>
         {/* Right Column showing home for owner or adopter*/}
         <Col sm={9}>
-          <Row>
-            {/* <DogCard name="Murry" /> */}
-            <DogManager />
-          </Row>
+          <Row>{isOwner === false ? <DogAdopter /> : <DogManager />}</Row>
         </Col>
       </Row>
     </Container>

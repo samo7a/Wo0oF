@@ -1,49 +1,47 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useState } from "react";
+import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/dogcard.css";
-import goodDog from "../../img/goodest-dog.jpg";
 import "font-awesome/css/font-awesome.min.css";
-import "../css/buttons.css";
+import goodDog from "../../img/good-dog.jpeg";
 
-function DogCard(props) {
+function DogCard({ dog, removeDogCard }) {
   const [isFlipped, setFlipped] = useState(false);
   const flipCard = () => setFlipped(!isFlipped);
 
   return (
-    <Container fluid className="vh-100 bkgd-card-color">
-      <Row className="justify-content-center">
-        <Button className="flip-btn" onClick={flipCard}>
-          {!isFlipped ? (
-            <Card border="light" bg="light" className="dog-card">
-              <Card.Img variant="top" src={goodDog} alt="Card Image" />
-              <Card.Body className="center">
-                <Card.Text className="dog-card-title">{props.name}</Card.Text>
-              </Card.Body>
-            </Card>
-          ) : (
-            <Card border="light" bg="light" className="dog-card">
-              <ListGroup className="dog-card-text">
-                <ListGroupItem>Name: {props.name}</ListGroupItem>
-                <ListGroupItem>Gender: {props.gender}</ListGroupItem>
-                <ListGroupItem>Traits: {props.traits}</ListGroupItem>
-                <ListGroupItem>Location: {props.location}</ListGroupItem>
-                <ListGroupItem>Miscellaneous: {props.misc}</ListGroupItem>
+    <>
+      <Button className="flip-btn" onClick={flipCard}>
+        {!isFlipped ? (
+          <Card className="dog-card">
+            <Card.Img className="dog-card-img" variant="top" src={goodDog} alt="Card Image" />
+            <Card.Body className="center">
+              <Card.Text className="dog-card-title">{dog.Name}</Card.Text>
+            </Card.Body>
+          </Card>
+        ) : (
+          <Card border="light" bg="light" className="dog-card">
+            <Card.Body className="dog-card-text">
+              <ListGroup>
+                <ListGroupItem>Name: {dog.Name}</ListGroupItem>
+                <ListGroupItem>Gender: {dog.Sex}</ListGroupItem>
+                <ListGroupItem>Breed: {dog.Breed}</ListGroupItem>
+                <ListGroupItem>Age: {dog.Age}</ListGroupItem>
+                {/* <ListGroupItem>Weight: {dog.Weight}</ListGroupItem> */}
+                <ListGroupItem>Height: {dog.Height}</ListGroupItem>
+                <ListGroupItem>Bio: {dog.Bio}</ListGroupItem>
               </ListGroup>
-            </Card>
-          )}
-        </Button>
-      </Row>
-      <Row className="justify-content-center mt-4">
-        {/* People would feel guilty disliking dogs so I changed it to heart or skip */}
-        <Button className="like-button">
-          <i class="fa fa-heart"></i>
-        </Button>
-        <Button className="dislike-button">
-          <i class="fa fa-arrow-right"></i>
-        </Button>
-      </Row>
-    </Container>
+            </Card.Body>
+          </Card>
+        )}
+      </Button>
+      <Button className="like-button" onClick={() => removeDogCard(dog._id)}>
+        <i className="fa fa-heart"></i>
+      </Button>
+      <Button className="dislike-button" onClick={() => removeDogCard(dog._id)}>
+        <i className="fa fa-arrow-right"></i>
+      </Button>
+    </>
   );
 }
 

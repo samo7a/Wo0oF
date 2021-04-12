@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var Int32 = require('mongoose-int32');
+var Int32 = require("mongoose-int32");
 
 //User Schema
 const UserSchema = new Schema({
   FirstName: {
     type: String,
-    required: true
+    required: true,
   },
 
   LastName: {
     type: String,
-    required: true
+    required: true,
   },
 
   Email: {
     type: String,
-    required: true
+    required: true,
   },
 
   Password: {
     type: String,
-    required: true
+    required: true,
   },
 
   Location: {
@@ -30,11 +30,11 @@ const UserSchema = new Schema({
 
   isOwner: {
     type: Boolean,
-    required: true
+    required: true,
   },
 
   Phone: {
-    type: String
+    type: String,
   },
 
   ShortBio: {
@@ -42,11 +42,11 @@ const UserSchema = new Schema({
   },
 
   ResetPasswordToken: {
-    type: String
+    type: String,
   },
 
   ResetPasswordExpires: {
-    type: Date
+    type: Date,
   },
 
   ProfilePicture: {
@@ -55,22 +55,25 @@ const UserSchema = new Schema({
 
   isVerified: {
     type: Boolean,
-    default: false
+    default: false,
   },
 
-  SpamReports: [{
-    Description: String,
-    Date: Date,
-  }],
+  SpamReports: [
+    {
+      Description: String,
+      Date: Date,
+    },
+  ],
 
   jwtToken: {
     UserID: String,
     FirstName: String,
     LastName: String,
-    isOwner: Boolean
+    isOwner: Boolean,
   },
 
-  Dogs: [{
+  Dogs: [
+    {
       Name: String,
       UserID: String,
       Bio: String,
@@ -81,56 +84,57 @@ const UserSchema = new Schema({
       Sex: String,
       isPottyTrained: Boolean,
       isFixed: Boolean,
-      isLiked: Boolean
-    }]
+      isLiked: Boolean,
+    },
+  ],
 });
 
 // Chat Schema
 const ChatSchema = new Schema({
   AdopterID: {
     type: String,
-    required: true
+    required: true,
   },
 
   OwnerID: {
     type: String,
-    required: true
+    required: true,
   },
 
   DogID: {
     type: String,
-    required: true
+    required: true,
   },
 
-  Messages: [{
-    text: String,
-    createdAt: Int32,
-    userID: String
-  }]
-
+  Messages: [
+    {
+      text: String,
+      createdAt: Int32,
+      userID: String,
+    },
+  ],
 });
 
 // Token Schema
 const TokenSchema = new Schema({
-    _userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User'
-    },
+  _userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
 
-    token: {
-      type: String,
-      required: true
-    },
+  token: {
+    type: String,
+    required: true,
+  },
 
-    expireAt: {
-      type: Date,
-      default: Date.now,
-      index:
-      {
-        expires: 86400000
-      }
-    }
+  expireAt: {
+    type: Date,
+    default: Date.now,
+    index: {
+      expires: 86400000,
+    },
+  },
 });
 
 module.exports = chat = mongoose.model("Chat", ChatSchema);

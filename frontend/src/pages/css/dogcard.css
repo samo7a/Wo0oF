@@ -3,9 +3,11 @@
 }
 
 .dog-card {
-  width: 25rem !important;
-  height: 40rem !important;
-  box-shadow: 0px 0px 20px black;
+  width: 30rem !important;
+  height: 45rem !important;
+  box-shadow: 0px 0px 2px black;
+  /* position: absolute !important; */
+  border-radius: 4% !important;
 }
 
 .dog-card-title {
@@ -13,16 +15,78 @@
   text-align: center;
 }
 
+.dog-card-img {
+  border-radius: 4% !important;
+}
+
 .dog-card-text {
   font-size: 24px;
   text-align: left;
+  /* border-radius: 4%; */
+}
+
+.list {
+  background-color: inherit !important;
+  border: none !important;
 }
 
 .flip-btn {
   background-color: inherit !important;
   color: rgb(0, 0, 0) !important;
   border: none !important;
-  margin-top: 8% !important;
+  margin-top: 5vh !important;
+  position: absolute !important;
+}
+
+.like-button {
+  border-radius: 50% !important;
+  display: inline !important;
+  background-color: white !important;
+  color: #dd3838 !important;
+  /* border-color: black !important;
+  border-width: 2px !important; */
+  border: none;
+  box-shadow: 0px 0px 2px black;
+  font-size: 40px;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: absolute !important;
+  margin-top: 82vh;
+  margin-right: 15vh;
+}
+
+.like-button:hover {
+  transition-duration: 0.25s;
+  background-color: #dd3838 !important;
+  color: white !important;
+  box-shadow: 0px 0px 10px black;
+}
+
+.dislike-button {
+  border-radius: 50% !important;
+  /* width: 5% !important; */
+  display: inline !important;
+  background-color: white !important;
+  color: #2b2d42 !important;
+  /* border-color: black !important;
+  border-width: 2px !important; */
+  border: none;
+  margin-left: 40px;
+  box-shadow: 0px 0px 2px black;
+  font-size: 40px;
+  padding-left: 19px;
+  padding-right: 17px;
+  /* padding-bottom: 7px;
+  padding-top: 5px; */
+  position: absolute !important;
+  margin-top: 82vh;
+  margin-left: 15vh;
+}
+
+.dislike-button:hover {
+  transition-duration: 0.2s;
+  background-color: #2b2d42 !important;
+  color: white !important;
 }
 
 /* @media only screen and (max-height: 1200px) {
@@ -49,3 +113,15 @@
     margin-top: 14% !important;
   }
 } */
+
+.no-dogs {
+  font-size: 26px;
+  color: white;
+  margin-top: 30vh;
+  text-align: center;
+}
+
+.sad-face {
+  font-size: 90px;
+  margin-bottom: 15px;
+}
