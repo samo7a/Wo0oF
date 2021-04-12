@@ -150,7 +150,7 @@ function Login() {
     <Container fluid className="vh-100 overflow-hidden">
       {/* Logo */}
       <Row className="justify-content-center header-color">
-        <img src={logo} className="Login-logo" />
+        <img src={logo} className="Login-logo" alt="Woof Logo"/>
       </Row>
       <Row className="background justify-content-center">
         {/* Card Form */}
@@ -198,22 +198,22 @@ function Login() {
           <Row className="justify-content-center">
             <Carousel fade controls={false} indicators={false} className="caro">
               <Carousel.Item>
-                <img src={dogPic1} className="dog-login-photo" />  
+                <img src={dogPic1} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic2} className="dog-login-photo" />  
+                <img src={dogPic2} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic3} className="dog-login-photo" />  
+                <img src={dogPic3} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic4} className="dog-login-photo" />  
+                <img src={dogPic4} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic5} className="dog-login-photo" />  
+                <img src={dogPic5} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic6} className="dog-login-photo" />  
+                <img src={dogPic6} className="dog-login-photo" alt="Dog" />  
               </Carousel.Item>
             </Carousel>
           </Row>

@@ -1,9 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/navbar.css";
 import { useState } from "react";
-import { Row, Button } from "react-bootstrap";
+import { Row, Button, Col } from "react-bootstrap";
 import EditProfile from "./editProfile";
 import Chat from "./chat";
+import "font-awesome/css/font-awesome.min.css";
 // import { set } from 'mongoose';
 
 function NavbarProfile() {
@@ -13,11 +14,10 @@ function NavbarProfile() {
 
   return (
     <>
-      <Row>
-        <div className="bkgd-color w-100">
-          <div className="center">
+      <Row className="bkgd-color justify-content-center">
+          <Col sm={4} className="center">
             <Button
-              className={isProfileClicked ? "nav-btn-clicked mr-5" : "nav-btn mr-5"}
+              className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
               onClick={() => {
                 setShowChat(false);
                 setProfileClicked(true);
@@ -26,8 +26,10 @@ function NavbarProfile() {
             >
               Profile
             </Button>
+          </Col>
+          <Col sm={4} className="center">
             <Button
-              className={isChatClicked ? "nav-btn-clicked mr-5" : "nav-btn mr-5"}
+              className={isChatClicked ? "nav-btn-clicked " : "nav-btn "}
               onClick={() => {
                 setShowChat(true);
                 setChatClicked(true);
@@ -36,8 +38,7 @@ function NavbarProfile() {
             >
               Messages
             </Button>
-          </div>
-        </div>
+          </Col>
       </Row>
       <Row>{showChat ? <Chat /> : <EditProfile />}</Row>
     </>

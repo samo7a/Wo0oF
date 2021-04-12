@@ -60,7 +60,7 @@ function ConfirmPassword() {
   return (
     <Container fluid className="page-color vh-100">
       <Row className="justify-content-center header-color">
-        <img src={logo} className="Login-logo" />
+        <img src={logo} className="Login-logo" alt="Woof logo" />
       </Row>
       <Row>
         <Container fluid className="confirm-container">

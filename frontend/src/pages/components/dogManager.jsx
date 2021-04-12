@@ -220,7 +220,7 @@ function DogManager() {
           </Col>
           <Col sm={4}>
             <Button className="add-button" onClick={showAddDogModal}>
-              Add Dog <i class="fa fa-plus-square"></i>
+              Add Dog <i className="fa fa-plus-square"></i>
             </Button>
           </Col>
         </Row>
@@ -251,7 +251,7 @@ function DogManager() {
               {({ onImageUpload }) => (
                 <>
                   <button className="profile-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} />
+                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt=""/>
                   </button>
                 </>
               )}

@@ -1,15 +1,12 @@
 import { Button, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/header.css";
-import profilePic from "../../img/def-pic.jpg";
 
-const doLogout = event =>
-{
+const doLogout = (event) => {
   event.preventDefault();
 
-  localStorage.removeItem("user_data")
-  window.location.href = '/';
+  localStorage.removeItem("user_data");
+  window.location.href = "/";
 };
 
 function ProfileHeader(props) {

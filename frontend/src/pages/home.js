@@ -2,8 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileHeader from "./components/profileHeader";
 import NavbarProfile from "./components/navbar";
-import DogCard from "./components/dogCard";
+import DogAdopter from "./components/dogAdopter";
 import DogManager from "./components/dogManager";
+
 
 function Home() {
   const storage = require("../tokenStorage.js");
@@ -31,7 +32,7 @@ function Home() {
         </Col>
         {/* Right Column showing home for owner or adopter*/}
         <Col sm={9}>
-          <Row>{isOwner === false ? <DogCard name="Murry" /> : <DogManager />}</Row>
+          <Row>{isOwner === false ? <DogAdopter /> : <DogManager />}</Row>
         </Col>
       </Row>
     </Container>

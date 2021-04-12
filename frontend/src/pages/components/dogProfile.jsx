@@ -1,12 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Button, Card, Modal, Form } from "react-bootstrap";
+import { Row, Button, Card, Modal, Form } from "react-bootstrap";
 import { useState } from "react";
 import "../css/dogmanager.css";
 import "font-awesome/css/font-awesome.min.css";
-import goodDog from "../../img/good-dog.jpeg";
+// import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
-import axios from "axios";
+// import axios from "axios";
 import { ACTIONS } from "./dogManager";
 
 function DogProfile({ dog, dispatch }) {
@@ -111,7 +111,7 @@ function DogProfile({ dog, dispatch }) {
     <>
       <Button className="dog-profile-btn" onClick={showDetails}>
         <Card border="light" bg="light" className="dog-profile-card">
-          <Card.Img variant="top" className="dog-profile-card-img" src={isImageChanged ? images[0].data_url : defProfilePic} />
+          <Card.Img variant="top" className="dog-profile-card-img" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
         </Card>
       </Button>
       <Modal show={details} onHide={hideDetails}>
@@ -126,7 +126,7 @@ function DogProfile({ dog, dispatch }) {
                   {({ onImageUpload }) => (
                     <>
                       <button className="profile-button" onClick={onImageUpload}>
-                        <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} />
+                        <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt=""/>
                       </button>
                     </>
                   )}
@@ -183,7 +183,7 @@ function DogProfile({ dog, dispatch }) {
 
             <Modal.Body>
               <Row className="justify-content-center">
-                <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} />
+                <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
               </Row>
               <div>
                 <br />
