@@ -55,5 +55,5 @@ exports.refresh = function( token )
   var location = ud.payload.location;
   var bio = ud.payload.bio;
 
-  return createToken( userId, firstName, lastName, isOwner, email, phone );
+  return createToken( userId, firstName, lastName, isOwner, email, phone, location, bio );
 }

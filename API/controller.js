@@ -376,12 +376,13 @@ exports.createDog = function (req, res) {
   // incoming: Dog Name, password
   // outgoing: id, firstName, lastName, error
 
-  var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
+  var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex, isPottyTrained, isFixed } = req.body;
 
   //console.log("Json package: " + req.body + "UserID: " + UserID);
 
   var DogID = DogCounter++;
-  const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age, Sex: Sex };
+  const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age,
+                   Sex: Sex, isPottyTrained: isPottyTrained, isFixed: isFixed };
 
   // Forgive me Papa Szum for going over 100 characters
   User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { Dogs: newDog } }, function (err, user) {
