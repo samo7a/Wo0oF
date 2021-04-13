@@ -3,90 +3,89 @@
 }
 
 .dog-card {
-  width: 30rem !important;
-  height: 45rem !important;
-  box-shadow: 0px 0px 2px black;
-  /* position: absolute !important; */
-  border-radius: 4% !important;
+  position: relative;
+  background-color: #fff;
+  width: 80vw;
+  max-width: 32rem;
+  height: 32rem;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  text-align: left !important;
 }
 
-.dog-card-title {
-  font-size: 34px;
-  text-align: center;
+.dog-card h3 {
+  position: absolute;
+  bottom: 0;
+  font-size: 35px;
+  margin: 10px;
+  color: #fff;
+  text-shadow: 0px 0px 5px black;
 }
 
-.dog-card-img {
-  border-radius: 4% !important;
-}
-
-.dog-card-text {
-  font-size: 24px;
-  text-align: left;
-  /* border-radius: 4%; */
-}
-
-.list {
-  background-color: inherit !important;
-  border: none !important;
+.dog-card p {
+  color: #ef233c;
+  display: inline;
+  font-weight: 500;
 }
 
 .flip-btn {
-  background-color: inherit !important;
-  color: rgb(0, 0, 0) !important;
-  border: none !important;
-  margin-top: 5vh !important;
-  position: absolute !important;
+  background-color: inherit;
+  color: rgb(0, 0, 0);
+  border: none;
+  top: 15vh;
+  /* left: 25vw; */
+  position: absolute;
+}
+
+.card-container {
+  position: absolute;
 }
 
 .like-button {
-  border-radius: 50% !important;
-  display: inline !important;
-  background-color: white !important;
-  color: #dd3838 !important;
-  /* border-color: black !important;
-  border-width: 2px !important; */
+  border-radius: 50%;
+  display: inline;
+  background-color: white;
+  color: #dd3838;
   border: none;
   box-shadow: 0px 0px 2px black;
-  font-size: 40px;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: absolute !important;
-  margin-top: 82vh;
-  margin-right: 15vh;
+  font-size: 45px;
+  padding: 5px 16px;
+  position: relative;
+  top: 75vh;
+  margin-right: 40px;
 }
 
 .like-button:hover {
   transition-duration: 0.25s;
-  background-color: #dd3838 !important;
-  color: white !important;
+  background-color: #dd3838;
+  color: white;
   box-shadow: 0px 0px 10px black;
 }
 
 .dislike-button {
-  border-radius: 50% !important;
-  /* width: 5% !important; */
-  display: inline !important;
-  background-color: white !important;
-  color: #2b2d42 !important;
-  /* border-color: black !important;
-  border-width: 2px !important; */
+  border-radius: 50%;
+  display: inline;
+  background-color: white;
+  color: #2b2d42;
   border: none;
   margin-left: 40px;
   box-shadow: 0px 0px 2px black;
-  font-size: 40px;
-  padding-left: 19px;
-  padding-right: 17px;
-  /* padding-bottom: 7px;
-  padding-top: 5px; */
-  position: absolute !important;
-  margin-top: 82vh;
-  margin-left: 15vh;
+  font-size: 45px;
+  padding-top: 2.5px;
+  padding-bottom: 7.5px;
+  padding-left: 20px;
+  padding-right: 18.5px;
+  position: relative;
+  top: 75vh;
+  margin-left: 40px;
 }
 
 .dislike-button:hover {
   transition-duration: 0.2s;
-  background-color: #2b2d42 !important;
-  color: white !important;
+  background-color: #2b2d42;
+  color: white;
 }
 
 /* @media only screen and (max-height: 1200px) {

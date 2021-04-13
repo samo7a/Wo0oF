@@ -74,7 +74,9 @@ function DogAdopter() {
       <Row className="justify-content-center">
         { dogs.length !== 0 ?
           (dogs.map((dog) => (
-            <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
+            <Row fluid className="justify-content-center card-container">
+              <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
+            </Row>
           )))
           :
           <div className="no-dogs">

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroupItem, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/dogcard.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -11,36 +11,33 @@ function DogCard({ dog, removeDogCard }) {
 
   return (
     <>
-      <Button className="flip-btn" onClick={flipCard}>
-        {!isFlipped ? (
-          <Card className="dog-card">
-            <Card.Img className="dog-card-img" variant="top" src={goodDog} alt="Card Image" />
-            <Card.Body className="center">
-              <Card.Text className="dog-card-title">{dog.Name}</Card.Text>
-            </Card.Body>
-          </Card>
-        ) : (
-          <Card border="light" bg="light" className="dog-card">
-            <Card.Body className="dog-card-text">
-              <ListGroup>
-                <ListGroupItem>Name: {dog.Name}</ListGroupItem>
-                <ListGroupItem>Gender: {dog.Sex}</ListGroupItem>
-                <ListGroupItem>Breed: {dog.Breed}</ListGroupItem>
-                <ListGroupItem>Age: {dog.Age}</ListGroupItem>
-                {/* <ListGroupItem>Weight: {dog.Weight}</ListGroupItem> */}
-                <ListGroupItem>Height: {dog.Height}</ListGroupItem>
-                <ListGroupItem>Bio: {dog.Bio}</ListGroupItem>
-              </ListGroup>
-            </Card.Body>
-          </Card>
-        )}
-      </Button>
-      <Button className="like-button" onClick={() => removeDogCard(dog._id)}>
-        <i className="fa fa-heart"></i>
-      </Button>
-      <Button className="dislike-button" onClick={() => removeDogCard(dog._id)}>
-        <i className="fa fa-arrow-right"></i>
-      </Button>
+      
+      {!isFlipped ? (
+        <button className="flip-btn" onClick={flipCard}>
+          <div className="dog-card" style={{backgroundImage: `url(${goodDog})`}}>
+              <h3 className="dog-card-title">{dog.Name}</h3>
+          </div>
+        </button>
+      ) : (
+        <button className="flip-btn" onClick={flipCard}>
+        <div className="dog-card" style={{fontSize: "22px"}}>
+          <ListGroupItem><p>Name: </p>{dog.Name}</ListGroupItem>
+          <ListGroupItem><p>Sex: </p>{dog.Sex}</ListGroupItem>
+          <ListGroupItem><p>Breed: </p>{dog.Breed}</ListGroupItem>
+          <ListGroupItem><p>Age: </p>{dog.Age}</ListGroupItem>
+          <ListGroupItem><p>Height: </p>{dog.Height}</ListGroupItem>
+          <ListGroupItem><p>Bio: </p>{dog.Bio}</ListGroupItem>
+        </div>
+        </button>
+      )}
+      <Row className="justify-content-center">
+        <button className="like-button" onClick={() => removeDogCard(dog._id)}>
+          <i className="fa fa-heart"></i>
+        </button>
+        <button className="dislike-button" onClick={() => removeDogCard(dog._id)}>
+          <i className="fa fa-arrow-right"></i>
+        </button>
+      </Row>
     </>
   );
 }
