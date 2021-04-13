@@ -1,3 +1,4 @@
+const uri = process.env.MONGODB_URI;
 var mongoose = require("mongoose");
 var nodemailer = require("nodemailer");
 var bcrypt = require("bcrypt");
@@ -8,8 +9,18 @@ var Token = mongoose.model("Token");
 var Chat = mongoose.model("Chat");
 ObjectId = require("mongodb").ObjectID;
 
+// Start: gridfs and multer for profile pictures
+const multer = require('multer');
+const gridFsStorage = require('multer-gridfs-storage');
+const grid = require('gridfs-stream');
+const conn = mongoose.createConnection(uri);
 const crypto = require("crypto");
+let gfs;
+// End: 
+
 const jwt = require("../createJWT");
+//const { pathToFileURL } = require("node:url");
+// const { Grid } = require("gridfs-stream");
 
 var DogCounter = 0;
 
@@ -374,8 +385,10 @@ exports.createDog = function (req, res) {
   //console.log("Json package: " + req.body + "UserID: " + UserID);
 
   var DogID = DogCounter++;
-  const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age,
-                   Sex: Sex, isPottyTrained: isPottyTrained, isFixed: isFixed };
+  const newDog = {
+    DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age,
+    Sex: Sex, isPottyTrained: isPottyTrained, isFixed: isFixed
+  };
 
   // Forgive me Papa Szum for going over 100 characters
   User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { Dogs: newDog } }, function (err, user) {
@@ -494,3 +507,42 @@ exports.likeDog = function (req, res) {
     console.log("saving done");
   });
 };
+
+exports.uploadProfilePicture = function (req, res) {
+
+
+
+  conn.once('open', () => {
+    // Initiate stream
+    gfs = grid(conn.db, mongoose.mongo);
+    gfs.collection('profilePicUploads'); // profilePicUploads is name of collection in db. 
+
+  })
+
+  // create storage engine
+  var storage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+
+          const filename = buf.toString("hex") + path.extname(file.originalname);
+
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'profilePicUploads'
+          };
+          resolve(fileInfo);
+        });
+      });
+    }
+  });
+  const upload = multer({ storage });
+
+
+};
+
+

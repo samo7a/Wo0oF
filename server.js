@@ -2,18 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const methodOverride = require('method-override');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 mongoose = require('mongoose'),
-mongoose.Promise = global.Promise;
-mongoose.connect(url); 
+  mongoose.Promise = global.Promise;
+mongoose.connect(url);
 //client.connect(); // will throw an error localy.
 const PORT = process.env.PORT || 5000;
 const app = express();
 Task = require('./API/models.js'), //created model loading here
-app.set('port', (process.env.PORT || 5000));
+  app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+
+
 
 /*
     Add
@@ -26,13 +30,11 @@ app.use(bodyParser.json());
 // For Heroku deployment
 
 // Server static assets if in production
-if (process.env.NODE_ENV === 'production')
-{
+if (process.env.NODE_ENV === 'production') {
   // Set static folder
   app.use(express.static('frontend/build'));
 
-  app.get('*', (req, res) =>
-  {
+  app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
@@ -40,8 +42,7 @@ if (process.env.NODE_ENV === 'production')
 var routes = require('./API/routes.js'); //importing route
 routes(app); //register the route
 
-app.use((req, res, next) =>
-{
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -54,7 +55,6 @@ app.use((req, res, next) =>
   next();
 });
 
-app.listen(PORT, () =>
-{
+app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
