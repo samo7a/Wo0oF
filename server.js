@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const methodOverride = require('method-override');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 mongoose = require('mongoose'),
@@ -15,9 +14,6 @@ Task = require('./API/models.js'), //created model loading here
   app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(methodOverride('_method'));
-
-
 
 /*
     Add
