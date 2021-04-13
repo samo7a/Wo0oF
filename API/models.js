@@ -74,8 +74,7 @@ const UserSchema = new Schema({
 
   LikedDogs: [
     {
-      UserID: String,
-      isLiked: Boolean,
+      IsLiked: Boolean,
       DogID: String
     }
   ],
@@ -87,11 +86,12 @@ const UserSchema = new Schema({
       Bio: String,
       Breed: String,
       Weight: mongoose.Schema.Types.Decimal128,
-      Height: Int32,
+      Size: String,
       Age: Int32,
       Sex: String,
       isPottyTrained: Boolean,
-      isFixed: Boolean,
+      isNeutered: Boolean,
+      OwnerID: String
     },
   ],
 });
@@ -120,6 +120,7 @@ const ChatSchema = new Schema({
       userID: String,
     },
   ],
+  
 });
 
 // Token Schema

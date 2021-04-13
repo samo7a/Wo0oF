@@ -18,17 +18,20 @@ function DogProfile({ dog, dispatch }) {
   var userID = ud.payload.userId;
 
   const doEditDog = async () => {
+    console.log(dog.id)
     var obj = {
       UserID: userID,
       Name: name,
       DogID: dog.id,
       Bio: bio,
       Breed: breed,
-      Height: height,
+      Size: size,
+      isPottyTrained: isPottyTrained,
+      isNeutered: isNeutered,
       Age: age,
       Sex: sex,
     };
-
+    console.log(obj.DogID)
     var js = JSON.stringify(obj);
 
     try {
@@ -48,7 +51,22 @@ function DogProfile({ dog, dispatch }) {
 
           if (res.error) {
             console.log(res);
-          } 
+          } else {
+            dispatch({
+              type: ACTIONS.EDIT_DOG,
+              payload: {
+                id: obj.DogID,
+                name: obj.Name,
+                breed: obj.Breed,
+                sex: obj.Sex,
+                age: obj.Age,
+                size: obj.Size,
+                isPottyTrained: obj.isPottyTrained,
+                isNeutered: obj.isNeutered,
+                bio: obj.Bio,
+              },
+            });
+          }
         })
         .catch(function (error) {});
     } catch (e) {
@@ -91,12 +109,17 @@ function DogProfile({ dog, dispatch }) {
   };
 
   // Dog state variables
+  const dog_id = dog.id;
+  if (dog_id == null)
+    console.log('dogid '+dog_id)
   const [name, setName] = useState(dog.name);
   const [sex, setSex] = useState(dog.sex);
   const [breed, setBreed] = useState(dog.breed);
   const [age, setAge] = useState(dog.age);
-  const [height, setHeight] = useState(dog.height);
+  const [size, setSize] = useState(dog.size);
   const [bio, setBio] = useState(dog.bio);
+  const [isNeutered, setIsNeutered] = useState(dog.isNeutered)
+  const [isPottyTrained, setIsPottyTrained] = useState(dog.isPottyTrained);
 
   // Modal controls
   const [details, setShow] = useState(false);
@@ -117,18 +140,7 @@ function DogProfile({ dog, dispatch }) {
   const handleEditDog = () => {
     setEditingDog(false);
     doEditDog();
-    dispatch({
-      type: ACTIONS.EDIT_DOG,
-      payload: {
-        id: dog.id,
-        name: name,
-        breed: breed,
-        sex: sex,
-        age: age,
-        height: height,
-        bio: bio,
-      },
-    });
+    
   };
 
   const handleDeleteDog = () => {
@@ -136,7 +148,7 @@ function DogProfile({ dog, dispatch }) {
     dispatch({ 
       type: ACTIONS.DELETE_DOG, 
       payload: { 
-        id: dog.id 
+        id: dog_id 
       } 
     })
   }
@@ -170,23 +182,27 @@ function DogProfile({ dog, dispatch }) {
               <Form.Group className="dog-name">
                 <Form.Control type="text" defaultValue={dog.name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
               </Form.Group>
-
               <Form.Group className="dog-sex">
                 <Form.Control type="text" defaultValue={dog.sex} placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
               </Form.Group>
-
               <Form.Group className="dog-breed">
                 <Form.Control type="text" defaultValue={dog.breed} placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
               </Form.Group>
-
               <Form.Group className="dog-age">
                 <Form.Control type="number" defaultValue={dog.age} placeholder="Age" onChange={(e) => setAge(e.target.value)} />
               </Form.Group>
-
-              <Form.Group className="dog-height">
-                <Form.Control type="text" defaultValue={dog.height} placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
+              <Form.Group className="dog-size">
+                <Form.Control type="text" defaultValue={dog.size} placeholder="size" onChange={(e) => setSize(e.target.value)} />
+              </Form.Group>
+              <Form.Group >
+                <Form.Label style={{display: "inline"}}>Potty Trained   </Form.Label>
+                <Form.Check defaultValue={dog.isPottyTrained} style={{display: "inline"}} onChange={() => setIsPottyTrained(!isPottyTrained)} />
               </Form.Group>
 
+              <Form.Group >
+                <Form.Label style={{display: "inline"}}>Neutered   </Form.Label>
+                <Form.Check defaultValue={dog.isNeutered} style={{display: "inline"}} onChange={() => setIsNeutered(!isNeutered)} />
+              </Form.Group>
               <Form.Group className="dog-bio">
                 <textarea
                   className="form-control"
@@ -225,7 +241,11 @@ function DogProfile({ dog, dispatch }) {
                 <br />
                 <p className="profile-text">Age: {dog.age}</p>
                 <br />
-                <p className="profile-text">Height: {dog.height}</p>
+                <p className="profile-text">Size: {dog.size}</p>
+                <br />
+                <p className="profile-text">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
+                <br />
+                <p className="profile-text">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
                 <br />
                 <p className="bio-text">Bio: {dog.bio}</p>
                 <br />

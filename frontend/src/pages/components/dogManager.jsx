@@ -25,8 +25,10 @@ function reducer(dogs, action) {
           action.payload.breed,
           action.payload.sex,
           action.payload.age,
-          action.payload.height,
-          action.payload.bio
+          action.payload.size,
+          action.payload.bio,
+          action.payload.isPottyTrained,
+          action.payload.isNeutered,
         ),
       ];
     case ACTIONS.EDIT_DOG:
@@ -34,12 +36,15 @@ function reducer(dogs, action) {
         if (dog.id === action.payload.id) {
           return {
             ...dogs,
+            id: action.payload.id,
             name: action.payload.name,
             breed: action.payload.breed,
             sex: action.payload.sex,
             age: action.payload.age,
-            height: action.payload.height,
+            size: action.payload.size,
             bio: action.payload.bio,
+            isPottyTrained: action.payload.isPottyTrained,
+            isNeutered: action.payload.isNeutered,
           };
         }
         return dog;
@@ -51,15 +56,17 @@ function reducer(dogs, action) {
   }
 }
 
-function newDog(id, name, breed, sex, age, height, bio) {
+function newDog(id, name, breed, sex, age, size, bio, isPottyTrained, isNeutered) {
   return {
     id: id,
     name: name,
     breed: breed,
     sex: sex,
     age: age,
-    height: height,
+    size: size,
     bio: bio,
+    isNeutered: isNeutered,
+    isPottyTrained: isPottyTrained
   };
 }
 
@@ -77,9 +84,11 @@ function DogManager() {
       Name: name,
       Bio: bio,
       Breed: breed,
-      Height: height,
+      Size: size,
       Age: age,
       Sex: sex,
+      isPottyTrained: isPottyTrained,
+      isNeutered: isNeutered,
     };
 
     var js = JSON.stringify(obj);
@@ -102,16 +111,31 @@ function DogManager() {
           if (res.error) {
             console.log(res);
           } else {
+
+            // Dont read this code
+            // PLS DO NOT TOUCH
+            let tempID = res.dogID;
+            let tempID1 = tempID.substring(0, 20);
+            let tempID2 = tempID.substring(20,tempID.length);
+            tempID2 = parseInt(tempID2, 16);
+            tempID2 = tempID2 - 1;
+            tempID2 = tempID2.toString(16);
+            tempID = tempID1 + tempID2;
+            // DONT TOUCH THAT ^
+
+            console.log(tempID)
             dispatch({
               type: ACTIONS.ADD_DOG,
               payload: {
-                id: res.dogID,
+                id: tempID,
                 name: obj.Name,
                 breed: obj.Breed,
                 sex: obj.Sex,
                 age: obj.Age,
-                height: obj.Height,
+                size: obj.Size,
                 bio: obj.Bio,
+                isNeutered: obj.isNeutered,
+                isPottyTrained: obj.isPottyTrained
               },
             });
           }
@@ -160,8 +184,10 @@ function DogManager() {
                   breed: dog.Breed,
                   sex: dog.Sex,
                   age: dog.Age,
-                  height: dog.Height,
+                  size: dog.Size,
                   bio: dog.Bio,
+                  isNeutered: dog.isNeutered,
+                  isPottyTrained: dog.isPottyTrained
                 },
               });
             })
@@ -195,8 +221,9 @@ function DogManager() {
   const [sex, setSex] = useState("");
   const [breed, setBreed] = useState("");
   const [age, setAge] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [isPottyTrained, setIsPottyTrained] = useState(false);
+  const [isNeutered, setIsNeutered] = useState(false);
+  const [size, setSize] = useState("");
   const [bio, setBio] = useState("");
 
   // Fetching dogs from API on load once
@@ -211,8 +238,9 @@ function DogManager() {
     setSex("");
     setBreed("");
     setAge(0);
-    setWeight(0);
-    setHeight(0);
+    setIsPottyTrained(false);
+    setIsNeutered(false);
+    setSize("");
     setBio("");
   }
 
@@ -232,7 +260,7 @@ function DogManager() {
             </Button>
           </Col>
         </Row>
-        {/* Where dog profiles are displayed */}
+        {/* Where dog proles are displayed */}
         <Row className="justify-content-center">
           {dogs.map((dog) => {
             return <DogProfile key={dog.id} dog={dog} dispatch={dispatch} />;
@@ -266,28 +294,38 @@ function DogManager() {
             </ImageUploading>
           </Row>
           <br />
-          <Form.Group className="dog-name">
+          <Form.Group >
             <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
           </Form.Group>
 
-          <Form.Group className="dog-sex">
+          <Form.Group>
             <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
           </Form.Group>
 
-          <Form.Group className="dog-breed">
+          <Form.Group>
             <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
           </Form.Group>
 
-          <Form.Group className="dog-age">
+          <Form.Group >
             <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
           </Form.Group>
 
-          <Form.Group className="dog-height">
-            <Form.Control type="text" placeholder="Height" onChange={(e) => setHeight(e.target.value)} />
+          <Form.Group >
+            <Form.Control type="text" placeholder="Size" onChange={(e) => setSize(e.target.value)} />
           </Form.Group>
 
-          <Form.Group className="dog-bio">
-            <textarea className="form-control" rows="5" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
+          <Form.Group >
+            <Form.Label style={{display: "inline"}}>Potty Trained   </Form.Label>
+            <Form.Check style={{display: "inline"}} onChange={() => setIsPottyTrained(!isPottyTrained)} />
+          </Form.Group>
+
+          <Form.Group >
+            <Form.Label style={{display: "inline"}}>Neutered   </Form.Label>
+            <Form.Check style={{display: "inline"}} onChange={() => setIsNeutered(!isNeutered)} />
+          </Form.Group>
+
+          <Form.Group>
+            <textarea className="form-control" rows="2" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="justify-content-center">

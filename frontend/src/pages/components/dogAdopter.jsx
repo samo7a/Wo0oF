@@ -14,13 +14,12 @@ function DogAdopter() {
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
   var zipCode = ud.payload.location;
-  var reload = false
 
   // State variables
   const [dogs, setDogs] = useState([]);
 
   // Loading dogs from database
-  const getDogs = async (event) => {
+  const getDogs = async () => {
     var obj = {
       Location: zipCode,
     };
@@ -58,16 +57,11 @@ function DogAdopter() {
       return;
     }
   };
-  // useEffect(() => {
 
-  //   getDogs();
-  // }, []);
-
-  console.log(dogs.length);
-  console.log(dogs);
+  // console.log(dogs.length);
+  // console.log(dogs);
   if (dogs.length === 0) {
     getDogs();
-    console.log("getting dogs")
   }
 
   // When user clicks like or skip, dog is removed from dogs array
@@ -80,13 +74,13 @@ function DogAdopter() {
       <Row className="justify-content-center">
         { dogs.length !== 0 ?
           (dogs.map((dog) => (
-            <Row fluid className="justify-content-center card-container">
+            <Row className="justify-content-center card-container">
               <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
             </Row>
           )))
           :
           <div className="no-dogs">
-            <i class="fa fa-frown-o sad-face"></i>
+            <i className="fa fa-frown-o sad-face"></i>
             <p>Sorry there are no more dogs for adoption in your area.</p>
             <p>Expand your area or come back later.</p>
           </div>

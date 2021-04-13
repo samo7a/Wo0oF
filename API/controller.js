@@ -11,7 +11,6 @@ ObjectId = require("mongodb").ObjectID;
 const crypto = require("crypto");
 const jwt = require("../createJWT");
 
-var DogCounter = 0;
 
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
@@ -366,15 +365,13 @@ exports.reportAccounts = function (req, res) {
 
 // Create Dog Function
 exports.createDog = function (req, res) {
-  var i;
   // incoming: Dog Name, password
   // outgoing: id, firstName, lastName, error
 
-  var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex, isPottyTrained, isFixed } = req.body;
+  var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered } = req.body;
 
-  var DogID = DogCounter++;
-  const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age,
-                   Sex: Sex, isPottyTrained: isPottyTrained, isFixed: isFixed };
+  const newDog = {Name: Name, Bio: Bio, Breed: Breed,  Size: Size, Age: Age,
+                   Sex: Sex, isPottyTrained: isPottyTrained, isNeutered: isNeutered, OwnerID: UserID};
 
   // Forgive me Papa Szum for going over 100 characters
   User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { Dogs: newDog } }, function (err, user) {
@@ -389,8 +386,6 @@ exports.createDog = function (req, res) {
       return res.status(200).send(jsonReturn);
     }
   });
-
-  //console.log("Json package: " + req.body + "UserID: " + UserID);
 };
 
 // Complete deleteDog API
@@ -412,8 +407,9 @@ exports.deleteDog = function (req, res) {
 
 // Complete editDog API
 exports.editDog = function (req, res) {
-  var { Name, UserID, DogID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
+  var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered, DogID } = req.body;
 
+  console.log(req.body);
   // Find user then find the dog and update
   User.findOneAndUpdate(
     { _id: ObjectId(UserID), "Dogs._id": ObjectId(DogID) },
@@ -422,10 +418,11 @@ exports.editDog = function (req, res) {
         "Dogs.$.Name": Name,
         "Dogs.$.Bio": Bio,
         "Dogs.$.Breed": Breed,
-        "Dogs.$.Weight": Weight,
-        "Dogs.$.Height": Height,
+        "Dogs.$.Size": Size,
         "Dogs.$.Age": Age,
         "Dogs.$.Sex": Sex,
+        "Dogs.$.isPottyTrained": isPottyTrained,
+        "Dogs.$.isNeutered": isNeutered
       },
     },
     function (err, owner) {
@@ -492,32 +489,26 @@ exports.getOwnerDogs = function (req, res) {
 // Complete likeDog API
 exports.likeDog = function (req, res) {
   // Imports: UserID, OwnerID, DogID, isLiked
-  var { UserID, OwnerID, DogID, isLiked } = req.body;
+  var { UserID, OwnerID, DogID, IsLiked } = req.body;
 
-  console.log(req.body);
-
-  if(isLiked == true)
-  {
-
+  if(IsLiked === true) {
   // Create a new chat with that user's information
   const newChat = new Chat({ AdopterID: UserID, DogID: DogID, OwnerID: OwnerID });
 
-  // create and save user
+  // create and save the new chat
   newChat.save(function (err) {
     if (err) {
       console.log(err);
       return res.status(500);
     } else {
-      return res.end("ended");
+      // Add the dog to the user's liked dogs
+      const LikedDog = {DogID:DogID, IsLiked: true};
+      console.log(LikedDog);
+      User.findOneAndUpdate({_id: ObjectId(UserID)}, { $push: {LikedDogs: LikedDog} });
     }
   });
-
-  else
-  {
-    const DislikedDog = {DogID: DogID, UserID: UserID, IsLiked:false}
-    User.findOneAndUpdate({_id: objectid(UserID)} { $push: {LikedDogs: DislikedDog} },
-    function (err, user) {
+  } else {
+    const DislikedDog = {DogID: DogID, IsLiked: false};
+    User.findOneAndUpdate({_id: ObjectId(UserID)}, { $push: {LikedDogs: DislikedDog} });
   }
-
-  });
 };
