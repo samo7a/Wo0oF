@@ -6,7 +6,8 @@ exports.createToken = function ( id, fn, ln, isOwner, email, phone, location, bi
     try
     {
       const expiration = new Date();
-if (phone === undefined)
+      
+      if (phone === undefined)
         phone = "";
       if (location === undefined)
         location = "";
