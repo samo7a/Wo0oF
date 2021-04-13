@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DogCard from "./dogCard";
 import "../css/dogcard.css";
-import axios from "axios";
+import axios from "axios"; 
 
 function DogAdopter() {
   // Backend stuff
@@ -14,55 +14,61 @@ function DogAdopter() {
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
   var zipCode = ud.payload.location;
+  var reload = false
 
   // State variables
   const [dogs, setDogs] = useState([]);
 
   // Loading dogs from database
-  useEffect(() => {
-    const getDogs = async (event) => {
-      var obj = {
-        Location: zipCode,
-      };
-
-      var js = JSON.stringify(obj);
-
-      try {
-        // Axios code follows
-        var config = {
-          method: "post",
-          url: bp.buildPath("displayDogs"),
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          data: js,
-        };
-
-        axios(config)
-        .then(function (response) {
-          var res = response.data;
-
-          if (res.error) {
-            console.log(res);
-          } else {
-            // Use setDogs to point dogs to the new array
-            setDogs(res);
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-        });
-      } catch (e) {
-        alert(e.toString());
-        return;
-      }
+  const getDogs = async (event) => {
+    var obj = {
+      Location: zipCode,
     };
 
-    getDogs();
-  }, []);
+    var js = JSON.stringify(obj);
 
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("displayDogs"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: js,
+      };
+
+      axios(config)
+      .then(function (response) {
+        var res = response.data;
+
+        if (res.error) {
+          console.log(res);
+        } else {
+          // Use setDogs to point dogs to the new array
+          setDogs(res);
+        }
+      })
+      .catch(function (error) {
+        // setMessage(error);
+      });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+  // useEffect(() => {
+
+  //   getDogs();
+  // }, []);
+
+  console.log(dogs.length);
   console.log(dogs);
+  if (dogs.length === 0) {
+    getDogs();
+    console.log("getting dogs")
+  }
 
   // When user clicks like or skip, dog is removed from dogs array
   function removeDogCard(id) {

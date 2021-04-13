@@ -72,10 +72,18 @@ const UserSchema = new Schema({
     isOwner: Boolean,
   },
 
+  LikedDogs: [
+    {
+      UserID: String,
+      isLiked: Boolean,
+      DogID: String
+    }
+  ],
+
   Dogs: [
     {
+      DogID: String,
       Name: String,
-      UserID: String,
       Bio: String,
       Breed: String,
       Weight: mongoose.Schema.Types.Decimal128,
@@ -84,7 +92,6 @@ const UserSchema = new Schema({
       Sex: String,
       isPottyTrained: Boolean,
       isFixed: Boolean,
-      isLiked: Boolean
     },
   ],
 });

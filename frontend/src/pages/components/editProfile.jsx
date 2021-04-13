@@ -47,10 +47,8 @@ function EditProfile() {
         data: js,
       };
 
-      axios(config)
-        .then(function (response) {
+      axios(config).then(function (response) {
           var res = response.data;
-
           if (res.error) {
             console.log(res);
           } else {

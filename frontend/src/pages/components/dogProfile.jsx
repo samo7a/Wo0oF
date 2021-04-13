@@ -6,82 +6,107 @@ import "font-awesome/css/font-awesome.min.css";
 // import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
-// import axios from "axios";
+import axios from "axios";
 import { ACTIONS } from "./dogManager";
 
 function DogProfile({ dog, dispatch }) {
-  // const bp = require("../../bp.js");
-  // const storage = require("../../tokenStorage.js");
-  // const jwt = require("jsonwebtoken");
+  const bp = require("../../bp.js");
+  const storage = require("../../tokenStorage.js");
+  const jwt = require("jsonwebtoken");
+  var tok = storage.retrieveToken();
+  var ud = jwt.decode(tok, { complete: true });
+  var userID = ud.payload.userId;
 
-  // const dogID = dog.id;
+  const doEditDog = async () => {
+    var obj = {
+      UserID: userID,
+      Name: name,
+      DogID: dog.id,
+      Bio: bio,
+      Breed: breed,
+      Height: height,
+      Age: age,
+      Sex: sex,
+    };
 
-  // var tok = storage.retrieveToken();
-  // var ud = jwt.decode(tok, { complete: true });
+    var js = JSON.stringify(obj);
 
-  // var userID = ud.payload.userId;
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("editDog"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: js,
+      };
 
-  // const doEditDog = async (event) => {
-  //   var obj = {
-  //     UserID: userID,
-  //     Name: name,
-  //     Bio: bio,
-  //     Breed: breed,
-  //     Weight: weight,
-  //     Height: height,
-  //     Age: age,
-  //     Sex: sex,
-  //   };
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
 
-  //   var js = JSON.stringify(obj);
+          if (res.error) {
+            console.log(res);
+          } 
+        })
+        .catch(function (error) {});
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
 
-  //   try {
-  //     // Axios code follows
-  //     var config = {
-  //       method: "post",
-  //       url: bp.buildPath("editDog"),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
+  const doDeleteDog = async () => {
+    var obj = {
+      UserID: userID,
+      DogID: dog.id,
+    };
 
-  //       data: js,
-  //     };
+    var js = JSON.stringify(obj);
 
-  //     axios(config)
-  //       .then(function (response) {
-  //         var res = response.data;
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("deleteDog"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: js,
+      };
 
-  //         if (res.error) {
-  //           console.log(res);
-  //         } else {
-  //           storage.storeToken(jwt.refresh(res));
-  //           window.location.href = "/home";
-  //         }
-  //       })
-  //       .catch(function (error) {
-  //         // setMessage(error);
-  //       });
-  //   } catch (e) {
-  //     alert(e.toString());
-  //     return;
-  //   }
-  // };
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } 
+        })
+        .catch(function (error) {});
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
 
   // Dog state variables
   const [name, setName] = useState(dog.name);
   const [sex, setSex] = useState(dog.sex);
   const [breed, setBreed] = useState(dog.breed);
   const [age, setAge] = useState(dog.age);
-  const [weight, setWeight] = useState(dog.weight);
   const [height, setHeight] = useState(dog.height);
   const [bio, setBio] = useState(dog.bio);
 
+  // Modal controls
   const [details, setShow] = useState(false);
   const showDetails = () => setShow(true);
   const hideDetails = () => setShow(false);
 
+  // Edit state
   const [isEditingDog, setEditingDog] = useState(false);
 
+  // Profile picture states
   const [images, setImages] = useState([]);
   const [isImageChanged, setImageChanged] = useState(false);
   const onUpload = (image) => {
@@ -91,7 +116,7 @@ function DogProfile({ dog, dispatch }) {
 
   const handleEditDog = () => {
     setEditingDog(false);
-    // doEditDog();
+    doEditDog();
     dispatch({
       type: ACTIONS.EDIT_DOG,
       payload: {
@@ -100,12 +125,21 @@ function DogProfile({ dog, dispatch }) {
         breed: breed,
         sex: sex,
         age: age,
-        weight: weight,
         height: height,
         bio: bio,
       },
     });
   };
+
+  const handleDeleteDog = () => {
+    doDeleteDog()
+    dispatch({ 
+      type: ACTIONS.DELETE_DOG, 
+      payload: { 
+        id: dog.id 
+      } 
+    })
+  }
 
   return (
     <>
@@ -147,10 +181,6 @@ function DogProfile({ dog, dispatch }) {
 
               <Form.Group className="dog-age">
                 <Form.Control type="number" defaultValue={dog.age} placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-              </Form.Group>
-
-              <Form.Group className="dog-weight">
-                <Form.Control type="number" defaultValue={dog.weight} placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
               </Form.Group>
 
               <Form.Group className="dog-height">
@@ -195,8 +225,6 @@ function DogProfile({ dog, dispatch }) {
                 <br />
                 <p className="profile-text">Age: {dog.age}</p>
                 <br />
-                <p className="profile-text">Weight: {dog.weight}</p>
-                <br />
                 <p className="profile-text">Height: {dog.height}</p>
                 <br />
                 <p className="bio-text">Bio: {dog.bio}</p>
@@ -207,7 +235,7 @@ function DogProfile({ dog, dispatch }) {
               <Button className="edit-prof-btn" onClick={() => setEditingDog(true)}>
                 Update
               </Button>
-              <Button className="edit-prof-btn" onClick={() => dispatch({ type: ACTIONS.DELETE_DOG, payload: { id: dog.id } })}>
+              <Button className="edit-prof-btn" onClick={handleDeleteDog}>
                 Delete
               </Button>
             </Row>

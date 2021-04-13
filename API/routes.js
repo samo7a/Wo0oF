@@ -13,6 +13,10 @@ module.exports = function(app) {
   app.route('/editUser')
   .post(controller.editUser);
 
+  // Get Owner Dogs route
+  app.route('/getOwnerDogs')
+  .post(controller.getOwnerDogs);
+
   // Edit User route
   app.route('/reportAccounts')
   .post(controller.reportAccounts);

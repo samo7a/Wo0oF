@@ -366,12 +366,11 @@ exports.reportAccounts = function (req, res) {
 
 // Create Dog Function
 exports.createDog = function (req, res) {
+  var i;
   // incoming: Dog Name, password
   // outgoing: id, firstName, lastName, error
 
   var { Name, UserID, Bio, Breed, Weight, Height, Age, Sex, isPottyTrained, isFixed } = req.body;
-
-  //console.log("Json package: " + req.body + "UserID: " + UserID);
 
   var DogID = DogCounter++;
   const newDog = { DogID: DogID, Name: Name, Bio: Bio, Breed: Breed, Weight: Weight, Height: Height, Age: Age,
@@ -390,6 +389,8 @@ exports.createDog = function (req, res) {
       return res.status(200).send(jsonReturn);
     }
   });
+
+  //console.log("Json package: " + req.body + "UserID: " + UserID);
 };
 
 // Complete deleteDog API
@@ -409,7 +410,7 @@ exports.deleteDog = function (req, res) {
   });
 };
 
-// Complete editUser API
+// Complete editDog API
 exports.editDog = function (req, res) {
   var { Name, UserID, DogID, Bio, Breed, Weight, Height, Age, Sex } = req.body;
 
@@ -472,12 +473,31 @@ exports.displayDogs = function (req, res) {
   });
 };
 
+// Function for an owner to get a list of their dogs
+exports.getOwnerDogs = function (req, res) {
+  var { id } = req.body;
+
+  // Find the next owner in the same area
+  User.findOne({ _id: id}, function (err, owner) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Technical error while attempting to find User information.");
+    } else {
+      res.send(owner.Dogs);
+    }
+    
+  });
+};
+
 // Complete likeDog API
 exports.likeDog = function (req, res) {
   // Imports: UserID, OwnerID, DogID, isLiked
   var { UserID, OwnerID, DogID, isLiked } = req.body;
 
   console.log(req.body);
+
+  if(isLiked == true)
+  {
 
   // Create a new chat with that user's information
   const newChat = new Chat({ AdopterID: UserID, DogID: DogID, OwnerID: OwnerID });
@@ -490,7 +510,14 @@ exports.likeDog = function (req, res) {
     } else {
       return res.end("ended");
     }
+  });
 
-    console.log("saving done");
+  else
+  {
+    const DislikedDog = {DogID: DogID, UserID: UserID, IsLiked:false}
+    User.findOneAndUpdate({_id: objectid(UserID)} { $push: {LikedDogs: DislikedDog} },
+    function (err, user) {
+  }
+
   });
 };

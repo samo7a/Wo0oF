@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import ImageUploading from "react-images-uploading";
@@ -20,11 +20,11 @@ function reducer(dogs, action) {
       return [
         ...dogs,
         newDog(
+          action.payload.id,
           action.payload.name,
           action.payload.breed,
           action.payload.sex,
           action.payload.age,
-          action.payload.weight,
           action.payload.height,
           action.payload.bio
         ),
@@ -38,7 +38,6 @@ function reducer(dogs, action) {
             breed: action.payload.breed,
             sex: action.payload.sex,
             age: action.payload.age,
-            weight: action.payload.weight,
             height: action.payload.height,
             bio: action.payload.bio,
           };
@@ -52,14 +51,13 @@ function reducer(dogs, action) {
   }
 }
 
-function newDog(name, breed, sex, age, weight, height, bio) {
+function newDog(id, name, breed, sex, age, height, bio) {
   return {
-    id: Date.now(),
+    id: id,
     name: name,
     breed: breed,
     sex: sex,
     age: age,
-    weight: weight,
     height: height,
     bio: bio,
   };
@@ -69,18 +67,16 @@ function DogManager() {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
-
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
 
-  const doCreateDog = async (event) => {
+  const doCreateDog = async () => {
     var obj = {
       UserID: userID,
       Name: name,
       Bio: bio,
       Breed: breed,
-      Weight: weight,
       Height: height,
       Age: age,
       Sex: sex,
@@ -103,11 +99,21 @@ function DogManager() {
       axios(config)
         .then(function (response) {
           var res = response.data;
-
           if (res.error) {
             console.log(res);
           } else {
-            window.location.href = "/home";
+            dispatch({
+              type: ACTIONS.ADD_DOG,
+              payload: {
+                id: res.dogID,
+                name: obj.Name,
+                breed: obj.Breed,
+                sex: obj.Sex,
+                age: obj.Age,
+                height: obj.Height,
+                bio: obj.Bio,
+              },
+            });
           }
         })
         .catch(function (error) {
@@ -119,9 +125,9 @@ function DogManager() {
     }
   };
 
-  const doDisplayDogs = async (event) => {
+  const getOwnerDogs = async () => {
     var obj = {
-      UserID: userID,
+      id: userID,
     };
 
     var js = JSON.stringify(obj);
@@ -130,7 +136,7 @@ function DogManager() {
       // Axios code follows
       var config = {
         method: "post",
-        url: bp.buildPath("displayDogs"),
+        url: bp.buildPath("getOwnerDogs"),
         headers: {
           "Content-Type": "application/json",
         },
@@ -141,13 +147,24 @@ function DogManager() {
       axios(config)
         .then(function (response) {
           var res = response.data;
-          const dogArray = res;
-
           if (res.error) {
             console.log(res);
           } else {
-            // Do stuff with dogArray, dogArray contains the Dog array
-            window.location.href = "/home";
+            console.log(res);
+            res.map((dog) => {
+              dispatch({
+                type: ACTIONS.ADD_DOG,
+                payload: {
+                  id: dog._id,
+                  name: dog.Name,
+                  breed: dog.Breed,
+                  sex: dog.Sex,
+                  age: dog.Age,
+                  height: dog.Height,
+                  bio: dog.Bio,
+                },
+              });
+            })
           }
         })
         .catch(function (error) {
@@ -182,20 +199,13 @@ function DogManager() {
   const [height, setHeight] = useState(0);
   const [bio, setBio] = useState("");
 
+  // Fetching dogs from API on load once
+  useEffect(() => {
+    getOwnerDogs();
+  }, []);
+
   function handleAddDog() {
-    dispatch({
-      type: ACTIONS.ADD_DOG,
-      payload: {
-        name: name,
-        breed: breed,
-        sex: sex,
-        age: age,
-        weight: weight,
-        height: height,
-        bio: bio,
-      },
-    });
-    // doCreateDog();
+    doCreateDog();
     hideAddDogModal();
     setName("");
     setSex("");
@@ -205,8 +215,6 @@ function DogManager() {
     setHeight(0);
     setBio("");
   }
-
-  // console.log(dogs);
 
   return (
     <>
@@ -272,10 +280,6 @@ function DogManager() {
 
           <Form.Group className="dog-age">
             <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-          </Form.Group>
-
-          <Form.Group className="dog-weight">
-            <Form.Control type="number" placeholder="Weight" onChange={(e) => setWeight(e.target.value)} />
           </Form.Group>
 
           <Form.Group className="dog-height">
