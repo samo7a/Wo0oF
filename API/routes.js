@@ -49,8 +49,7 @@ module.exports = function (app) {
   app.route('/likeDog')
     .post(controller.likeDog);
 
-  // Upload Profile Picture route
-  app.route('/uploadProfilePicture')
-    .post(controller.uploadProfilePicture);
+  // // Upload Profile Picture route
+  // app.route('/uploadProfilePicture')
+  //   .post(controller.uploadProfilePicture);
 }
-
