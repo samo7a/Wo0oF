@@ -8,63 +8,6 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
-module.exports = function (app) {
-  var controller = require('../API/controller.js');
-  var profilePicture = require('../API/ProfilePicture.js');
-
-  // Signup route
-  app.route('/signup')
-    .post(controller.signup);
-
-  // Login route
-  app.route('/login')
-    .post(controller.login);
-
-  // Edit User route
-  app.route('/editUser')
-    .post(controller.editUser);
-
-  // Edit User route
-  app.route('/reportAccounts')
-    .post(controller.reportAccounts);
-
-  // Reset Password route
-  app.route('/resetPassword')
-    .post(controller.resetPassword);
-
-  // Confirm Password route
-  app.route('/confirmResetPassword')
-    .post(controller.confirmResetPassword);
-
-  // Verify Email route
-  app.route('/verifyEmail/:email/:token')
-    .get(controller.verifyEmail);
-
-  // Create Dog Route
-  app.route('/createDog')
-    .post(controller.createDog);
-
-  // Create Dog Route
-  app.route('/editDog')
-    .post(controller.editDog);
-
-  // Create Dog Route
-  app.route('/deleteDog')
-    .post(controller.deleteDog);
-
-  // Display Dogs Route
-  app.route('/displayDogs')
-    .post(controller.displayDogs);
-
-  // Like Dogs Route
-  app.route('/likeDog')
-    .post(controller.likeDog);
-
-  // Upload Profile Picture route
-  app.route('/uploadProfilePicture')
-    .post(controller.uploadProfilePicture);
-}
-
 const app = express();
 
 // Middleware
@@ -81,60 +24,60 @@ const conn = mongoose.createConnection(mongoURI);
 let gfs;
 
 conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('ProfilePictureUploads');
+    // Init stream
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('ProfilePictureUploads');
 });
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'ProfilePictureUploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
+    url: mongoURI,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(16, (err, buf) => {
+                if (err) {
+                    return reject(err);
+                }
+                const filename = buf.toString('hex') + path.extname(file.originalname);
+                const fileInfo = {
+                    filename: filename,
+                    bucketName: 'ProfilePictureUploads'
+                };
+                resolve(fileInfo);
+            });
+        });
+    }
 });
 const upload = multer({ storage });
 
 // @route GET /
 // @desc Loads form
 app.get('/', (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    // Check if files
-    if (!files || files.length === 0) {
-      res.render('home', { files: false });
-    } else {
-      files.map(file => {
-        if (
-          file.contentType === 'image/jpeg' ||
-          file.contentType === 'image/png'
-        ) {
-          file.isImage = true;
+    gfs.files.find().toArray((err, files) => {
+        // Check if files
+        if (!files || files.length === 0) {
+            res.render('home', { files: false });
         } else {
-          file.isImage = false;
+            files.map(file => {
+                if (
+                    file.contentType === 'image/jpeg' ||
+                    file.contentType === 'image/png'
+                ) {
+                    file.isImage = true;
+                } else {
+                    file.isImage = false;
+                }
+            });
+            res.render('home', { files: files });
         }
-      });
-      res.render('home', { files: files });
-    }
-  });
+    });
 });
 
 // @route POST /upload
 // @desc  Uploads file to DB
 app.post('/profilePicture', upload.single('file'), (req, res) => {
-  // res.json({ file: req.file });
-  res.redirect('home');
+    // res.json({ file: req.file });
+    res.redirect('home');
 });
 
 // // @route GET /files
@@ -207,4 +150,3 @@ app.post('/profilePicture', upload.single('file'), (req, res) => {
 // const port = 5000;
 
 // app.listen(port, () => console.log(`Server started on port ${port}`));
-
