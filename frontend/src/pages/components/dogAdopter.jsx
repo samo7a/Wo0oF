@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DogCard from "./dogCard";
 import "../css/dogcard.css";
-import axios from "axios"; 
+import axios from "axios";
 
 function DogAdopter() {
   // Backend stuff
@@ -39,19 +39,19 @@ function DogAdopter() {
       };
 
       axios(config)
-      .then(function (response) {
-        var res = response.data;
+        .then(function (response) {
+          var res = response.data;
 
-        if (res.error) {
-          console.log(res);
-        } else {
-          // Use setDogs to point dogs to the new array
-          setDogs(res);
-        }
-      })
-      .catch(function (error) {
-        // setMessage(error);
-      });
+          if (res.error) {
+            console.log(res);
+          } else {
+            // Use setDogs to point dogs to the new array
+            setDogs(res);
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
     } catch (e) {
       alert(e.toString());
       return;
@@ -72,19 +72,19 @@ function DogAdopter() {
   return (
     <Container fluid className="vh-100 bkgd-card-color">
       <Row className="justify-content-center">
-        { dogs.length !== 0 ?
-          (dogs.map((dog) => (
+        {dogs.length !== 0 ? (
+          dogs.map((dog) => (
             <Row className="justify-content-center card-container">
               <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
             </Row>
-          )))
-          :
+          ))
+        ) : (
           <div className="no-dogs">
             <i className="fa fa-frown-o sad-face"></i>
             <p>Sorry there are no more dogs for adoption in your area.</p>
             <p>Expand your area or come back later.</p>
           </div>
-        }
+        )}
       </Row>
     </Container>
   );

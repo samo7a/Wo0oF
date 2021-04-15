@@ -5,7 +5,6 @@ import NavbarProfile from "./components/navbar";
 import DogAdopter from "./components/dogAdopter";
 import DogManager from "./components/dogManager";
 
-
 function Home() {
   const storage = require("../tokenStorage.js");
   const jwt = require("jsonwebtoken");

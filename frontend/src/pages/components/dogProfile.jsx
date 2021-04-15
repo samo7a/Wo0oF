@@ -187,7 +187,14 @@ function DogProfile({ dog, dispatch }) {
               </Form.Group>
               <Form.Group style={{ display: "inline" }}>
                 <Form.Label style={{ display: "inline" }}>Sex: </Form.Label>
-                <Form.Control style={{ display: "inline" }} className="w-25" as="select" custom onChange={(e) => setSex(e.target.value)}>
+                <Form.Control
+                  style={{ display: "inline" }}
+                  className="w-25"
+                  as="select"
+                  defaultValue={dog.sex}
+                  custom
+                  onChange={(e) => setSex(e.target.value)}
+                >
                   <option>Male</option>
                   <option>Female</option>
                   <option>Other</option>

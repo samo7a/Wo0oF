@@ -150,13 +150,13 @@ function Login() {
     <Container fluid className="vh-100 overflow-hidden">
       {/* Logo */}
       <Row className="justify-content-center header-color">
-        <img src={logo} className="Login-logo" alt="Woof Logo"/>
+        <img src={logo} className="Login-logo" alt="Woof Logo" />
       </Row>
       <Row className="background justify-content-center">
         {/* Card Form */}
         <Col className="justify-content-center">
           {/* Description */}
-          <Row style={{marginTop: "10vh"}}></Row>
+          <Row style={{ marginTop: "10vh" }}></Row>
           <Row className="background justify-content-center">
             <p className="login-text">
               Let us help you find your new best friend. Woof helps connect dogs with the people that can provide them a loving home.
@@ -164,11 +164,11 @@ function Login() {
             <Card className="card-style">
               <Card.Body>
                 <Form>
-                  <Form.Group className="emailTextbox" controlId="formBasicEmail" style={{margin: "5% 2%"}}>
+                  <Form.Group className="emailTextbox" controlId="formBasicEmail" style={{ margin: "5% 2%" }}>
                     <Form.Control type="email" placeholder="Email Address " ref={(c) => (email = c)} />
                   </Form.Group>
 
-                  <Form.Group className="passwordTextbox" controlId="formBasicPassword" style={{margin: "5% 2%"}}>
+                  <Form.Group className="passwordTextbox" controlId="formBasicPassword" style={{ margin: "5% 2%" }}>
                     <Form.Control type="password" placeholder="Password" ref={(c) => (password = c)} />
                   </Form.Group>
 
@@ -198,22 +198,22 @@ function Login() {
           <Row className="justify-content-center">
             <Carousel fade controls={false} indicators={false} className="caro">
               <Carousel.Item>
-                <img src={dogPic1} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic1} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic2} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic2} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic3} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic3} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic4} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic4} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic5} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic5} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
               <Carousel.Item>
-                <img src={dogPic6} className="dog-login-photo" alt="Dog" />  
+                <img src={dogPic6} className="dog-login-photo" alt="Dog" />
               </Carousel.Item>
             </Carousel>
           </Row>

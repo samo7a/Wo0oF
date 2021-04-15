@@ -15,30 +15,30 @@ function NavbarProfile() {
   return (
     <>
       <Row className="bkgd-color justify-content-center">
-          <Col sm={4} className="center">
-            <Button
-              className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
-              onClick={() => {
-                setShowChat(false);
-                setProfileClicked(true);
-                setChatClicked(false);
-              }}
-            >
-              Profile
-            </Button>
-          </Col>
-          <Col sm={4} className="center">
-            <Button
-              className={isChatClicked ? "nav-btn-clicked " : "nav-btn "}
-              onClick={() => {
-                setShowChat(true);
-                setChatClicked(true);
-                setProfileClicked(false);
-              }}
-            >
-              Messages
-            </Button>
-          </Col>
+        <Col sm={4} className="center">
+          <Button
+            className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
+            onClick={() => {
+              setShowChat(false);
+              setProfileClicked(true);
+              setChatClicked(false);
+            }}
+          >
+            Profile
+          </Button>
+        </Col>
+        <Col sm={4} className="center">
+          <Button
+            className={isChatClicked ? "nav-btn-clicked " : "nav-btn "}
+            onClick={() => {
+              setShowChat(true);
+              setChatClicked(true);
+              setProfileClicked(false);
+            }}
+          >
+            Messages
+          </Button>
+        </Col>
       </Row>
       <Row>{showChat ? <Chat /> : <EditProfile />}</Row>
     </>

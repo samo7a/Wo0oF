@@ -15,13 +15,9 @@ function ConfirmPassword() {
   const doConfirmPwd = async (event) => {
     event.preventDefault();
 
-    if (newPassword.value !== confirmPassword.value)
-    {
+    if (newPassword.value !== confirmPassword.value) {
       setMatching(false);
-    }
-
-    else
-    {
+    } else {
       var obj = { resetToken: resetToken.value, newPassword: newPassword.value };
       var js = JSON.stringify(obj);
 
