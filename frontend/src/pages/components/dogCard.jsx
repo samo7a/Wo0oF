@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ListGroupItem, Row } from "react-bootstrap";
+import { ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/dogcard.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -110,39 +110,41 @@ function DogCard({ dog, removeDogCard }) {
         </button>
       ) : (
         <button className="flip-btn" onClick={flipCard}>
-          <div className="dog-card" style={{ fontSize: "22px" }}>
-            <ListGroupItem>
-              <p>Name: </p>
-              {dog.Name}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Sex: </p>
-              {dog.Sex}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Breed: </p>
-              {dog.Breed}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Age: </p>
-              {dog.Age}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Size: </p>
-              {dog.Size}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Potty Trained: </p>
-              {dog.isPottyTrained ? "Yes" : "No"}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Neutered: </p>
-              {dog.isNeutered ? "Yes" : "No"}
-            </ListGroupItem>
-            <ListGroupItem>
-              <p>Bio: </p>
-              {dog.Bio}
-            </ListGroupItem>
+          <div className="dog-card list-text" style={{ overflow: "auto" }}>
+            <ListGroup>
+              <ListGroupItem>
+                <p>Name: </p>
+                {dog.Name}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Breed: </p>
+                {dog.Breed}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Age: </p>
+                {dog.Age}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Sex: </p>
+                {dog.Sex}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Size: </p>
+                {dog.Size}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Potty Trained: </p>
+                {dog.isPottyTrained ? "Yes" : "No"}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Neutered: </p>
+                {dog.isNeutered ? "Yes" : "No"}
+              </ListGroupItem>
+              <ListGroupItem>
+                <p>Bio: </p>
+                {dog.Bio}
+              </ListGroupItem>
+            </ListGroup>
           </div>
         </button>
       )}

@@ -33,21 +33,65 @@
 }
 
 .sign-out-btn {
-  color: white;
-  background-color: inherit;
-  padding: 5px 10px;
-  margin-top: 5px;
-  border-color: white;
-  font-size: 15px;
-  border-style: solid;
-  border-radius: 5px;
-  float: right;
-  display: inline;
+  color: white !important;
+  background-color: #2b2d42 !important;
+  padding: 5px 10px !important;
+  margin-top: 5px !important;
+  border-color: white !important;
+  font-size: 15px !important;
+  border-style: solid !important;
+  border-width: 2px;
+  border-radius: 5px !important;
+  float: right !important;
+  display: inline !important;
 }
 
 .sign-out-btn:hover {
-  transition: 0.25s;
+  transition: 0.3s;
   text-decoration: none !important;
-  color: rgba(255, 255, 255, 0.76) !important;
-  border-color: rgba(255, 255, 255, 0.76) !important;
+  border-color: #2b2d42 !important;
+  color: #2b2d42 !important;
+  background-color: white !important;
+}
+
+@media only screen and (max-height: 900px) {
+  .profile-header-name {
+    color: white;
+    font-size: 18px;
+    align-items: center;
+    text-align: center;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 0%;
+  }
+
+  .header-name {
+    font-size: 28px;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .sign-out-btn {
+    color: white !important;
+    background-color: #2b2d42 !important;
+    padding: 5px 10px !important;
+    margin-top: 3px !important;
+    border-color: white !important;
+    font-size: 15px !important;
+    border-style: solid !important;
+    border-width: 2px;
+    border-radius: 5px !important;
+    float: right !important;
+    display: inline !important;
+  }
+
+  .sign-out-btn:hover {
+    transition: 0.3s;
+    text-decoration: none !important;
+    border-color: #2b2d42 !important;
+    color: #2b2d42 !important;
+    background-color: white !important;
+  }
 }

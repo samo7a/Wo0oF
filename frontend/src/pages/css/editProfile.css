@@ -68,6 +68,48 @@
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 1%;
-  margin-top: 0%;
+  margin-top: 10%;
   margin-left: 1%;
+}
+
+.profile-htext-top {
+  color: #ef233c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1%;
+  margin-top: 3%;
+  margin-left: 1%;
+}
+
+@media only screen and (max-height: 900px) {
+  .profile-htext {
+    color: #ef233c;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 1%;
+    margin-top: 7%;
+    margin-left: 1%;
+  }
+
+  .profile-htext-top {
+    color: #ef233c;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    margin-left: 1%;
+  }
+
+  .pic-button {
+    background-color: inherit !important;
+    border: none !important;
+    margin-top: 4% !important;
+    border-radius: 50%;
+  }
+
+  .profile-pic {
+    margin-top: 5% !important;
+    width: 7rem !important;
+    border-radius: 50% !important;
+  }
 }

@@ -87,7 +87,7 @@ function EditProfile() {
   };
 
   return (
-    <Container fluid className="profile-color vh-100">
+    <Container fluid className="profile-color vh-100" style={{ overflow: "auto" }}>
       {isEditing ? (
         <>
           <Row className="justify-content-center">
@@ -132,6 +132,15 @@ function EditProfile() {
               Confirm
             </Button>
           </Row>
+          <Row>
+            <div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
+          </Row>
         </>
       ) : (
         <>
@@ -139,27 +148,29 @@ function EditProfile() {
             <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
           </Row>
           <div>
-            <br />
-            <p className="profile-htext">Name</p>
+            <p className="profile-htext-top">Name</p>
             <p className="profile-text">{tokenFirstName + " " + tokenLastName}</p>
-            <br />
             <p className="profile-htext">Email</p>
             <p className="profile-text">{tokenEmail}</p>
-            <br />
             <p className="profile-htext">Phone</p>
             <p className="profile-text">{tokenPhone == null ? " " : tokenPhone}</p>
-            <br />
             <p className="profile-htext">Location</p>
             <p className="profile-text">{tokenLocation == null ? " " : tokenLocation}</p>
-            <br />
             <p className="profile-htext">Bio</p>
             <p className="profile-text">{tokenBio == null ? " " : tokenBio} </p>
-            <br />
           </div>
           <Row className="justify-content-center">
             <Button className="edit-prof-btn" onClick={() => setEditMode(true)}>
               Edit Profile
             </Button>
+          </Row>
+          <Row>
+            <div>
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
           </Row>
         </>
       )}

@@ -251,7 +251,7 @@ function DogManager() {
         <Row className="justify-content-center">
           <Col sm={4}></Col>
           <Col sm={4}>
-            <h2 className="title-text-dm">Dog Manager</h2>
+            <h2 className="title-text-dm">Dogs</h2>
           </Col>
           <Col sm={4}>
             <Button className="add-button" onClick={showAddDogModal}>
