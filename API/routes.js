@@ -32,7 +32,7 @@ module.exports = function (app) {
       url: mongoURI,
       file: (req, file) => {
           return new Promise((resolve, reject) => {
-              crypto.randomBytes(16, (err, buf) => {
+              crypto.randomBytes(16, (err, buf) => { 
                   if (err) {
                       return reject(err);
                   }
@@ -156,3 +156,4 @@ module.exports = function (app) {
   // Like Dogs Route
   app.route('/likeDog')
     .post(controller.likeDog);
+}
