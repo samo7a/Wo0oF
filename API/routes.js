@@ -41,16 +41,21 @@ module.exports = function (app) {
                       filename: filename,
                       bucketName: 'ProfilePictureUploads'
                   };
+
+                  console.log("Inside storage:" + JSON.stringify(fileInfo));
                   resolve(fileInfo);
               });
           });
       }
   });
+
+  //  Limiting the file size so it doesn't crash the database.
+  // const upload = multer({ storage: storage, limits: { fieldSize: 10 * 1024 * 1024 } });
   const upload = multer({ storage });
 
   // @route GET /
   // @desc Loads form
-  app.get('/', (req, res) => {
+  app.get('/getImages', (req, res) => {
       gfs.files.find().toArray((err, files) => {
           // Check if files
           if (!files || files.length === 0) {
@@ -66,7 +71,7 @@ module.exports = function (app) {
                       file.isImage = false;
                   }
               });
-              res.render('home', { files: files });
+              res.send({ files: files });
           }
       });
   });
@@ -74,18 +79,20 @@ module.exports = function (app) {
   // @route POST /upload
   // @desc  Uploads file to DB
   app.post('/profilePicture', upload.single('file'), (req, res) => {
-      // res.json({ file: req.file });
+      var jsonReturn = { file: req.file };
+      console.log(jsonReturn);
       res.redirect('home');
   });
 
   // @route GET /image/:filename
   // @desc Display Image
-  app.get('/image/:filename', (req, res) => {
+  app.get('/getSingleImage/:filename', (req, res) => {
       gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
           // Check if file
           if (!file || file.length === 0) {
+            console.log("File name inside of get image API: " + req.params.filename);
               return res.status(404).json({
-                  err: 'No file exists'
+                  err: 'No file exists \s'
               });
           }
 
