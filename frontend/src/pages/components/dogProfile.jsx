@@ -18,7 +18,7 @@ function DogProfile({ dog, dispatch }) {
   var userID = ud.payload.userId;
 
   const doEditDog = async () => {
-    console.log(dog.id)
+    console.log(dog.id);
     var obj = {
       UserID: userID,
       Name: name,
@@ -31,7 +31,7 @@ function DogProfile({ dog, dispatch }) {
       Age: age,
       Sex: sex,
     };
-    console.log(obj.DogID)
+    console.log(obj.DogID);
     var js = JSON.stringify(obj);
 
     try {
@@ -99,7 +99,7 @@ function DogProfile({ dog, dispatch }) {
           var res = response.data;
           if (res.error) {
             console.log(res);
-          } 
+          }
         })
         .catch(function (error) {});
     } catch (e) {
@@ -110,15 +110,14 @@ function DogProfile({ dog, dispatch }) {
 
   // Dog state variables
   const dog_id = dog.id;
-  if (dog_id == null)
-    console.log('dogid '+dog_id)
+  if (dog_id == null) console.log("dogid " + dog_id);
   const [name, setName] = useState(dog.name);
   const [sex, setSex] = useState(dog.sex);
   const [breed, setBreed] = useState(dog.breed);
   const [age, setAge] = useState(dog.age);
   const [size, setSize] = useState(dog.size);
   const [bio, setBio] = useState(dog.bio);
-  const [isNeutered, setIsNeutered] = useState(dog.isNeutered)
+  const [isNeutered, setIsNeutered] = useState(dog.isNeutered);
   const [isPottyTrained, setIsPottyTrained] = useState(dog.isPottyTrained);
 
   // Modal controls
@@ -140,18 +139,17 @@ function DogProfile({ dog, dispatch }) {
   const handleEditDog = () => {
     setEditingDog(false);
     doEditDog();
-    
   };
 
   const handleDeleteDog = () => {
-    doDeleteDog()
-    dispatch({ 
-      type: ACTIONS.DELETE_DOG, 
-      payload: { 
-        id: dog_id 
-      } 
-    })
-  }
+    doDeleteDog();
+    dispatch({
+      type: ACTIONS.DELETE_DOG,
+      payload: {
+        id: dog_id,
+      },
+    });
+  };
 
   return (
     <>
@@ -172,7 +170,7 @@ function DogProfile({ dog, dispatch }) {
                   {({ onImageUpload }) => (
                     <>
                       <button className="profile-button" onClick={onImageUpload}>
-                        <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt=""/>
+                        <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
                       </button>
                     </>
                   )}
@@ -180,28 +178,62 @@ function DogProfile({ dog, dispatch }) {
               </Row>
               <br />
               <Form.Group className="dog-name">
+                <Form.Label>Name: </Form.Label>
                 <Form.Control type="text" defaultValue={dog.name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
               </Form.Group>
-              <Form.Group className="dog-sex">
-                <Form.Control type="text" defaultValue={dog.sex} placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
-              </Form.Group>
               <Form.Group className="dog-breed">
+                <Form.Label>Breed: </Form.Label>
                 <Form.Control type="text" defaultValue={dog.breed} placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
               </Form.Group>
-              <Form.Group className="dog-age">
-                <Form.Control type="number" defaultValue={dog.age} placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+              <Form.Group style={{ display: "inline" }}>
+                <Form.Label style={{ display: "inline" }}>Sex: </Form.Label>
+                <Form.Control style={{ display: "inline" }} className="w-25" as="select" custom onChange={(e) => setSex(e.target.value)}>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </Form.Control>
               </Form.Group>
-              <Form.Group className="dog-size">
-                <Form.Control type="text" defaultValue={dog.size} placeholder="size" onChange={(e) => setSize(e.target.value)} />
+              <Form.Group style={{ display: "inline" }} className="dog-age">
+                <Form.Label style={{ display: "inline" }}> Age: </Form.Label>
+                <Form.Control
+                  style={{ display: "inline" }}
+                  className="w-25"
+                  type="number"
+                  defaultValue={dog.age}
+                  placeholder="Age"
+                  onChange={(e) => setAge(e.target.value)}
+                />
               </Form.Group>
-              <Form.Group >
-                <Form.Label style={{display: "inline"}}>Potty Trained   </Form.Label>
-                <Form.Check defaultValue={dog.isPottyTrained} style={{display: "inline"}} onChange={() => setIsPottyTrained(!isPottyTrained)} />
+              <Form.Group style={{ display: "inline" }} className="dog-size">
+                <Form.Label style={{ display: "inline" }}> Size: </Form.Label>
+                <Form.Control
+                  style={{ display: "inline" }}
+                  className="w-25"
+                  as="select"
+                  defaultValue={dog.size}
+                  custom
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  <option>Small</option>
+                  <option>Medium</option>
+                  <option>Large</option>
+                </Form.Control>
               </Form.Group>
-
-              <Form.Group >
-                <Form.Label style={{display: "inline"}}>Neutered   </Form.Label>
-                <Form.Check defaultValue={dog.isNeutered} style={{display: "inline"}} onChange={() => setIsNeutered(!isNeutered)} />
+              <Form.Group style={{ marginTop: "15px" }}>
+                <Form.Label style={{ display: "inline" }}>Potty Trained </Form.Label>
+                {isPottyTrained ? (
+                  <Form.Check checked style={{ display: "inline" }} onChange={() => setIsPottyTrained(!isPottyTrained)} />
+                ) : (
+                  <Form.Check style={{ display: "inline" }} onChange={() => setIsPottyTrained(!isPottyTrained)} />
+                )}
+              </Form.Group>
+              <Form.Group>
+                <Form.Label style={{ display: "inline" }}>Neutered </Form.Label>
+                {isNeutered ? (
+                  <Form.Check checked style={{ display: "inline" }} onChange={() => setIsNeutered(!isNeutered)} />
+                ) : (
+                  <Form.Check style={{ display: "inline" }} onChange={() => setIsNeutered(!isNeutered)} />
+                )}
               </Form.Group>
               <Form.Group className="dog-bio">
                 <textarea

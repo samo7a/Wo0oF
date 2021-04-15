@@ -28,7 +28,7 @@ function reducer(dogs, action) {
           action.payload.size,
           action.payload.bio,
           action.payload.isPottyTrained,
-          action.payload.isNeutered,
+          action.payload.isNeutered
         ),
       ];
     case ACTIONS.EDIT_DOG:
@@ -66,7 +66,7 @@ function newDog(id, name, breed, sex, age, size, bio, isPottyTrained, isNeutered
     size: size,
     bio: bio,
     isNeutered: isNeutered,
-    isPottyTrained: isPottyTrained
+    isPottyTrained: isPottyTrained,
   };
 }
 
@@ -111,19 +111,18 @@ function DogManager() {
           if (res.error) {
             console.log(res);
           } else {
-
             // Dont read this code
             // PLS DO NOT TOUCH
             let tempID = res.dogID;
             let tempID1 = tempID.substring(0, 20);
-            let tempID2 = tempID.substring(20,tempID.length);
+            let tempID2 = tempID.substring(20, tempID.length);
             tempID2 = parseInt(tempID2, 16);
             tempID2 = tempID2 - 1;
             tempID2 = tempID2.toString(16);
             tempID = tempID1 + tempID2;
             // DONT TOUCH THAT ^
 
-            console.log(tempID)
+            console.log(tempID);
             dispatch({
               type: ACTIONS.ADD_DOG,
               payload: {
@@ -135,7 +134,7 @@ function DogManager() {
                 size: obj.Size,
                 bio: obj.Bio,
                 isNeutered: obj.isNeutered,
-                isPottyTrained: obj.isPottyTrained
+                isPottyTrained: obj.isPottyTrained,
               },
             });
           }
@@ -187,10 +186,10 @@ function DogManager() {
                   size: dog.Size,
                   bio: dog.Bio,
                   isNeutered: dog.isNeutered,
-                  isPottyTrained: dog.isPottyTrained
+                  isPottyTrained: dog.isPottyTrained,
                 },
               });
-            })
+            });
           }
         })
         .catch(function (error) {
@@ -287,43 +286,49 @@ function DogManager() {
               {({ onImageUpload }) => (
                 <>
                   <button className="profile-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt=""/>
+                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
                   </button>
                 </>
               )}
             </ImageUploading>
           </Row>
           <br />
-          <Form.Group >
+          <Form.Group>
+            <Form.Label>Name: </Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
           </Form.Group>
-
           <Form.Group>
-            <Form.Control type="text" placeholder="Sex" onChange={(e) => setSex(e.target.value)} />
-          </Form.Group>
-
-          <Form.Group>
+            <Form.Label>Breed: </Form.Label>
             <Form.Control type="text" placeholder="Breed" onChange={(e) => setBreed(e.target.value)} />
           </Form.Group>
-
-          <Form.Group >
-            <Form.Control type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+          <Form.Group style={{ display: "inline" }}>
+            <Form.Label style={{ display: "inline" }}> Sex: </Form.Label>
+            <Form.Control className="w-25" as="select" custom onChange={(e) => setSex(e.target.value)}>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </Form.Control>
           </Form.Group>
-
-          <Form.Group >
-            <Form.Control type="text" placeholder="Size" onChange={(e) => setSize(e.target.value)} />
+          <Form.Group style={{ display: "inline" }}>
+            <Form.Label style={{ display: "inline" }}> Age: </Form.Label>
+            <Form.Control style={{ display: "inline" }} className="w-25" type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
           </Form.Group>
-
-          <Form.Group >
-            <Form.Label style={{display: "inline"}}>Potty Trained   </Form.Label>
-            <Form.Check style={{display: "inline"}} onChange={() => setIsPottyTrained(!isPottyTrained)} />
+          <Form.Group style={{ display: "inline" }}>
+            <Form.Label style={{ display: "inline" }}> Size: </Form.Label>
+            <Form.Control className="w-25" as="select" custom onChange={(e) => setSize(e.target.value)}>
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+            </Form.Control>
           </Form.Group>
-
-          <Form.Group >
-            <Form.Label style={{display: "inline"}}>Neutered   </Form.Label>
-            <Form.Check style={{display: "inline"}} onChange={() => setIsNeutered(!isNeutered)} />
+          <Form.Group style={{ marginTop: "15px" }}>
+            <Form.Label style={{ display: "inline" }}>Potty Trained </Form.Label>
+            <Form.Check style={{ display: "inline" }} onChange={() => setIsPottyTrained(!isPottyTrained)} />
           </Form.Group>
-
+          <Form.Group>
+            <Form.Label style={{ display: "inline" }}>Neutered </Form.Label>
+            <Form.Check style={{ display: "inline" }} onChange={() => setIsNeutered(!isNeutered)} />
+          </Form.Group>
           <Form.Group>
             <textarea className="form-control" rows="2" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
           </Form.Group>
