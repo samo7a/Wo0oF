@@ -7,6 +7,7 @@ import defProfilePic from "../../img/def-pic.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../css/dogmanager.css";
+import "../css/editProfile.css";
 
 export const ACTIONS = {
   ADD_DOG: "add-dog",

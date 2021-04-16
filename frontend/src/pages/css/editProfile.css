@@ -17,11 +17,11 @@
 }
 
 .profile-text {
-  color: black;
-  font-size: 16px;
+  color: #2b2d42;
+  font-size: 17px;
   margin-left: 5%;
   margin-right: 5%;
-  border-bottom: 1px black solid;
+  border-bottom: 2px #2b2d42 solid;
 }
 
 .bio-text {

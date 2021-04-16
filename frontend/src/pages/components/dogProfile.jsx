@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Button, Card, Modal, Form } from "react-bootstrap";
 import { useState } from "react";
 import "../css/dogmanager.css";
+import "../css/editProfile.css";
 import "font-awesome/css/font-awesome.min.css";
 // import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
@@ -195,6 +196,7 @@ function DogProfile({ dog, dispatch }) {
                   custom
                   onChange={(e) => setSex(e.target.value)}
                 >
+                  <option></option>
                   <option>Male</option>
                   <option>Female</option>
                   <option>Other</option>
@@ -221,6 +223,7 @@ function DogProfile({ dog, dispatch }) {
                   custom
                   onChange={(e) => setSize(e.target.value)}
                 >
+                  <option></option>
                   <option>Small</option>
                   <option>Medium</option>
                   <option>Large</option>
@@ -272,32 +275,24 @@ function DogProfile({ dog, dispatch }) {
               </Row>
               <div>
                 <br />
-                <p className="profile-text">Name: {dog.name}</p>
-                <br />
-                <p className="profile-text">Sex: {dog.sex}</p>
-                <br />
-                <p className="profile-text">Breed: {dog.breed}</p>
-                <br />
-                <p className="profile-text">Age: {dog.age}</p>
-                <br />
-                <p className="profile-text">Size: {dog.size}</p>
-                <br />
-                <p className="profile-text">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
-                <br />
-                <p className="profile-text">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-                <br />
-                <p className="bio-text">Bio: {dog.bio}</p>
-                <br />
+                <p className="profile-text mb-4">Name: {dog.name}</p>
+                <p className="profile-text mb-4">Sex: {dog.sex}</p>
+                <p className="profile-text mb-4">Breed: {dog.breed}</p>
+                <p className="profile-text mb-4">Age: {dog.age}</p>
+                <p className="profile-text mb-4">Size: {dog.size}</p>
+                <p className="profile-text mb-4">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
+                <p className="profile-text mb-4">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
+                <p className="bio-text mb-4">Bio: {dog.bio}</p>
               </div>
             </Modal.Body>
-            <Row className="justify-content-center">
+            <Modal.Footer className="justify-content-center">
               <Button className="edit-prof-btn" onClick={() => setEditingDog(true)}>
                 Update
               </Button>
               <Button className="edit-prof-btn" onClick={handleDeleteDog}>
                 Delete
               </Button>
-            </Row>
+            </Modal.Footer>
           </>
         )}
       </Modal>
