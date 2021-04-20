@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var nodemailer = require("nodemailer");
+var sendGridTransport = require("nodemailer-sendgrid-transport");
 var bcrypt = require("bcrypt");
 var http = require("http");
 var url = require("url");
@@ -69,14 +70,16 @@ exports.signup = async function (req, res) {
           }
         });
 
-        // Send email (use credintials of in .env file)
-        var transporter = nodemailer.createTransport({
-          service: "Hotmail",
+        var options = {
           auth: {
-            user: `${process.env.EMAIL_ADDRESS}`,
-            pass: `${process.env.EMAIL_PASSWORD}`,
-          },
-        });
+            api_key: process.env.SENDGRID_APIKEY
+          }
+        }
+
+        console.log("TEST 1")
+
+        // Send email (use credentials in .env file)
+        var transporter = nodemailer.createTransport(sendGridTransport(options));
 
         if (process.env.NODE_ENV === "production") {
           var mailOptions = {
@@ -120,15 +123,13 @@ exports.signup = async function (req, res) {
             // return res.status(500).send({msg: "Technical Error sending Email :("});
             return res.status(500);
           } else {
-            console.log("Verification Email sent: " + info.response);
+            console.log("Verification Email sent");
             res.status(200).send({ msg: "Verification Email Sent! :)" });
           }
         });
       });
     }
   });
-
-  return res.status(200).send({ msg: "Verification Email Sent! :)" });
 };
 
 // Complete Login API
@@ -306,13 +307,16 @@ exports.resetPassword = function (req, res) {
 
       user.save();
 
-      var transporter = nodemailer.createTransport({
-        service: "Hotmail",
+      var options = {
         auth: {
-          user: `${process.env.EMAIL_ADDRESS}`,
-          pass: `${process.env.EMAIL_PASSWORD}`,
-        },
-      });
+          api_key: process.env.SENDGRID_APIKEY
+        }
+      }
+
+      console.log(JSON.stringify(options));
+
+      // Send email (use credentials in .env file)
+      var transporter = nodemailer.createTransport(sendGridTransport(options));
 
       if (process.env.NODE_ENV === "production") {
         var mailOptions = {
@@ -388,13 +392,14 @@ exports.confirmResetPassword = function (req, res) {
 
       user.save();
 
-      var transporter = nodemailer.createTransport({
-        service: "Hotmail",
+      var options = {
         auth: {
-          user: `${process.env.EMAIL_ADDRESS}`,
-          pass: `${process.env.EMAIL_PASSWORD}`,
-        },
-      });
+          api_key: process.env.SENDGRID_APIKEY
+        }
+      }
+
+      // Send email (use credentials in .env file)
+      var transporter = nodemailer.createTransport(sendGridTransport(options));
 
       var mailOptions = {
         from: "woofnoreply <woof4331@outlook.com>",
