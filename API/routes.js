@@ -40,7 +40,7 @@ module.exports = function (app) {
                       return reject(err);
                   }
                   //const filename = buf.toString('hex') + path.extname(file.originalname);
-                  console.log(req.headers['userID']);
+                  gfs.files.remove({ filename: req.headers['userid'] });
                   const filename = req.headers['userid'];
                   const fileInfo = {
                       filename: filename,

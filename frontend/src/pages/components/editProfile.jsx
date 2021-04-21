@@ -82,7 +82,7 @@ function EditProfile() {
         url: bp.buildPath("profilePicture"),
         headers: {
           "Content-Type": "multipart/form-data",
-          "UserID": userID,
+          "userid": userID,
         },
 
         data: formData,
@@ -191,8 +191,8 @@ function EditProfile() {
         </>
       ) : (
         <>
-          <Row className="justify-content-center">
-            <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
+          <Row className="justify-content-center"> 
+            <img className="profile-pic" src={"http://localhost:5000/getSingleImage/" + userID} alt="Profile" />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>
