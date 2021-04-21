@@ -67,6 +67,45 @@ function EditProfile() {
     }
   };
 
+  const uploadPhoto = async (event) => {
+
+    var formData = new FormData();
+    var imagefile = document.getElementById("profilePic");
+    formData.append("file", imagefile.files[0]);
+
+    console.log(formData);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("profilePicture"),
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "UserID": userID,
+        },
+
+        data: formData,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            console.log("Response: " + JSON.stringify(res));
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   const [isEditing, setEditMode] = useState(false);
 
   const [images, setImages] = useState([]);
@@ -91,7 +130,7 @@ function EditProfile() {
       {isEditing ? (
         <>
           <Row className="justify-content-center">
-            <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
+            {/* <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
               {({ onImageUpload }) => (
                 <>
                   <button className="pic-button" onClick={onImageUpload}>
@@ -99,7 +138,14 @@ function EditProfile() {
                   </button>
                 </>
               )}
-            </ImageUploading>
+            </ImageUploading> */}
+            {/* <button className="pic-button" onClick={onImageUpload}>
+              <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
+            </button> */}
+            <form>
+              <input type="file" name="file" id="profilePic" accept="image/*" />
+              <input type="submit" value="Upload Photo" onClick={ () => uploadPhoto() }/>
+            </form>
           </Row>
           <Form>
             <Form.Group className="forms-margin">
