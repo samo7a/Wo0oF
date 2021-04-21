@@ -174,5 +174,4 @@ module.exports = function (app) {
 
   // Get chats route
   app.route("/deleteChat").post(controller.deleteChat);
-
 }
