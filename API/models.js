@@ -49,13 +49,13 @@ const UserSchema = new Schema({
     type: Date,
   },
 
-  ProfilePicture: {
-    type: String,
-  },
-
   isVerified: {
     type: Boolean,
     default: false,
+  },
+
+  FileName: {
+    type: String,
   },
 
   SpamReports: [
@@ -64,13 +64,6 @@ const UserSchema = new Schema({
       Date: Date,
     },
   ],
-
-  jwtToken: {
-    UserID: String,
-    FirstName: String,
-    LastName: String,
-    isOwner: Boolean,
-  },
 
   LikedDogs: [
     {
@@ -91,7 +84,8 @@ const UserSchema = new Schema({
       Sex: String,
       isPottyTrained: Boolean,
       isNeutered: Boolean,
-      OwnerID: String
+      OwnerID: String,
+      FileID: Schema.Types.ObjectId
     },
   ],
 });
@@ -120,7 +114,7 @@ const ChatSchema = new Schema({
       userID: String,
     },
   ],
-  
+
 });
 
 // Token Schema

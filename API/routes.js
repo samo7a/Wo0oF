@@ -9,6 +9,7 @@ module.exports = function (app) {
   const GridFsStorage = require("multer-gridfs-storage");
   const Grid = require("gridfs-stream");
   const methodOverride = require("method-override");
+  var User = mongoose.model("User");
 
   // Mongo URI
   const mongoURI = process.env.MONGODB_URI;
@@ -76,9 +77,45 @@ module.exports = function (app) {
   // @route POST /upload
   // @desc  Uploads file to DB
   app.post("/profilePicture", upload.single("file"), (req, res) => {
-    var jsonReturn = { file: req.file };
-    console.log(jsonReturn);
-    res.redirect("home");
+
+    console.log("INSIDE req: " + req);
+
+    // var {
+    //   UserID,
+    // } = req.body;
+
+    User.findOneAndUpdate(
+      { _id: ObjectId(UserID) },
+      {
+        $set: {
+          FileName: "Hash.jpg"
+        },
+      },
+      function (err, user) {
+        // Check for any technical errors
+        if (err) {
+          return res
+            .status(500)
+            .send("Technical error while attempting to update User information.");
+        }
+        // Update JWT and send confirmation message.
+        else {
+          // const ret = jwt.createToken(
+          //   UserID,
+          //   FirstName,
+          //   LastName,
+          //   user.isOwner,
+          //   user.Email,
+          //   Phone,
+          //   Location,
+          //   ShortBio
+          // );
+          // console.log(JSON.stringify(ret));
+          var jsonReturn = { file: req.file };
+          res.status(200).json(jsonReturn);
+        }
+      }
+    );
   });
 
   // @route GET /image/:filename
