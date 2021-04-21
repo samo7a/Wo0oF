@@ -39,7 +39,9 @@ module.exports = function (app) {
                   if (err) {
                       return reject(err);
                   }
-                  const filename = buf.toString('hex') + path.extname(file.originalname);
+                  //const filename = buf.toString('hex') + path.extname(file.originalname);
+                  console.log(req.headers['userID']);
+                  const filename = req.headers['userid'];
                   const fileInfo = {
                       filename: filename,
                       bucketName: 'ProfilePictureUploads'

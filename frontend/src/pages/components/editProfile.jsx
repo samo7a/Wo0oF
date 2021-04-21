@@ -99,6 +99,7 @@ function EditProfile() {
         })
         .catch(function (error) {
           // setMessage(error);
+          console.log(error);
         });
     } catch (e) {
       alert(e.toString());
