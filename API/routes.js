@@ -156,4 +156,11 @@ module.exports = function (app) {
   // Like Dogs Route
   app.route('/likeDog')
     .post(controller.likeDog);
+
+  // Send message Route
+  app.route("/sendMessage").post(controller.sendMessage);
+
+  // Get messages Route
+  app.route("/getMessages").post(controller.getMessages);
+
 }

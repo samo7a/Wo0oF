@@ -110,7 +110,7 @@ const ChatSchema = new Schema({
   Messages: [
     {
       text: String,
-      createdAt: Int32,
+      createdAt: Date,
       userID: String,
     },
   ],
