@@ -718,8 +718,8 @@ exports.getChats = function (req,res) {
       res.send(chats);
     }
   });
+}
 
-  
 exports.deleteChat = function (req,res) {
   var {chatID} = req.body;
   Chat.findOneAndDelete({_id : chatID}, function (err, chats) {
@@ -732,5 +732,4 @@ exports.deleteChat = function (req,res) {
       res.send(200);
     }
   });
-};
 };

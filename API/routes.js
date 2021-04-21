@@ -172,7 +172,7 @@ module.exports = function (app) {
   // Get chats route
   app.route("/getChats").post(controller.getChats);
 
-  // Get chats route
+  // Delete chats route
   app.route("/deleteChat").post(controller.deleteChat);
 
 }
