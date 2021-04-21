@@ -175,7 +175,8 @@ exports.login = function (req, res) {
         user.Email,
         user.Phone,
         user.Location,
-        user.ShortBio
+        user.ShortBio,
+        user.FileName,
       );
       console.log("Inside of Login: " + JSON.stringify(ret));
 

@@ -19,6 +19,9 @@ module.exports = function (app) {
   // Init gfs
   let gfs;
 
+  let tempFileName = '';
+  let tempUserID = '';
+
   console.log("Routes has been invoked!");
 
   conn.once('open', () => {
@@ -41,6 +44,9 @@ module.exports = function (app) {
                       filename: filename,
                       bucketName: 'ProfilePictureUploads'
                   };
+
+                  tempUserID = fileInfo.filename;
+                  console.log("temp")
 
                   console.log("Inside storage:" + JSON.stringify(fileInfo));
                   resolve(fileInfo);
@@ -79,7 +85,7 @@ module.exports = function (app) {
   // @route POST /upload
   // @desc  Uploads file to DB
   app.post('/profilePicture', upload.single('file'), (req, res) => {
-      var jsonReturn = { fileName: req.file.filename };
+      var jsonReturn = { fileName: req.file };
       console.log(jsonReturn);
       res.status(200).json(jsonReturn);
   });

@@ -1,19 +1,22 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-exports.createToken = function ( id, fn, ln, isOwner, email, phone, location, bio )
+exports.createToken = function ( id, fn, ln, isOwner, email, phone, location, bio, profilePicture )
 {
     try
     {
       const expiration = new Date();
-      
+
       if (phone === undefined)
         phone = "";
       if (location === undefined)
         location = "";
       if (bio === undefined)
         bio = "";
-      const user = {userId: id, firstName: fn, lastName: ln, isOwner: isOwner, email: email, phone: phone, location: location, bio: bio};
+      if (profilePicture === undefined)
+        profilePicture = "";
+
+      const user = {userId: id, firstName: fn, lastName: ln, isOwner: isOwner, email: email, phone: phone, location: location, bio: bio, profilePicture: profilePicture};
 
       console.log("Inside createJWT: " + JSON.stringify(user));
 
@@ -61,6 +64,7 @@ exports.refresh = function( token )
   var phone = ud.payload.phone;
   var location = ud.payload.location;
   var bio = ud.payload.bio;
+  var profilePicture = ud.payload.profilePicture;
 
-  return createToken( userId, firstName, lastName, isOwner, email, phone, location, bio );
+  return createToken( userId, firstName, lastName, isOwner, email, phone, location, bio, profilePicture );
 }
