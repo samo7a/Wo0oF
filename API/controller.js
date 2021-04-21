@@ -576,7 +576,7 @@ exports.displayDogs = function (req, res) {
   dogarray = [];
   var i, j;
 
-  // Find the next owner in the same area
+  // Find the owners in the same area
   User.find({ Location: Location, isOwner: true }, function (err, owners) {
     if (err) {
       console.log(err);
@@ -631,7 +631,10 @@ exports.likeDog = function (req, res) {
   // Imports: UserID, OwnerID, DogID, isLiked
   var { UserID, OwnerID, DogID, IsLiked } = req.body;
 
+  console.log(IsLiked);
+
   if (IsLiked === true) {
+    console.log("dog liked")
     // Create a new chat with that user's information
     const newChat = new Chat({
       AdopterID: UserID,
@@ -648,17 +651,70 @@ exports.likeDog = function (req, res) {
         // Add the dog to the user's liked dogs
         const LikedDog = { DogID: DogID, IsLiked: true };
         console.log(LikedDog);
-        User.findOneAndUpdate(
-          { _id: ObjectId(UserID) },
-          { $push: { LikedDogs: LikedDog } }
+        User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: LikedDog } }, function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500);
+        }
+        else{return res.status(200);}
+        }
         );
       }
     });
   } else {
+    // Add the dog to the user's disliked dogs
     const DislikedDog = { DogID: DogID, IsLiked: false };
-    User.findOneAndUpdate(
-      { _id: ObjectId(UserID) },
-      { $push: { LikedDogs: DislikedDog } }
+    console.log(DislikedDog);
+    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: DislikedDog } }, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500);
+    }
+    }
     );
   }
+  return res.send(200);
+};
+
+
+exports.sendMessage = function (req,res) {
+  var { userID, chatID, messageData } = req.body;
+  const newMessage = {text: messageData, createdAt: Date.now(), userID: userID}
+  Chat.findOneAndUpdate({ _id: ObjectId(chatID) }, { $push: { Messages: newMessage } }, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500);
+    }
+    else{
+      return res.send(200);}
+    }
+    );
+};
+
+exports.getMessages = function (req,res) {
+  var {chatID} = req.body;
+  Chat.findOne({ _id: chatID }, function (err, chat) {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send("Technical error while attempting to find User information.");
+    } else {
+      res.send(chat.Messages);
+    }
+  });
+};
+
+exports.getChats = function (req,res) {
+  var {userID} = req.body;
+  Chat.find({ $or: [{ AdopterID: userID }, { OwnerID: userID }]}, function (err, chats) {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send("Technical error while attempting to find User information.");
+    } else {
+      res.send(chats);
+    }
+  });
 };

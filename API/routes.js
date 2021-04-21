@@ -163,4 +163,6 @@ module.exports = function (app) {
   // Get messages Route
   app.route("/getMessages").post(controller.getMessages);
 
+  // Get chats route
+
 }
