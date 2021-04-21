@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Form, Button } from "react-bootstrap";
+import { Container, Row, Form, Button, Image } from "react-bootstrap";
 import { useState } from "react";
 import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
@@ -95,7 +95,7 @@ function EditProfile() {
               {({ onImageUpload }) => (
                 <>
                   <button className="pic-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
+                    <Image className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" roundedCircle />
                   </button>
                 </>
               )}
@@ -145,7 +145,7 @@ function EditProfile() {
       ) : (
         <>
           <Row className="justify-content-center">
-            <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
+            <Image className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" roundedCircle />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>

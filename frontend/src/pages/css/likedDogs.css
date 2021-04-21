@@ -1,0 +1,10 @@
+.row-border {
+  /* border-bottom: 1px solid !important; */
+  border-bottom: 2px solid !important;
+  border-color: black !important;
+}
+
+.top-row {
+  border-bottom: 2px solid !important;
+  border-color: black !important;
+}
