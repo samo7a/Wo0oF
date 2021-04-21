@@ -720,7 +720,6 @@ exports.getChats = function (req,res) {
   });
 };
 
-
 exports.deleteChat = function (req,res) {
   var {chatID} = req.body;
   Chat.findOneAndDelete({_id : chatID}, function (err, chats) {
