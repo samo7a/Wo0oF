@@ -135,6 +135,46 @@ function Login() {
     }
   };
 
+  // const uploadPhoto = async (event) => {
+  //
+  //   var formData = new FormData();
+  //   var imagefile = document.getElementById("profilePic");
+  //   formData.append("file", imagefile.files[0]);
+  //
+  //   console.log(formData);
+  //
+  //   try {
+  //     // Axios code follows
+  //     var config = {
+  //       method: "post",
+  //       url: bp.buildPath("profilePicture"),
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         "userid": userID,
+  //       },
+  //
+  //       data: formData,
+  //     };
+  //
+  //     axios(config)
+  //       .then(function (response) {
+  //         var res = response.data;
+  //         if (res.error) {
+  //           console.log(res);
+  //         } else {
+  //           console.log("Response: " + JSON.stringify(res));
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         // setMessage(error);
+  //         console.log(error);
+  //       });
+  //   } catch (e) {
+  //     alert(e.toString());
+  //     return;
+  //   }
+  // };
+
   const [showSignUp, setShowSignUp] = useState(false);
   const handleCloseSignUp = () => setShowSignUp(false);
   const handleShowSignUp = () => setShowSignUp(true);

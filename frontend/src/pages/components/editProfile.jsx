@@ -73,6 +73,9 @@ function EditProfile() {
     var imagefile = document.getElementById("profilePic");
     formData.append("file", imagefile.files[0]);
 
+    if (process.env.NODE_ENV === "production")
+      console.log("IN PRODUCTION");
+
     console.log(formData);
 
     try {
@@ -191,8 +194,8 @@ function EditProfile() {
         </>
       ) : (
         <>
-          <Row className="justify-content-center"> 
-            <img className="profile-pic" src={"http://localhost:5000/getSingleImage/" + userID} alt="Profile" />
+          <Row className="justify-content-center">
+            <img className="profile-pic" src={ ((process.env.NODE_ENV === "production") ? "https://wo0of.herokuapp.com/getSingleImage/" + userID : "http://localhost:5000/getSingleImage/" + userID)} alt="Profile" />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>
