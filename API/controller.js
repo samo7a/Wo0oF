@@ -327,8 +327,10 @@ exports.resetPassword = function (req, res) {
             "Hi,\nWe have received a request to reset the password for Woof account " +
             Email +
             " You can reset your password by clicking the link below within one hour\n" +
-            `https://wo0of.herokuapp.com/confirmPassword/${token}\n\n` +
-            "If you did not request this, please ignore this email and your password will remain unchanged.\n",
+            `https://wo0of.herokuapp.com/confirmPassword\n\n` +
+            "Make sure to copy and paste the following confirmation code into the reset form.\n" +
+            `${token}` +
+            "\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n",
         };
       } else {
         var mailOptions = {
