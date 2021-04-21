@@ -1,21 +1,20 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/navbar.css";
 import { useState } from "react";
 import { Row, Button, Col } from "react-bootstrap";
 import EditProfile from "./editProfile";
 import Chat from "./chat";
 import "font-awesome/css/font-awesome.min.css";
-import LikedDogs from "./likedDogs";
+import LikedPage from "./likedPage";
 // import { set } from 'mongoose';
 
-function NavbarProfile() {
+function NavbarProfile({ isOwner }) {
   const [showChat, setShowChat] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
   const [isProfileClicked, setProfileClicked] = useState(false);
   const [isChatClicked, setChatClicked] = useState(true);
-  const [isDogsClicked, setDogsClicked] = useState(false);
+  const [isLikedClicked, setLikedClicked] = useState(false);
 
-  return (
+  return isOwner ? (
     <>
       <Row className="bkgd-color justify-content-center">
         <Col sm={3} className="center">
@@ -25,25 +24,10 @@ function NavbarProfile() {
               setShowChat(false);
               setProfileClicked(true);
               setChatClicked(false);
-              setDogsClicked(false);
               setShowProfile(true);
             }}
           >
             Profile
-          </Button>
-        </Col>
-        <Col sm={3} className="center">
-          <Button
-            className={isDogsClicked ? "nav-btn-clicked " : "nav-btn "}
-            onClick={() => {
-              setShowChat(false);
-              setChatClicked(false);
-              setProfileClicked(false);
-              setDogsClicked(true);
-              setShowProfile(false);
-            }}
-          >
-            Liked
           </Button>
         </Col>
         <Col sm={3} className="center">
@@ -53,7 +37,6 @@ function NavbarProfile() {
               setShowChat(true);
               setChatClicked(true);
               setProfileClicked(false);
-              setDogsClicked(false);
               setShowProfile(false);
             }}
           >
@@ -61,7 +44,55 @@ function NavbarProfile() {
           </Button>
         </Col>
       </Row>
-      <Row>{showChat ? <Chat /> : showProfile ? <EditProfile /> : <LikedDogs />}</Row>
+      <Row>{showChat ? <Chat /> : <EditProfile />}</Row>
+    </>
+  ) : (
+    <>
+      <Row className="bkgd-color justify-content-center">
+        <Col sm={3} className="center">
+          <Button
+            className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
+            onClick={() => {
+              setShowChat(false);
+              setProfileClicked(true);
+              setChatClicked(false);
+              setLikedClicked(false);
+              setShowProfile(true);
+            }}
+          >
+            Profile
+          </Button>
+        </Col>
+        <Col sm={3} className="center">
+          <Button
+            className={isLikedClicked ? "nav-btn-clicked " : "nav-btn "}
+            onClick={() => {
+              setShowChat(false);
+              setChatClicked(false);
+              setProfileClicked(false);
+              setLikedClicked(true);
+              setShowProfile(false);
+            }}
+          >
+            Likes
+          </Button>
+        </Col>
+        <Col sm={3} className="center">
+          <Button
+            className={isChatClicked ? "nav-btn-clicked " : "nav-btn "}
+            onClick={() => {
+              setShowChat(true);
+              setChatClicked(true);
+              setProfileClicked(false);
+              setLikedClicked(false);
+              setShowProfile(false);
+            }}
+          >
+            Chat
+          </Button>
+        </Col>
+      </Row>
+      <Row>{showChat ? <Chat /> : showProfile ? <EditProfile /> : <LikedPage />}</Row>
     </>
   );
 }

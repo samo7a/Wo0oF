@@ -95,7 +95,7 @@ function EditProfile() {
               {({ onImageUpload }) => (
                 <>
                   <button className="pic-button" onClick={onImageUpload}>
-                    <Image className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" roundedCircle />
+                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
                   </button>
                 </>
               )}
@@ -145,7 +145,7 @@ function EditProfile() {
       ) : (
         <>
           <Row className="justify-content-center">
-            <Image className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" roundedCircle />
+            <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>

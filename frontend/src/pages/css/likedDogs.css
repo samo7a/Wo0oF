@@ -8,3 +8,51 @@
   border-bottom: 2px solid !important;
   border-color: black !important;
 }
+
+.liked-dogs-text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.liked-dogs-btn-m {
+  font-size: 17px;
+  font-weight: 500;
+  float: right;
+  background-color: #2b2d42 !important;
+}
+
+.dog-btn {
+  background-color: inherit;
+  border: none;
+}
+
+.liked-dogs-btn {
+  font-size: 17px;
+  font-weight: 500;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.liked-img {
+  width: 50px;
+  border-radius: 50%;
+}
+
+@media only screen and (max-height: 900px) {
+  .liked-dogs-btn {
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .liked-dogs-btn-m {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .liked-dogs-text {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}

@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileHeader from "./components/profileHeader";
 import NavbarProfile from "./components/navbar";
@@ -26,11 +25,11 @@ function Home() {
       <Row>
         {/* Left column displaying The navigation bar
                 and profile or chat under it*/}
-        <Col sm={3}>
-          <NavbarProfile />
+        <Col sm={4}>
+          <NavbarProfile isOwner={isOwner} />
         </Col>
         {/* Right Column showing home for owner or adopter*/}
-        <Col sm={9}>
+        <Col sm={8}>
           <Row>{isOwner === false ? <DogAdopter /> : <DogManager />}</Row>
         </Col>
       </Row>
