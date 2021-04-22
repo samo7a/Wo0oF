@@ -91,7 +91,7 @@ module.exports = function (app) {
 
   // @route GET /image/:filename
   // @desc Display Image
-  app.get("/getSingleImage/:filename", (req, res) => {
+  app.post("/getSingleImage/:filename", (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
       // Check if file
       if (!file || file.length === 0) {
