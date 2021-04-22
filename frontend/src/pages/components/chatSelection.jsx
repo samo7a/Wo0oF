@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, ListGroup } from "react-bootstrap";
 import ChatBanner from "./chatBanner";
 import ChatScreen from "./chatScreen";
 
@@ -32,14 +32,20 @@ const ChatSelection = () => {
     setDisplayChat();
   }
 
-  return (
+  return isChatOpen ? (
     <Container fluid className="vh-100">
-      {isChatOpen
-        ? chats.map((chat) => {
-            if (chat.id === displayChat) return <ChatScreen chat={chat} handleCloseChat={handleCloseChat} />;
-          })
-        : chats.map((chat) => <ChatBanner key={chat.id} chat={chat} handleOpenChat={handleOpenChat} />)}
+      {chats.map((chat) => {
+        if (chat.id === displayChat) return <ChatScreen chat={chat} handleCloseChat={handleCloseChat} />;
+      })}
     </Container>
+  ) : (
+    <ListGroup className="w-100" style={{ overflow: "auto" }}>
+      {chats.map((chat) => (
+        <ListGroup.Item>
+          <ChatBanner key={chat.id} chat={chat} handleOpenChat={handleOpenChat} />
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
   );
 };
 

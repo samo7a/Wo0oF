@@ -23,14 +23,16 @@ export default function DogBanner({ dog }) {
           />
         </button>
       </Col>
-      <Col sm={3} className="mt-3 ">
+      <Col sm={6} className="mt-3 pl-0">
         <p className="pt-1 liked-dogs-text">{dog.Name}</p>
       </Col>
-      <Col sm={5} className="mt-3 mb-3">
+      <Col sm={2} className="mt-2 mb-2">
         {/* ON click send a message request from user to owner */}
-        <Button className="btn-sm liked-dogs-btn-m">Message Owner</Button>
+        <Button className="btn-sm liked-dogs-btn-m">
+          <i className="fa fa-envelope"></i>
+        </Button>
       </Col>
-      <Col sm={1} className="mt-3 mb-3">
+      <Col sm={2} className="mt-2 mb-2">
         {/* ON click remove dog users likes */}
         <Button className="btn-sm btn-danger liked-dogs-btn">
           <i className="fa fa-times" aria-hidden="true"></i>
@@ -55,14 +57,14 @@ export default function DogBanner({ dog }) {
           </Row>
           <div>
             <br />
-            <p className="profile-text mb-4">Name: {dog.Name}</p>
-            <p className="profile-text mb-4">Sex: {dog.Sex}</p>
-            <p className="profile-text mb-4">Breed: {dog.Breed}</p>
-            <p className="profile-text mb-4">Age: {dog.Age}</p>
-            <p className="profile-text mb-4">Size: {dog.Size}</p>
-            <p className="profile-text mb-4">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
-            <p className="profile-text mb-4">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-            <p className="bio-text mb-4">Bio: {dog.Bio}</p>
+            <p className="modal-text ">Name: {dog.Name}</p>
+            <p className="modal-text ">Sex: {dog.Sex}</p>
+            <p className="modal-text ">Breed: {dog.Breed}</p>
+            <p className="modal-text ">Age: {dog.Age}</p>
+            <p className="modal-text ">Size: {dog.Size}</p>
+            <p className="modal-text ">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
+            <p className="modal-text ">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
+            <p className="bio-text ">Bio: {dog.Bio}</p>
           </div>
         </Modal.Body>
       </Modal>

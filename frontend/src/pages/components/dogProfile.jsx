@@ -194,18 +194,18 @@ function DogProfile({ dog, dispatch }) {
   return (
     <>
       <Button className="dog-profile-btn" onClick={showDetails}>
-        <Card border="light" bg="light" className="dog-profile-card">
-          <Card.Img
-            variant="top"
-            className="dog-profile-card-img"
-            src={
+        <div
+          className="dog-profile-card"
+          style={{
+            backgroundImage: `url(${
               process.env.NODE_ENV === "production"
                 ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
                 : "http://localhost:5000/getSingleImage/" + dog.id
-            }
-            alt=""
-          />
-        </Card>
+            })`,
+          }}
+        >
+          <h3>{dog.name}</h3>
+        </div>
       </Button>
       <Modal show={details} onHide={hideDetails}>
         {isEditingDog ? (
@@ -215,6 +215,7 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Header>
             <Modal.Body>
               <Row className="justify-content-center">
+                <p style={{ display: "inline" }}>Change Profile Pic</p>
                 <form>
                   <input type="file" name="file" id="profilePic" accept="image/*" />
                   <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
@@ -315,7 +316,7 @@ function DogProfile({ dog, dispatch }) {
             <Modal.Body>
               <Row className="justify-content-center">
                 <img
-                  className="profile-pic"
+                  className="dog-img-details"
                   src={
                     process.env.NODE_ENV === "production"
                       ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
@@ -326,13 +327,13 @@ function DogProfile({ dog, dispatch }) {
               </Row>
               <div>
                 <br />
-                <p className="profile-text mb-4">Name: {dog.name}</p>
-                <p className="profile-text mb-4">Sex: {dog.sex}</p>
-                <p className="profile-text mb-4">Breed: {dog.breed}</p>
-                <p className="profile-text mb-4">Age: {dog.age}</p>
-                <p className="profile-text mb-4">Size: {dog.size}</p>
-                <p className="profile-text mb-4">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
-                <p className="profile-text mb-4">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
+                <p className="modal-text ">Name: {dog.name}</p>
+                <p className="modal-text ">Sex: {dog.sex}</p>
+                <p className="modal-text ">Breed: {dog.breed}</p>
+                <p className="modal-text ">Age: {dog.age}</p>
+                <p className="modal-text ">Size: {dog.size}</p>
+                <p className="modal-text ">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
+                <p className="modal-text ">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
                 <p className="bio-text mb-4">Bio: {dog.bio}</p>
               </div>
             </Modal.Body>

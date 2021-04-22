@@ -57,7 +57,7 @@ export default function LikedPage() {
     getLikedDogs();
   }, []);
 
-  console.log(likedDogsArr);
+  // console.log(likedDogsArr);
   return (
     // <Container fluid className="" style={{ overflow: "auto" }}>
     <ListGroup className="w-100" style={{ overflow: "auto" }}>
