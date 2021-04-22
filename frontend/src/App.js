@@ -14,7 +14,7 @@ function App() {
           <Route exact path="/" component={Login}></Route>
           <Route path="/home" component={Home}></Route>
           <Route path="/confirmPassword" component={ConfirmPassword}></Route>
-          <Route path="/verifyEmail" component={EmailVerification}></Route>
+          <Route path="/verifyUserEmail" component={EmailVerification}></Route>
         </Switch>
       </div>
     </Router>

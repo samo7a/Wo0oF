@@ -133,7 +133,7 @@ module.exports = function (app) {
   app.route("/confirmResetPassword").post(controller.confirmResetPassword);
 
   // Verify Email route
-  app.route("/verifyEmail/:email/:token").get(controller.verifyEmail);
+  app.route("/verifyEmail").post(controller.verifyEmail);
 
   // Create Dog Route
   app.route("/createDog").post(controller.createDog);

@@ -74,8 +74,6 @@ exports.signup = async function (req, res) {
           },
         };
 
-        console.log("TEST 1");
-
         // Send email (use credentials in .env file)
         var transporter = nodemailer.createTransport(sendGridTransport(options));
 
@@ -83,35 +81,29 @@ exports.signup = async function (req, res) {
           var mailOptions = {
             from: "woofnoreply <woof4331@outlook.com>",
             to: Email,
-            subject: "Account Verification Link",
+            subject: "Email Verification",
             text:
-              "Hello " +
-              FirstName +
-              ",\n\n" +
-              "Please verify your account by clicking the link: \nhttps://" +
-              req.headers.host +
-              "/verifyEmail/" +
+              "Hi,\nWe have received a request to verify the following Woof account " +
               Email +
-              "/" +
-              token.token +
-              "\n\nThank You!\n",
+              "\nPlease verify your account by clicking the link:\n" +
+              `https://wo0of.herokuapp.com/verifyUserEmail\n\n` +
+              "Make sure to copy and paste the following confirmation code into the reset form.\n" +
+              `${token.token}` +
+              "\n\nIf you did not request this, please ignore this email.\n",
           };
         } else {
           var mailOptions = {
             from: "woofnoreply <woof4331@outlook.com>",
             to: Email,
-            subject: "Account Verification Link",
+            subject: "Email Verification",
             text:
-              "Hello " +
-              FirstName +
-              ",\n\n" +
-              "Please verify your account by clicking the link: \nhttp://" +
-              req.headers.host +
-              "/verifyEmail/" +
+              "Hi,\nWe have received a request to verify the following Woof account " +
               Email +
-              "/" +
-              token.token +
-              "\n\nThank You!\n",
+              "\nPlease verify your account by clicking the link:\n" +
+              `http://localhost:3000/verifyUserEmail\n\n` +
+              "Make sure to copy and paste the following confirmation code into the reset form.\n" +
+              `${token.token}` +
+              "\n\nIf you did not request this, please ignore this email.\n",
           };
         }
 
@@ -213,7 +205,10 @@ exports.editUser = function (req, res) {
 
 // Complete Verify Email API
 exports.verifyEmail = function (req, res) {
-  Token.findOne({ token: req.params.token }, function (err, token) {
+
+  const { emailToken } = req.body;
+
+  Token.findOne({ token: emailToken }, function (err, token) {
     // Token is not found in the database then the token may have expired
     if (!token) {
       return res.status(400).send("Your verification link may have expired. Please re-verify your Email.");

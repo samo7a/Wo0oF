@@ -5,7 +5,7 @@ import bp from "./bp";
 import "./css/confirmPassword.css";
 import logo from "../img/logo.png";
 
-export default function EmailVerification() {
+function EmailVerification() {
   // set this to true when u get a response by doing setConfirmed(true);
   const [isConfirmed, setConfirmed] = useState(false);
   const [code, setCode] = useState(""); // this is where the code is saved
@@ -14,39 +14,38 @@ export default function EmailVerification() {
   const doVerifyEmail = async (event) => {
     event.preventDefault();
 
-    // var obj;
-    // var js;
+    var obj = { emailToken : code };
+    var js = JSON.stringify(obj);
 
-    // try {
-    //   // Axios code follows
-    //   var config = {
-    //     method: "post",
-    //     url: bp.buildPath("confirmResetPassword"),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("verifyEmail"),
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-    //     data: js,
-    //   };
+        data: js,
+      };
 
-    //   axios(config)
-    //     .then(function (response) {
-    //       var res = response.data;
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
 
-    //       if (res.error) {
-    //         console.log(res);
-    //       } else {
-    //         // save the response in the variable here and setConfirmed here
-    //         window.location.href = "/"; // or this could just take u back to login
-    //       }
-    //     })
-    //     .catch(function (error) {
-    //       // setMessage(error);
-    //     });
-    // } catch (e) {
-    //   alert(e.toString());
-    //   return;
-    // }
+          if (res.error) {
+            console.log(res);
+          } else {
+            window.location.href = "/";
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
   };
 
   return (
@@ -78,3 +77,5 @@ export default function EmailVerification() {
     </Container>
   );
 }
+
+export default EmailVerification;
