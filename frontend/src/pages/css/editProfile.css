@@ -98,6 +98,27 @@
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
 }
 
+.profile-img-file {
+  padding-right: 0px;
+}
+
+.profile-img-inp {
+  background-color: #ef233c !important;
+  color: white !important;
+  border: none !important;
+  font-size: 15px !important;
+  padding-right: 40px !important;
+  padding-left: 40px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  margin-top: 15px !important;
+  margin-bottom: 10px !important;
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+  border-radius: 30px !important;
+  text-align: center !important;
+}
+
 @media only screen and (max-height: 900px) {
   .profile-htext {
     color: #ef233c;

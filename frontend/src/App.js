@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import ConfirmPassword from "./pages/confirmPassword";
+import EmailVerification from "./pages/emailVerification";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route exact path="/" component={Login}></Route>
           <Route path="/home" component={Home}></Route>
           <Route path="/confirmPassword" component={ConfirmPassword}></Route>
+          <Route path="/verifyEmail" component={EmailVerification}></Route>
         </Switch>
       </div>
     </Router>

@@ -68,13 +68,11 @@ function EditProfile() {
   };
 
   const uploadPhoto = async (event) => {
-
     var formData = new FormData();
     var imagefile = document.getElementById("profilePic");
     formData.append("file", imagefile.files[0]);
 
-    if (process.env.NODE_ENV === "production")
-      console.log("IN PRODUCTION");
+    if (process.env.NODE_ENV === "production") console.log("IN PRODUCTION");
 
     console.log(formData);
 
@@ -85,7 +83,7 @@ function EditProfile() {
         url: bp.buildPath("profilePicture"),
         headers: {
           "Content-Type": "multipart/form-data",
-          "userid": userID,
+          userid: userID,
         },
 
         data: formData,
@@ -134,21 +132,15 @@ function EditProfile() {
       {isEditing ? (
         <>
           <Row className="justify-content-center">
-            {/* <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
-              {({ onImageUpload }) => (
-                <>
-                  <button className="pic-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
-                  </button>
-                </>
-              )}
-            </ImageUploading> */}
-            {/* <button className="pic-button" onClick={onImageUpload}>
-              <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="Profile" />
-            </button> */}
+            <div>
+              <br />
+              <p style={{ display: "block" }}>Change Profile Pic</p>
+            </div>
+          </Row>
+          <Row className="justify-content-center">
             <form>
               <input type="file" name="file" id="profilePic" accept="image/*" />
-              <input type="submit" value="Upload Photo" onClick={ () => uploadPhoto() }/>
+              <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
             </form>
           </Row>
           <Form>
@@ -195,7 +187,15 @@ function EditProfile() {
       ) : (
         <>
           <Row className="justify-content-center">
-            <img className="profile-pic" src={ ((process.env.NODE_ENV === "production") ? "https://wo0of.herokuapp.com/getSingleImage/" + userID : "http://localhost:5000/getSingleImage/" + userID)} alt="Profile" />
+            <img
+              className="profile-pic"
+              src={
+                process.env.NODE_ENV === "production"
+                  ? "https://wo0of.herokuapp.com/getSingleImage/" + userID
+                  : "http://localhost:5000/getSingleImage/" + userID
+              }
+              alt="Profile"
+            />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>

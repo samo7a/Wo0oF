@@ -111,7 +111,7 @@ function DogProfile({ dog, dispatch }) {
 
   const uploadPhoto = async (event) => {
     var formData = new FormData();
-    var imagefile = document.getElementById("profilePic");
+    var imagefile = document.getElementById("dogProfilePic");
     formData.append("file", imagefile.files[0]);
 
     console.log(formData);
@@ -217,7 +217,7 @@ function DogProfile({ dog, dispatch }) {
               <Row className="justify-content-center">
                 <p style={{ display: "inline" }}>Change Profile Pic</p>
                 <form>
-                  <input type="file" name="file" id="profilePic" accept="image/*" />
+                  <input type="file" name="file" id="dogProfilePic" accept="image/*" />
                   <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
                 </form>
               </Row>
