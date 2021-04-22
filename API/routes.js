@@ -161,6 +161,10 @@ module.exports = function (app) {
   app.route('/displayDogs')
     .post(controller.displayDogs);
 
+  // Display Dogs Route
+  app.route('/getOwnerDogs')
+    .post(controller.getOwnerDogs);
+
   // Like Dogs Route
   app.route('/likeDog')
     .post(controller.likeDog);

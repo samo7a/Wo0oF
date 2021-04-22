@@ -87,6 +87,46 @@ function DogCard({ dog, removeDogCard }) {
     }
   };
 
+  const uploadPhoto = async (event) => {
+
+    var formData = new FormData();
+    var imagefile = document.getElementById("profilePic");
+    formData.append("file", imagefile.files[0]);
+
+    console.log(formData);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("profilePicture"),
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "userid": dog._id,
+        },
+
+        data: formData,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            console.log("Response: " + JSON.stringify(res));
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   const [isFlipped, setFlipped] = useState(false);
   const flipCard = () => setFlipped(!isFlipped);
 
@@ -104,7 +144,7 @@ function DogCard({ dog, removeDogCard }) {
     <>
       {!isFlipped ? (
         <button className="flip-btn" onClick={flipCard}>
-          <div className="dog-card" style={{ backgroundImage: `url(${goodDog})` }}>
+          <div className="dog-card" style={{ backgroundImage: `url(${((process.env.NODE_ENV === "production") ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id : "http://localhost:5000/getSingleImage/" + dog._id)})` }}>
             <h3 className="dog-card-title">{dog.Name}</h3>
           </div>
         </button>
