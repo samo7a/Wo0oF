@@ -108,6 +108,39 @@ function EditProfile() {
     }
   };
 
+  const getPhoto = async (event) => {
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("/getSingleImage/" + userID),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+
+          console.log("getphoto res: " + res);
+
+          if (res.error) {
+            console.log(res);
+          } else {
+            return res;
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   const [isEditing, setEditMode] = useState(false);
 
   const [images, setImages] = useState([]);
@@ -190,9 +223,7 @@ function EditProfile() {
             <img
               className="profile-pic"
               src={
-                process.env.NODE_ENV === "production"
-                  ? "https://wo0of.herokuapp.com/getSingleImage/" + userID
-                  : "http://localhost:5000/getSingleImage/" + userID
+                () => getPhoto()
               }
               alt="Profile"
             />

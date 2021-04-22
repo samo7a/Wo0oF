@@ -81,7 +81,7 @@ exports.signup = async function (req, res) {
           var mailOptions = {
             from: "woofnoreply <woof4331@outlook.com>",
             to: Email,
-            subject: "Email Verification",
+            subject: "Account Verification Link",
             text:
               "Hi,\nWe have received a request to verify the following Woof account " +
               Email +
@@ -95,7 +95,7 @@ exports.signup = async function (req, res) {
           var mailOptions = {
             from: "woofnoreply <woof4331@outlook.com>",
             to: Email,
-            subject: "Email Verification",
+            subject: "Account Verification Link",
             text:
               "Hi,\nWe have received a request to verify the following Woof account " +
               Email +

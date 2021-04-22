@@ -148,6 +148,39 @@ function DogProfile({ dog, dispatch }) {
     }
   };
 
+  const getPhoto = async (event) => {
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("/getSingleImage/" + dog.id),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+
+          console.log("getphoto res: " + res);
+
+          if (res.error) {
+            console.log(res);
+          } else {
+            return res;
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   // Dog state variables
   const dog_id = dog.id;
   if (dog_id == null) console.log("dogid " + dog_id);
@@ -198,9 +231,7 @@ function DogProfile({ dog, dispatch }) {
           className="dog-profile-card"
           style={{
             backgroundImage: `url(${
-              process.env.NODE_ENV === "production"
-                ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
-                : "http://localhost:5000/getSingleImage/" + dog.id
+              getPhoto()
             })`,
           }}
         >
@@ -318,9 +349,7 @@ function DogProfile({ dog, dispatch }) {
                 <img
                   className="dog-img-details"
                   src={
-                    process.env.NODE_ENV === "production"
-                      ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
-                      : "http://localhost:5000/getSingleImage/" + dog.id
+                    getPhoto()
                   }
                   alt=""
                 />
