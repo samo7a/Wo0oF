@@ -1,7 +1,7 @@
 .profile-pic {
   margin-top: 5% !important;
-  width: 10rem !important;
-  /* height: 9rem !important; */
+  width: 150px !important;
+  height: 150px !important;
   border-radius: 50% !important;
 }
 
@@ -23,6 +23,15 @@
   margin-left: 5%;
   margin-right: 5%;
   border-bottom: 2px #2b2d42 solid;
+}
+
+.modal-text {
+  color: #2b2d42;
+  font-size: 17px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-bottom: 2px #2b2d42 solid;
+  margin-bottom: 20px;
 }
 
 .bio-text {
@@ -82,6 +91,13 @@
   margin-left: 1%;
 }
 
+.dog-img-details {
+  max-width: 350px;
+  max-height: 300px;
+  border-radius: 2%;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
+}
+
 @media only screen and (max-height: 900px) {
   .profile-htext {
     color: #ef233c;
@@ -112,5 +128,21 @@
     margin-top: 5% !important;
     width: 7rem !important;
     border-radius: 50% !important;
+  }
+
+  .modal-text {
+    color: #2b2d42;
+    font-size: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 14px;
+    border-bottom: 2px #2b2d42 solid;
+  }
+
+  .dog-img-details {
+    max-width: 250px;
+    max-height: 200px;
+    border-radius: 2%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
   }
 }

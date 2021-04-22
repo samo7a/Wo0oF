@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DogCard from "./dogCard";
 import "../css/dogcard.css";
@@ -22,6 +22,7 @@ function DogAdopter() {
   const getDogs = async () => {
     var obj = {
       Location: zipCode,
+      id: userID,
     };
 
     var js = JSON.stringify(obj);
@@ -59,7 +60,7 @@ function DogAdopter() {
   };
 
   // console.log(dogs.length);
-  // console.log(dogs);
+  console.log(dogs);
   if (dogs.length === 0) {
     getDogs();
   }
@@ -81,6 +82,7 @@ function DogAdopter() {
         ) : (
           <div className="no-dogs">
             <i className="fa fa-frown-o sad-face"></i>
+            <Spinner animation="grow" />
             <p>Sorry there are no more dogs for adoption in your area.</p>
             <p>Expand your area or come back later.</p>
           </div>
