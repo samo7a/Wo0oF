@@ -92,7 +92,6 @@ exports.signup = async function (req, res) {
               ",\n\n" +
               "Please verify your account by clicking the link: \nhttps://" +
               req.headers.host +
-              ".com" +
               "/verifyEmail/" +
               Email +
               "/" +
