@@ -2,7 +2,7 @@ import "../css/navbar.css";
 import { useState } from "react";
 import { Row, Button, Col } from "react-bootstrap";
 import EditProfile from "./editProfile";
-import Chat from "./chat";
+import ChatSelection from "./chatSelection";
 import "font-awesome/css/font-awesome.min.css";
 import LikedPage from "./likedPage";
 // import { set } from 'mongoose';
@@ -44,7 +44,7 @@ function NavbarProfile({ isOwner }) {
           </Button>
         </Col>
       </Row>
-      <Row>{showChat ? <Chat /> : <EditProfile />}</Row>
+      <Row>{showChat ? <ChatSelection /> : <EditProfile />}</Row>
     </>
   ) : (
     <>
@@ -92,7 +92,7 @@ function NavbarProfile({ isOwner }) {
           </Button>
         </Col>
       </Row>
-      <Row>{showChat ? <Chat /> : showProfile ? <EditProfile /> : <LikedPage />}</Row>
+      <Row>{showChat ? <ChatSelection /> : showProfile ? <EditProfile /> : <LikedPage />}</Row>
     </>
   );
 }

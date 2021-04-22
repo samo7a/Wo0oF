@@ -67,9 +67,19 @@ const UserSchema = new Schema({
 
   LikedDogs: [
     {
-      IsLiked: Boolean,
-      DogID: String
-    }
+      DogID: String,
+      Name: String,
+      Bio: String,
+      Breed: String,
+      Weight: mongoose.Schema.Types.Decimal128,
+      Size: String,
+      Age: Int32,
+      Sex: String,
+      isPottyTrained: Boolean,
+      isNeutered: Boolean,
+      OwnerID: String,
+      FileID: Schema.Types.ObjectId,
+    },
   ],
 
   Dogs: [
@@ -85,7 +95,12 @@ const UserSchema = new Schema({
       isPottyTrained: Boolean,
       isNeutered: Boolean,
       OwnerID: String,
-      FileID: Schema.Types.ObjectId
+      FileID: Schema.Types.ObjectId,
+    },
+  ],
+  DislikedDogs: [
+    {
+      DogID: String,
     },
   ],
 });
@@ -94,17 +109,25 @@ const UserSchema = new Schema({
 const ChatSchema = new Schema({
   AdopterID: {
     type: String,
-    required: true,
   },
 
   OwnerID: {
     type: String,
-    required: true,
   },
 
-  DogID: {
-    type: String,
-    required: true,
+  Dog: {
+    DogID: String,
+    Name: String,
+    Bio: String,
+    Breed: String,
+    Weight: mongoose.Schema.Types.Decimal128,
+    Size: String,
+    Age: Int32,
+    Sex: String,
+    isPottyTrained: Boolean,
+    isNeutered: Boolean,
+    OwnerID: String,
+    FileID: Schema.Types.ObjectId,
   },
 
   Messages: [
@@ -114,7 +137,6 @@ const ChatSchema = new Schema({
       userID: String,
     },
   ],
-
 });
 
 // Token Schema

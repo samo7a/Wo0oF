@@ -64,19 +64,17 @@ exports.signup = async function (req, res) {
 
         token.save(function (err) {
           if (err) {
-            return res
-              .status(500)
-              .send({ msg: "Technical Error creating Token :(" });
+            return res.status(500).send({ msg: "Technical Error creating Token :(" });
           }
         });
 
         var options = {
           auth: {
-            api_key: process.env.SENDGRID_APIKEY
-          }
-        }
+            api_key: process.env.SENDGRID_APIKEY,
+          },
+        };
 
-        console.log("TEST 1")
+        console.log("TEST 1");
 
         // Send email (use credentials in .env file)
         var transporter = nodemailer.createTransport(sendGridTransport(options));
@@ -142,16 +140,12 @@ exports.login = function (req, res) {
   User.findOne({ Email: Email }, function (err, user) {
     // Check if error occurs
     if (err) {
-      return res
-        .status(500)
-        .send({ msg: "Technical error, Please try logging in again" });
+      return res.status(500).send({ msg: "Technical error, Please try logging in again" });
     }
     // user is not found in database i.e. user is not registered yet.
     else if (user === null) {
       // This line of code gives a header error.
-      return res
-        .status(500)
-        .send({ msg: "This email address is not associated with any account" });
+      return res.status(500).send({ msg: "This email address is not associated with any account" });
     }
     // comapre user's password if user is find in above step
     else if (!bcrypt.compareSync(Password, user.Password)) {
@@ -159,11 +153,9 @@ exports.login = function (req, res) {
     }
     // check user is verified or not
     else if (!user.isVerified) {
-      return res
-        .status(500)
-        .send({
-          msg: "Your Email has not been verified. Please click on resend",
-        });
+      return res.status(500).send({
+        msg: "Your Email has not been verified. Please click on resend",
+      });
     }
     // user successfully logged in
     else {
@@ -176,7 +168,7 @@ exports.login = function (req, res) {
         user.Phone,
         user.Location,
         user.ShortBio,
-        user.FileName,
+        user.FileName
       );
       console.log("Inside of Login: " + JSON.stringify(ret));
 
@@ -190,15 +182,7 @@ exports.editUser = function (req, res) {
   // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
   // outgoing: error, jwt
 
-  var {
-    UserID,
-    FirstName,
-    LastName,
-    Phone,
-    Location,
-    ProfilePicture,
-    ShortBio,
-  } = req.body;
+  var { UserID, FirstName, LastName, Phone, Location, ProfilePicture, ShortBio } = req.body;
   console.log(req.body);
 
   // Forgive me Papa Szum for going over 100 characters
@@ -217,22 +201,11 @@ exports.editUser = function (req, res) {
     function (err, user) {
       // Check for any technical errors
       if (err) {
-        return res
-          .status(500)
-          .send("Technical error while attempting to update User information.");
+        return res.status(500).send("Technical error while attempting to update User information.");
       }
       // Update JWT and send confirmation message.
       else {
-        const ret = jwt.createToken(
-          UserID,
-          FirstName,
-          LastName,
-          user.isOwner,
-          user.Email,
-          Phone,
-          Location,
-          ShortBio
-        );
+        const ret = jwt.createToken(UserID, FirstName, LastName, user.isOwner, user.Email, Phone, Location, ShortBio);
         console.log(JSON.stringify(ret));
 
         res.status(200).json(ret);
@@ -246,11 +219,7 @@ exports.verifyEmail = function (req, res) {
   Token.findOne({ token: req.params.token }, function (err, token) {
     // Token is not found in the database then the token may have expired
     if (!token) {
-      return res
-        .status(400)
-        .send(
-          "Your verification link may have expired. Please re-verify your Email."
-        );
+      return res.status(400).send("Your verification link may have expired. Please re-verify your Email.");
     }
     // if token is found then check if they are a valid user
     else {
@@ -258,9 +227,7 @@ exports.verifyEmail = function (req, res) {
         // User does not exist in database
         if (user === null) {
           console.log(user);
-          return res
-            .status(404)
-            .send("We were unable to find a user for this verification.");
+          return res.status(404).send("We were unable to find a user for this verification.");
         }
         // User is already verified
         else if (user.isVerified) {
@@ -279,9 +246,7 @@ exports.verifyEmail = function (req, res) {
             }
             // Account successfully verified
             else {
-              res
-                .status(200)
-                .send(`${user.Email}` + " has been successfully verified");
+              res.status(200).send(`${user.Email}` + " has been successfully verified");
             }
           });
         }
@@ -310,9 +275,9 @@ exports.resetPassword = function (req, res) {
 
       var options = {
         auth: {
-          api_key: process.env.SENDGRID_APIKEY
-        }
-      }
+          api_key: process.env.SENDGRID_APIKEY,
+        },
+      };
 
       console.log(JSON.stringify(options));
 
@@ -356,12 +321,9 @@ exports.resetPassword = function (req, res) {
           console.log(error);
         } else {
           console.log("Recovery Email sent: " + info.response);
-          res
-            .status(200)
-            .send({
-              msg:
-                "A password recovery email has been sent. It will expire after one hour.",
-            });
+          res.status(200).send({
+            msg: "A password recovery email has been sent. It will expire after one hour.",
+          });
         }
       });
     }
@@ -376,12 +338,9 @@ exports.confirmResetPassword = function (req, res) {
     // User is not found into database then the token may have expired
     if (!user) {
       console.log("Could not find user");
-      return res
-        .status(500)
-        .send({
-          msg:
-            "Your verification link may have expired. Please resend your email.",
-        });
+      return res.status(500).send({
+        msg: "Your verification link may have expired. Please resend your email.",
+      });
     }
     // If token is found then reset password
     else {
@@ -397,9 +356,9 @@ exports.confirmResetPassword = function (req, res) {
 
       var options = {
         auth: {
-          api_key: process.env.SENDGRID_APIKEY
-        }
-      }
+          api_key: process.env.SENDGRID_APIKEY,
+        },
+      };
 
       // Send email (use credentials in .env file)
       var transporter = nodemailer.createTransport(sendGridTransport(options));
@@ -408,10 +367,7 @@ exports.confirmResetPassword = function (req, res) {
         from: "woofnoreply <woof4331@outlook.com>",
         to: user.Email,
         subject: "Confirmation of Password Reset for Woof",
-        text:
-          "Hi,\nWe would like to confirm that the following Woof account, " +
-          user.Email +
-          " has had their password reset recently.\n",
+        text: "Hi,\nWe would like to confirm that the following Woof account, " + user.Email + " has had their password reset recently.\n",
       };
 
       console.log("Sending mail");
@@ -435,22 +391,16 @@ exports.reportAccounts = function (req, res) {
   const newReport = { Description: Description, Date: Date.now() };
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate(
-    { _id: ObjectId(UserID) },
-    { $push: { SpamReports: newReport } },
-    function (err, user) {
-      // Check for any technical errors
-      if (err) {
-        return res
-          .status(500)
-          .send("Technical error while attempting to update User information.");
-      }
-      // Update JWT and send confirmation message.
-      else {
-        res.status(200).send("Report successfully inserted!");
-      }
+  User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { SpamReports: newReport } }, function (err, user) {
+    // Check for any technical errors
+    if (err) {
+      return res.status(500).send("Technical error while attempting to update User information.");
     }
-  );
+    // Update JWT and send confirmation message.
+    else {
+      res.status(200).send("Report successfully inserted!");
+    }
+  });
 };
 
 // Create Dog Function
@@ -458,17 +408,7 @@ exports.createDog = function (req, res) {
   // incoming: Dog Name, password
   // outgoing: id, firstName, lastName, error
 
-  var {
-    Name,
-    UserID,
-    Bio,
-    Breed,
-    Size,
-    Age,
-    Sex,
-    isPottyTrained,
-    isNeutered,
-  } = req.body;
+  var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered } = req.body;
 
   const newDog = {
     Name: Name,
@@ -483,24 +423,18 @@ exports.createDog = function (req, res) {
   };
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate(
-    { _id: ObjectId(UserID) },
-    { $push: { Dogs: newDog } },
-    function (err, user) {
-      // Check for any technical errors
-      if (err) {
-        return res
-          .status(500)
-          .send("Technical error while attempting to update User information.");
-      }
-      // Update JWT and send confirmation message.
-      else {
-        // For the FE ppl, attach DogID to the dog profile.
-        var jsonReturn = { dogID: ObjectId(newDog._id) };
-        return res.status(200).send(jsonReturn);
-      }
+  User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { Dogs: newDog } }, function (err, user) {
+    // Check for any technical errors
+    if (err) {
+      return res.status(500).send("Technical error while attempting to update User information.");
     }
-  );
+    // Update JWT and send confirmation message.
+    else {
+      // For the FE ppl, attach DogID to the dog profile.
+      var jsonReturn = { dogID: ObjectId(newDog._id) };
+      return res.status(200).send(jsonReturn);
+    }
+  });
 };
 
 // Complete deleteDog API
@@ -508,38 +442,21 @@ exports.deleteDog = function (req, res) {
   var { UserID, DogID } = req.body;
 
   // Forgive me Papa Szum for going over 100 characters
-  User.findOneAndUpdate(
-    { _id: ObjectId(UserID) },
-    { $pull: { Dogs: { _id: ObjectId(DogID) } } },
-    function (err, user) {
-      // Check for any technical errors
-      if (err) {
-        return res
-          .status(500)
-          .send("Technical error while attempting to update User information.");
-      }
-      // Update delete message
-      else {
-        return res.status(200).send("Dog successfully deleted!");
-      }
+  User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $pull: { Dogs: { _id: ObjectId(DogID) } } }, function (err, user) {
+    // Check for any technical errors
+    if (err) {
+      return res.status(500).send("Technical error while attempting to update User information.");
     }
-  );
+    // Update delete message
+    else {
+      return res.status(200).send("Dog successfully deleted!");
+    }
+  });
 };
 
 // Complete editDog API
 exports.editDog = function (req, res) {
-  var {
-    Name,
-    UserID,
-    Bio,
-    Breed,
-    Size,
-    Age,
-    Sex,
-    isPottyTrained,
-    isNeutered,
-    DogID,
-  } = req.body;
+  var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered, DogID } = req.body;
 
   console.log(req.body);
   // Find user then find the dog and update
@@ -559,9 +476,7 @@ exports.editDog = function (req, res) {
     },
     function (err, owner) {
       if (err) {
-        return res
-          .status(500)
-          .send("Technical error while attempting to find User information.");
+        return res.status(500).send("Technical error while attempting to find User information.");
       } else {
         return res.status(200).send("Dog successfully updated!");
       }
@@ -571,38 +486,65 @@ exports.editDog = function (req, res) {
 
 // Complete displayDogs API
 exports.displayDogs = function (req, res) {
-  var { Location } = req.body;
+  var { Location, id } = req.body;
+  var Usernum = 0;
+  var ignoreDogs = [];
+  var dogarray = [];
+  var i, j, k;
+  var useDog = true;
+  var yeetnum = 0;
 
-  Usernum = 0;
-  dogarray = [];
-  var i, j;
-
-  // Find the owners in the same area
-  User.find({ Location: Location, isOwner: true }, function (err, owners) {
+  // Grab the users liked and disliked dogs
+  User.findOne({ _id: id }, function (err, user) {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .send("Technical error while attempting to find User information.");
+      return res.status(500).send("Technical error while attempting to find User information.");
     } else {
-      // Loop through the users
+      for (j = 0; j < user.LikedDogs.length; j++) {
+        ignoreDogs.push(String(user.LikedDogs[j]._id));
+      }
+      for (j = 0; j < user.DislikedDogs.length; j++) {
+        ignoreDogs.push(user.DislikedDogs[j].DogID);
+      }
+      //console.log("Ignoredogs is: " + ignoreDogs);
 
-      for (j = 0; j < owners.length; j++) {
-        foundowner = owners[j];
+      // Find the owners in the same area
+      var Lowerlocation = Location - 20;
+      var Upperlocation = Location + 20;
+      User.find({ Location: { $lt: Upperlocation }, isOwner: true, Location: { $gt: Lowerlocation } }, function (err, owners) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Technical error while attempting to find User information.");
+        } else {
+          // Loop through the users
 
-        // Loop through the dogs of the user and ensure that they have not been seen before and then add them to array
-        for (i = 0; i < foundowner.Dogs.length; i++) {
-          // TODO: Make sure that they have not already been seen by this user
-          if (dogarray.length < 10) {
-            dogarray.push(foundowner.Dogs[i]);
-          } else {
-            res.send(dogarray);
-            return;
+          for (j = 0; j < owners.length; j++) {
+            foundowner = owners[j];
+
+            // Loop through the dogs of the user and ensure that they have not been seen before and then add them to array
+            for (i = 0; i < foundowner.Dogs.length; i++) {
+              useDog = true;
+              for (k = 0; k < ignoreDogs.length; k++) {
+                //console.log(ignoreDogs[k] + " vs " + foundowner.Dogs[i]._id);
+                if (ignoreDogs[k] == foundowner.Dogs[i]._id) {
+                  yeetnum++;
+                  useDog = false;
+                }
+              }
+              if (useDog) {
+                dogarray.push(foundowner.Dogs[i]);
+              }
+              if (dogarray.length >= 10) {
+                //console.log("yeeted " + yeetnum);
+                return res.send(dogarray);
+              }
+            }
           }
         }
-      }
+        //console.log("yeeted " + yeetnum);
+        res.send(dogarray);
+      });
     }
-    res.send(dogarray);
   });
 };
 
@@ -610,17 +552,13 @@ exports.displayDogs = function (req, res) {
 exports.getOwnerDogs = function (req, res) {
   var { id } = req.body;
   if (id === undefined) {
-    return res
-      .status(500)
-      .send("Technical error while attempting to find User information.");
+    return res.status(500).send("Technical error while attempting to find User information.");
   }
   // Find the next owner in the same area
   User.findOne({ _id: id }, function (err, owner) {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .send("Technical error while attempting to find User information.");
+      return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       res.send(owner.Dogs);
     }
@@ -630,17 +568,19 @@ exports.getOwnerDogs = function (req, res) {
 // Complete likeDog API
 exports.likeDog = function (req, res) {
   // Imports: UserID, OwnerID, DogID, isLiked
-  var { UserID, OwnerID, DogID, IsLiked } = req.body;
+  var { UserID, Dog, IsLiked } = req.body;
 
   console.log(IsLiked);
+  OwnerID = Dog.OwnerID;
+  console.log(Dog.OwnerID);
 
   if (IsLiked === true) {
-    console.log("dog liked")
+    console.log("dog liked");
     // Create a new chat with that user's information
     const newChat = new Chat({
       AdopterID: UserID,
-      DogID: DogID,
-      OwnerID: OwnerID,
+      Dog: Dog,
+      OwnerID: Dog.OwnerID,
     });
 
     // create and save the new chat
@@ -650,86 +590,87 @@ exports.likeDog = function (req, res) {
         return res.status(500);
       } else {
         // Add the dog to the user's liked dogs
-        const LikedDog = { DogID: DogID, IsLiked: true };
-        console.log(LikedDog);
-        User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: LikedDog } }, function (err) {
-        if (err) {
-          console.log(err);
-          return res.status(500);
-        }
-        else{return res.status(200);}
-        }
-        );
+        User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: Dog } }, function (err) {
+          if (err) {
+            console.log(err);
+            return res.status(500);
+          } else {
+            return res.status(200);
+          }
+        });
       }
     });
   } else {
     // Add the dog to the user's disliked dogs
-    const DislikedDog = { DogID: DogID, IsLiked: false };
+    const DislikedDog = { DogID: Dog._id };
     console.log(DislikedDog);
-    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: DislikedDog } }, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500);
-    }
-    }
-    );
+    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { DislikedDogs: DislikedDog } }, function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500);
+      }
+    });
   }
   return res.send(200);
 };
 
-
-exports.sendMessage = function (req,res) {
+exports.sendMessage = function (req, res) {
   var { userID, chatID, messageData } = req.body;
-  const newMessage = {text: messageData, createdAt: Date.now(), userID: userID}
+  const newMessage = { text: messageData, createdAt: Date.now(), userID: userID };
   Chat.findOneAndUpdate({ _id: ObjectId(chatID) }, { $push: { Messages: newMessage } }, function (err) {
     if (err) {
       console.log(err);
       return res.status(500);
+    } else {
+      return res.send(200);
     }
-    else{
-      return res.send(200);}
-    }
-    );
+  });
 };
 
-exports.getMessages = function (req,res) {
-  var {chatID} = req.body;
+exports.getMessages = function (req, res) {
+  var { chatID } = req.body;
   Chat.findOne({ _id: chatID }, function (err, chat) {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .send("Technical error while attempting to find User information.");
+      return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       res.send(chat.Messages);
     }
   });
 };
 
-exports.getChats = function (req,res) {
-  var {userID} = req.body;
-  Chat.find({ $or: [{ AdopterID: userID }, { OwnerID: userID }]}, function (err, chats) {
+exports.getChats = function (req, res) {
+  var { userID } = req.body;
+  Chat.find({ $or: [{ AdopterID: userID }, { OwnerID: userID }] }, function (err, chats) {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .send("Technical error while attempting to find User information.");
+      return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       res.send(chats);
     }
   });
 };
 
-exports.deleteChat = function (req,res) {
-  var {chatID} = req.body;
-  Chat.findOneAndDelete({_id : chatID}, function (err, chats) {
+exports.deleteChat = function (req, res) {
+  var { chatID } = req.body;
+  Chat.findOneAndDelete({ _id: chatID }, function (err) {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .send("Technical error while attempting to find User information.");
+      return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       res.status(200);
+    }
+  });
+};
+
+exports.getLikedDogs = function (req, res) {
+  var { id } = req.body;
+  User.findOne({ _id: id }, function (err, founduser) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Technical error while attempting to find User information.");
+    } else {
+      res.send(founduser.LikedDogs);
     }
   });
 };

@@ -110,7 +110,6 @@ function DogProfile({ dog, dispatch }) {
   };
 
   const uploadPhoto = async (event) => {
-
     var formData = new FormData();
     var imagefile = document.getElementById("profilePic");
     formData.append("file", imagefile.files[0]);
@@ -124,7 +123,7 @@ function DogProfile({ dog, dispatch }) {
         url: bp.buildPath("profilePicture"),
         headers: {
           "Content-Type": "multipart/form-data",
-          "userid": dog.id,
+          userid: dog.id,
         },
 
         data: formData,
@@ -196,7 +195,16 @@ function DogProfile({ dog, dispatch }) {
     <>
       <Button className="dog-profile-btn" onClick={showDetails}>
         <Card border="light" bg="light" className="dog-profile-card">
-          <Card.Img variant="top" className="dog-profile-card-img" src={ ((process.env.NODE_ENV === "production") ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id : "http://localhost:5000/getSingleImage/" + dog.id)} alt="" />
+          <Card.Img
+            variant="top"
+            className="dog-profile-card-img"
+            src={
+              process.env.NODE_ENV === "production"
+                ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
+                : "http://localhost:5000/getSingleImage/" + dog.id
+            }
+            alt=""
+          />
         </Card>
       </Button>
       <Modal show={details} onHide={hideDetails}>
@@ -209,7 +217,7 @@ function DogProfile({ dog, dispatch }) {
               <Row className="justify-content-center">
                 <form>
                   <input type="file" name="file" id="profilePic" accept="image/*" />
-                  <input type="submit" value="Upload Photo" onClick={ () => uploadPhoto() }/>
+                  <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
                 </form>
               </Row>
               <br />
@@ -306,7 +314,15 @@ function DogProfile({ dog, dispatch }) {
 
             <Modal.Body>
               <Row className="justify-content-center">
-                <img className="profile-pic" src={ ((process.env.NODE_ENV === "production") ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id : "http://localhost:5000/getSingleImage/" + dog.id)} alt="" />
+                <img
+                  className="profile-pic"
+                  src={
+                    process.env.NODE_ENV === "production"
+                      ? "https://wo0of.herokuapp.com/getSingleImage/" + dog.id
+                      : "http://localhost:5000/getSingleImage/" + dog.id
+                  }
+                  alt=""
+                />
               </Row>
               <div>
                 <br />

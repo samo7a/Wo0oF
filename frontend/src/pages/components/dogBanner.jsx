@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Row, Button, Modal } from "react-bootstrap";
 import "../css/likedDogs.css";
 import "../css/editProfile.css";
-import goodDog from "../../img/good-dog.jpeg";
 
 export default function DogBanner({ dog }) {
   const [openModal, setOpenModal] = useState(false);
@@ -13,11 +12,19 @@ export default function DogBanner({ dog }) {
       <Col sm={2} className="mt-2">
         {/* dog pic on click open profile*/}
         <button className="dog-btn" onClick={() => setOpenModal(true)}>
-          <img src={goodDog} fluid className="liked-img" />
+          <img
+            className="liked-img"
+            src={
+              process.env.NODE_ENV === "production"
+                ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id
+                : "http://localhost:5000/getSingleImage/" + dog._id
+            }
+            alt=""
+          />
         </button>
       </Col>
       <Col sm={3} className="mt-3 ">
-        <p className="pt-1 liked-dogs-text">{dog.name}</p>
+        <p className="pt-1 liked-dogs-text">{dog.Name}</p>
       </Col>
       <Col sm={5} className="mt-3 mb-3">
         {/* ON click send a message request from user to owner */}
@@ -36,18 +43,26 @@ export default function DogBanner({ dog }) {
         </Modal.Header>
         <Modal.Body style={{ right: "10vh !important" }}>
           <Row className="justify-content-center">
-            <img className="profile-pic" src={goodDog} alt="" />
+            <img
+              className="liked-img-details"
+              src={
+                process.env.NODE_ENV === "production"
+                  ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id
+                  : "http://localhost:5000/getSingleImage/" + dog._id
+              }
+              alt=""
+            />
           </Row>
           <div>
             <br />
-            <p className="profile-text mb-4">Name: {dog.name}</p>
-            <p className="profile-text mb-4">Sex: {dog.sex}</p>
-            <p className="profile-text mb-4">Breed: {dog.breed}</p>
-            <p className="profile-text mb-4">Age: {dog.age}</p>
-            <p className="profile-text mb-4">Size: {dog.size}</p>
+            <p className="profile-text mb-4">Name: {dog.Name}</p>
+            <p className="profile-text mb-4">Sex: {dog.Sex}</p>
+            <p className="profile-text mb-4">Breed: {dog.Breed}</p>
+            <p className="profile-text mb-4">Age: {dog.Age}</p>
+            <p className="profile-text mb-4">Size: {dog.Size}</p>
             <p className="profile-text mb-4">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
             <p className="profile-text mb-4">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-            <p className="bio-text mb-4">Bio: {dog.bio}</p>
+            <p className="bio-text mb-4">Bio: {dog.Bio}</p>
           </div>
         </Modal.Body>
       </Modal>
