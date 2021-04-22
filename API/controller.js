@@ -153,7 +153,7 @@ exports.login = function (req, res) {
     // check user is verified or not
     else if (!user.isVerified) {
       return res.status(500).send({
-        msg: "Your Email has not been verified. Please click on resend",
+        msg: "Your Email has not been verified. Please verify your email",
       });
     }
     // user successfully logged in
@@ -167,7 +167,6 @@ exports.login = function (req, res) {
         user.Phone,
         user.Location,
         user.ShortBio,
-        user.FileName
       );
       console.log("Inside of Login: " + JSON.stringify(ret));
 
@@ -193,7 +192,6 @@ exports.editUser = function (req, res) {
         LastName: LastName,
         Location: Location,
         Phone: Phone,
-        ProfilePicture: ProfilePicture,
         ShortBio: ShortBio,
       },
     },

@@ -97,7 +97,7 @@ module.exports = function (app) {
       if (!file || file.length === 0) {
         console.log("File name inside of get image API: " + req.params.filename);
         return res.status(404).json({
-          err: "No file exists s",
+          err: "No file exists",
         });
       }
 

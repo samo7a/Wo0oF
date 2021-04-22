@@ -54,10 +54,6 @@ const UserSchema = new Schema({
     default: false,
   },
 
-  FileName: {
-    type: String,
-  },
-
   SpamReports: [
     {
       Description: String,
@@ -78,7 +74,6 @@ const UserSchema = new Schema({
       isPottyTrained: Boolean,
       isNeutered: Boolean,
       OwnerID: String,
-      FileID: Schema.Types.ObjectId,
     },
   ],
 
@@ -95,7 +90,6 @@ const UserSchema = new Schema({
       isPottyTrained: Boolean,
       isNeutered: Boolean,
       OwnerID: String,
-      FileID: Schema.Types.ObjectId,
     },
   ],
   DislikedDogs: [
@@ -127,7 +121,6 @@ const ChatSchema = new Schema({
     isPottyTrained: Boolean,
     isNeutered: Boolean,
     OwnerID: String,
-    FileID: Schema.Types.ObjectId,
   },
 
   Messages: [
