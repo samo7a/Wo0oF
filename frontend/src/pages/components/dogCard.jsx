@@ -5,8 +5,6 @@ import "../css/dogcard.css";
 import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
 
-import goodDog from "../../img/good-dog.jpeg";
-
 function DogCard({ dog, removeDogCard }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
@@ -14,7 +12,7 @@ function DogCard({ dog, removeDogCard }) {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
-  const [source, setSource] = useState('');
+  const [source, setSource] = useState("");
 
   const likeDog = async () => {
     var obj = {
@@ -102,7 +100,6 @@ function DogCard({ dog, removeDogCard }) {
   useEffect(() => {
     // Update the document title using the getPhoto API
   }, []);
-  
 
   return (
     <>
@@ -111,7 +108,7 @@ function DogCard({ dog, removeDogCard }) {
           <div
             className="dog-card"
             style={{
-              backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog.id})`,
+              backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog._id})`,
             }}
           >
             <h3 className="dog-card-title">{dog.Name}</h3>
@@ -168,6 +165,5 @@ function DogCard({ dog, removeDogCard }) {
     </>
   );
 }
-
 
 export default DogCard;

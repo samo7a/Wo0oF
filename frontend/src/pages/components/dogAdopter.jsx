@@ -17,6 +17,7 @@ function DogAdopter() {
 
   // State variables
   const [dogs, setDogs] = useState([]);
+  const [isOKtoPull, setOKtoPull] = useState(true);
 
   // Loading dogs from database
   const getDogs = async () => {
@@ -46,8 +47,13 @@ function DogAdopter() {
           if (res.error) {
             console.log(res);
           } else {
-            // Use setDogs to point dogs to the new array
-            setDogs(res);
+            if (res.length == 0) {
+              setOKtoPull(false);
+            } else {
+              // Use setDogs to point dogs to the new array
+              setOKtoPull(true);
+              setDogs(res);
+            }
           }
         })
         .catch(function (error) {
@@ -61,7 +67,7 @@ function DogAdopter() {
 
   // console.log(dogs.length);
   console.log(dogs);
-  if (dogs.length === 0) {
+  if (dogs.length === 0 && isOKtoPull) {
     getDogs();
   }
 
