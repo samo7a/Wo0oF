@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
+import { uploadFile } from "../images.js";
 
 export const ACTIONS = {
   ADD_DOG: "add-dog",
@@ -53,7 +54,7 @@ function reducer(dogs, action) {
     case ACTIONS.DELETE_DOG:
       return dogs.filter((dog) => dog.id !== action.payload.id);
     default:
-      return dogs;
+      return [];
   }
 }
 
@@ -78,6 +79,7 @@ function DogManager() {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
+  const [render, setRender] = useState(false);
 
   const doCreateDog = async () => {
     var obj = {
@@ -123,7 +125,8 @@ function DogManager() {
             tempID = tempID1 + tempID2;
             // DONT TOUCH THAT ^
 
-            console.log(tempID);
+            uploadFile(images[0].file, tempID);
+
             dispatch({
               type: ACTIONS.ADD_DOG,
               payload: {
@@ -138,6 +141,8 @@ function DogManager() {
                 isPottyTrained: obj.isPottyTrained,
               },
             });
+            setImageChanged(false);
+            setImages([]);
           }
         })
         .catch(function (error) {
@@ -228,6 +233,7 @@ function DogManager() {
 
   // Fetching dogs from API on load once
   useEffect(() => {
+    dispatch("default");
     getOwnerDogs();
   }, []);
 
@@ -286,9 +292,11 @@ function DogManager() {
             <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
               {({ onImageUpload }) => (
                 <>
-                  <button className="profile-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
-                  </button>
+                  <button
+                    className="pic-button"
+                    onClick={onImageUpload}
+                    style={{ backgroundImage: `url(${isImageChanged ? images[0].data_url : defProfilePic})`, backgroundSize: "cover" }}
+                  ></button>
                 </>
               )}
             </ImageUploading>

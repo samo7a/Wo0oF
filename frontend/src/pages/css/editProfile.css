@@ -1,7 +1,9 @@
 .profile-pic {
   margin-top: 5% !important;
-  width: 150px !important;
-  height: 150px !important;
+  min-width: 150px !important;
+  min-height: 150px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
   border-radius: 50% !important;
 }
 
@@ -13,8 +15,18 @@
 .pic-button {
   background-color: inherit !important;
   border: none !important;
-  margin-top: 4% !important;
-  border-radius: 50%;
+  margin-top: 25px !important;
+  min-width: 150px !important;
+  min-height: 150px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 0px 5px black;
+}
+
+.pic-button:hover {
+  transition: 0.3s;
+  box-shadow: 0px 0px 10px black;
 }
 
 .profile-text {
@@ -47,13 +59,37 @@
   margin-right: 10%;
 }
 
+.confirm-upload {
+  padding: 5px 15px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #ef233c;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px rgb(131, 131, 131);
+  margin-left: 15px;
+}
+
+.confirm-upload:hover {
+  background-color: rgb(204, 27, 48) !important;
+}
+
+.confirm-upload:active {
+  background-color: rgb(204, 27, 48);
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
+}
+
 .edit-prof-btn {
   background-color: #ef233c !important;
   color: white !important;
   border: none !important;
   font-size: 20px !important;
-  padding-right: 57px !important;
-  padding-left: 57px !important;
+  padding-right: 42px !important;
+  padding-left: 42px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   margin-top: 15px !important;
@@ -67,6 +103,7 @@
 .edit-prof-btn:hover {
   background-color: rgb(204, 27, 48) !important;
   box-shadow: 0px 0px 10px black !important;
+  transition: 0.3s;
 }
 
 .edit-prof-btn:focus {
@@ -165,5 +202,14 @@
     max-height: 200px;
     border-radius: 2%;
     box-shadow: 0px 0px 10px rgb(0, 0, 0);
+  }
+
+  .profile-pic {
+    margin-top: 5% !important;
+    min-width: 125px !important;
+    min-height: 125px !important;
+    max-width: 125px !important;
+    max-height: 125px !important;
+    border-radius: 50% !important;
   }
 }

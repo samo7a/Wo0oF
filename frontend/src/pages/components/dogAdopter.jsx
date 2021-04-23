@@ -81,10 +81,14 @@ function DogAdopter() {
           ))
         ) : (
           <div className="no-dogs">
-            <i className="fa fa-frown-o sad-face"></i>
-            <Spinner animation="grow" />
-            <p>Sorry there are no more dogs for adoption in your area.</p>
-            <p>Expand your area or come back later.</p>
+            <br />
+            <Spinner style={{ width: "100px", height: "100px" }} animation="grow" />
+            <br />
+            <br />
+            <p>
+              Sorry there are no more dogs up for adoption in your area <i className="fa fa-frown-o "></i>.
+            </p>
+            <p>Change your search area or come back later.</p>
           </div>
         )}
       </Row>

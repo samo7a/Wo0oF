@@ -8,6 +8,7 @@ import defProfilePic from "../../img/def-pic.jpg";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
 import { uploadFile } from "../images.js";
+import ImageUploading from "react-images-uploading";
 
 function DogProfile({ dog, dispatch }) {
   const bp = require("../../bp.js");
@@ -17,9 +18,10 @@ function DogProfile({ dog, dispatch }) {
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
   const [source, setSource] = useState("");
+  // setSource("a");
 
   const doEditDog = async () => {
-    console.log(dog.id);
+    // console.log(dog.id);
     var obj = {
       UserID: userID,
       Name: name,
@@ -32,7 +34,7 @@ function DogProfile({ dog, dispatch }) {
       Age: age,
       Sex: sex,
     };
-    console.log(obj.DogID);
+    // console.log(obj.DogID);
     var js = JSON.stringify(obj);
 
     try {
@@ -112,6 +114,7 @@ function DogProfile({ dog, dispatch }) {
   const uploadPhoto = async (event) => {
     var formData = new FormData();
     var imagefile = document.getElementById("dogProfilePic");
+    console.log(imagefile.files[0]);
     uploadFile(imagefile.files[0], dog.id);
   };
 
@@ -135,12 +138,9 @@ function DogProfile({ dog, dispatch }) {
   // Edit state
   const [isEditingDog, setEditingDog] = useState(false);
 
-  // Profile picture states
-  const [images, setImages] = useState([]);
-  const [isImageChanged, setImageChanged] = useState(false);
+  // Profile picture upload
   const onUpload = (image) => {
-    setImages(image);
-    setImageChanged(true);
+    uploadFile(image[0].file, dog_id);
   };
 
   const handleEditDog = () => {
@@ -157,10 +157,6 @@ function DogProfile({ dog, dispatch }) {
       },
     });
   };
-
-  useEffect(() => {
-    // Update the document title using the getPhoto API
-  }, []);
 
   return (
     <>
@@ -182,11 +178,17 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Header>
             <Modal.Body>
               <Row className="justify-content-center">
-                <p style={{ display: "inline" }}>Change Profile Pic</p>
-                <form>
-                  <input type="file" name="file" id="dogProfilePic" accept="image/*" />
-                  <input type="button" value="Upload Photo" onClick={() => uploadPhoto()} />
-                </form>
+                <ImageUploading single onChange={onUpload} dataURLKey="data_url">
+                  {({ onImageUpload }) => (
+                    <>
+                      <button
+                        className="pic-button"
+                        onClick={onImageUpload}
+                        style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog.id})`, backgroundSize: "cover" }}
+                      ></button>
+                    </>
+                  )}
+                </ImageUploading>
               </Row>
               <br />
               <Form.Group className="dog-name">
@@ -269,7 +271,7 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               <Button className="edit-prof-btn" onClick={handleEditDog}>
-                Confirm
+                Confirm Edits
               </Button>
             </Modal.Footer>
           </>

@@ -5,6 +5,7 @@ import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
 import axios from "axios";
 import { uploadFile } from "../images.js";
+import ImageUploading from "react-images-uploading";
 
 function EditProfile() {
   const bp = require("../../bp.js");
@@ -13,8 +14,6 @@ function EditProfile() {
 
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
-  const [source, setSource] = useState("");
-
   var userID = ud.payload.userId;
   var tokenFirstName = ud.payload.firstName;
   var tokenLastName = ud.payload.lastName;
@@ -68,59 +67,12 @@ function EditProfile() {
     }
   };
 
-  const getPhoto = async (event) => {
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("getSingleImage/" + userID),
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        data: "",
-      };
-
-      console.log(bp.buildPath("getSingleImage/" + userID));
-
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-          if (res.error) {
-            console.log(res);
-          } else {
-            setSource(res);
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
+  // Profile picture upload
+  const onUpload = (image) => {
+    uploadFile(image[0].file, userID);
   };
-
-  const uploadPhoto = async (event) => {
-    var files = document.getElementById("profilePic").files;
-    var file = files[0];
-    uploadFile(file, userID);
-  };
-
-  useEffect(() => {
-    // Update the document title using the getPhoto API
-  }, []);
 
   const [isEditing, setEditMode] = useState(false);
-
-  const [images, setImages] = useState([]);
-  const [isImageChanged, setImageChanged] = useState(false);
-  const onUpload = (image) => {
-    setImages(image);
-    setImageChanged(true);
-  };
-
   const [firstName, setFirstName] = useState(tokenFirstName);
   const [lastName, setLastName] = useState(tokenLastName);
   const [location, setLocation] = useState(tokenLocation);
@@ -136,16 +88,17 @@ function EditProfile() {
       {isEditing ? (
         <>
           <Row className="justify-content-center">
-            <div>
-              <br />
-              <p style={{ display: "block" }}>Change Profile Pic</p>
-            </div>
-          </Row>
-          <Row className="justify-content-center">
-            <form>
-              <input type="file" name="file" id="profilePic" accept="image/*" />
-              <input type="button" value="Upload Photo" onClick={() => uploadPhoto()} />
-            </form>
+            <ImageUploading single onChange={onUpload} dataURLKey="data_url">
+              {({ onImageUpload }) => (
+                <>
+                  <button
+                    className="pic-button"
+                    onClick={onImageUpload}
+                    style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${userID})`, backgroundSize: "cover" }}
+                  ></button>
+                </>
+              )}
+            </ImageUploading>
           </Row>
           <Form>
             <Form.Group className="forms-margin">
@@ -175,7 +128,7 @@ function EditProfile() {
           </Form>
           <Row className="justify-content-center">
             <Button className="edit-prof-btn" onClick={onEdit}>
-              Confirm
+              Confirm Edits
             </Button>
           </Row>
           <Row>
