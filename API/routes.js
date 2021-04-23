@@ -105,7 +105,21 @@ module.exports = function (app) {
       if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
         // Read output to browser
         const readstream = gfs.createReadStream(file.filename);
-        readstream.pipe(res);
+
+        var bufs = [];
+
+        readstream.on('data', function(chunk) {
+          bufs.push(chunk);
+
+        }).on('end', function() { // done
+
+          var fbuf = Buffer.concat(bufs);
+
+          const img = `data:image/png;base64,${Buffer(fbuf).toString('base64')}`;
+          res.send(img);
+        });
+
+        // readstream.pipe(res);
       } else {
         res.status(404).json({
           err: "Not an image",

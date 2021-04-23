@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Form, Button, Image } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
@@ -13,6 +13,7 @@ function EditProfile() {
 
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
+  const [source, setSource] = useState('');
 
   var userID = ud.payload.userId;
   var tokenFirstName = ud.payload.firstName;
@@ -67,6 +68,40 @@ function EditProfile() {
     }
   };
 
+  const getPhoto = async (event) => {
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("getSingleImage/" + userID),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: ''
+      };
+
+      console.log(bp.buildPath("getSingleImage/" + userID));
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            setSource(res);
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   const uploadPhoto = async (event) => {
     var formData = new FormData();
     var imagefile = document.getElementById("profilePic");
@@ -108,38 +143,10 @@ function EditProfile() {
     }
   };
 
-  const getPhoto = async (event) => {
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("/getSingleImage/" + userID),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-
-          console.log("getphoto res: " + res);
-
-          if (res.error) {
-            console.log(res);
-          } else {
-            return res;
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
+  useEffect(() => {
+   // Update the document title using the getPhoto API
+   getPhoto();
+ }, []);
 
   const [isEditing, setEditMode] = useState(false);
 
@@ -222,10 +229,9 @@ function EditProfile() {
           <Row className="justify-content-center">
             <img
               className="profile-pic"
-              src={
-                () => getPhoto()
-              }
               alt="Profile"
+              id="userProfilePic"
+              src={source}
             />
           </Row>
           <div>
