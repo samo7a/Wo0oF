@@ -101,42 +101,8 @@ function DogCard({ dog, removeDogCard }) {
 
   useEffect(() => {
     // Update the document title using the getPhoto API
-    getPhoto();
   }, []);
   
-  const getPhoto = async (event) => {
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("getSingleImage/" + dog._id),
-        headers: {
-          "Content-Type": "application/json",
-        },
-  
-        data: ''
-      };
-  
-      console.log(bp.buildPath("getSingleImage/" + userID));
-  
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-          if (res.error) {
-            console.log(res);
-          } else {
-            setSource(res);
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
 
   return (
     <>
@@ -145,7 +111,7 @@ function DogCard({ dog, removeDogCard }) {
           <div
             className="dog-card"
             style={{
-              backgroundImage: `url(${source})`,
+              backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog.id})`,
             }}
           >
             <h3 className="dog-card-title">{dog.Name}</h3>

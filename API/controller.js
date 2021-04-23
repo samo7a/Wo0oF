@@ -666,3 +666,47 @@ exports.getLikedDogs = function (req, res) {
     }
   });
 };
+
+exports.s3Upload = function (req, res) {
+
+  const AWS = require('aws-sdk');
+  
+  var albumBucketName = "wo0of";
+  var bucketRegion = "Regions.US_EAST_1";
+  var IdentityPoolId = "us-east-1:0a08c10f-2ff9-4818-be28-4af04d0e440a";
+
+  AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: IdentityPoolId
+    })
+  });
+
+  var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: albumBucketName }
+  });
+
+  const uploadFile = (fileName) => {
+    // Read content from the file
+    const fileContent = fs.readFileSync(fileName);
+
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: albumBucketName,
+        Key: 'cat.jpg', // File name you want to save as in S3
+        Body: fileContent
+    };
+
+    // Uploading files to the bucket
+    s3.upload(params, function(err, data) {
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    });
+};
+
+
+
+}

@@ -5,6 +5,7 @@ import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
 import axios from "axios";
+import {uploadFile} from "../images.js";
 
 function EditProfile() {
   const bp = require("../../bp.js");
@@ -103,49 +104,14 @@ function EditProfile() {
   };
 
   const uploadPhoto = async (event) => {
-    var formData = new FormData();
-    var imagefile = document.getElementById("profilePic");
-    formData.append("file", imagefile.files[0]);
 
-    if (process.env.NODE_ENV === "production") console.log("IN PRODUCTION");
-
-    console.log(formData);
-
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("profilePicture"),
-        headers: {
-          "Content-Type": "multipart/form-data",
-          userid: userID,
-        },
-
-        data: formData,
-      };
-
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-          if (res.error) {
-            console.log(res);
-          } else {
-            console.log("Response: " + JSON.stringify(res));
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
+    var files = document.getElementById("profilePic").files;
+    var file = files[0];
+    uploadFile(file, userID);
   };
 
   useEffect(() => {
    // Update the document title using the getPhoto API
-   getPhoto();
  }, []);
 
   const [isEditing, setEditMode] = useState(false);
@@ -180,7 +146,7 @@ function EditProfile() {
           <Row className="justify-content-center">
             <form>
               <input type="file" name="file" id="profilePic" accept="image/*" />
-              <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
+              <input type="button" value="Upload Photo" onClick={() => uploadPhoto()} />
             </form>
           </Row>
           <Form>
@@ -231,7 +197,7 @@ function EditProfile() {
               className="profile-pic"
               alt="Profile"
               id="userProfilePic"
-              src={source==''?defProfilePic:source}
+              src={"https://wo0of.s3.amazonaws.com/" + userID}
             />
           </Row>
           <div>

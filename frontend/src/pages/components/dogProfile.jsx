@@ -9,6 +9,7 @@ import defProfilePic from "../../img/def-pic.jpg";
 import ImageUploading from "react-images-uploading";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
+import {uploadFile} from "../images.js";
 
 
 function DogProfile({ dog, dispatch }) {
@@ -114,40 +115,8 @@ function DogProfile({ dog, dispatch }) {
   const uploadPhoto = async (event) => {
     var formData = new FormData();
     var imagefile = document.getElementById("dogProfilePic");
-    formData.append("file", imagefile.files[0]);
-
-    console.log(formData);
-
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("profilePicture"),
-        headers: {
-          "Content-Type": "multipart/form-data",
-          userid: dog.id,
-        },
-
-        data: formData,
-      };
-
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-          if (res.error) {
-            console.log(res);
-          } else {
-            console.log("Response: " + JSON.stringify(res));
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
+    uploadFile(imagefile.files[0], dog.id);
+    
   };
 
   // Dog state variables
@@ -193,43 +162,9 @@ function DogProfile({ dog, dispatch }) {
     });
   };
 
-  const getPhoto = async (event) => {
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("getSingleImage/" + dog.id),
-        headers: {
-          "Content-Type": "application/json",
-        },
-  
-        data: ''
-      };
-  
-      console.log(bp.buildPath("getSingleImage/" + dog.id));
-  
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-          if (res.error) {
-            console.log(res);
-          } else {
-            setSource(res);
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
 
   useEffect(() => {
     // Update the document title using the getPhoto API
-    getPhoto();
   }, []);
   
 
@@ -239,7 +174,7 @@ function DogProfile({ dog, dispatch }) {
         <div
           className="dog-profile-card"
           style={{
-            backgroundImage: `url(${source})`,
+            backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog.id})`,
           }}
         >
           <h3>{dog.name}</h3>
@@ -256,7 +191,7 @@ function DogProfile({ dog, dispatch }) {
                 <p style={{ display: "inline" }}>Change Profile Pic</p>
                 <form>
                   <input type="file" name="file" id="dogProfilePic" accept="image/*" />
-                  <input type="submit" value="Upload Photo" onClick={() => uploadPhoto()} />
+                  <input type="button" value="Upload Photo" onClick={() => uploadPhoto()} />
                 </form>
               </Row>
               <br />
@@ -355,7 +290,7 @@ function DogProfile({ dog, dispatch }) {
               <Row className="justify-content-center">
                 <img
                   className="dog-img-details"
-                  src={source}
+                  src={("https://wo0of.s3.amazonaws.com/" + dog.id)}
                   alt=""
                 />
               </Row>
