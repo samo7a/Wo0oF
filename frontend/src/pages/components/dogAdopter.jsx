@@ -17,7 +17,6 @@ function DogAdopter() {
 
   // State variables
   const [dogs, setDogs] = useState([]);
-  const [isOKtoPull, setOKtoPull] = useState(true);
 
   // Loading dogs from database
   const getDogs = async () => {
@@ -47,11 +46,7 @@ function DogAdopter() {
           if (res.error) {
             console.log(res);
           } else {
-            if (res.length == 0) {
-              setOKtoPull(false);
-            } else {
-              // Use setDogs to point dogs to the new array
-              setOKtoPull(true);
+            if (!dogs.length) {
               setDogs(res);
             }
           }
@@ -65,11 +60,10 @@ function DogAdopter() {
     }
   };
 
-  // console.log(dogs.length);
-  console.log(dogs);
-  if (dogs.length === 0 && isOKtoPull) {
+  // Get dogs
+  useEffect(() => {
     getDogs();
-  }
+  }, [dogs.length]);
 
   // When user clicks like or skip, dog is removed from dogs array
   function removeDogCard(id) {
