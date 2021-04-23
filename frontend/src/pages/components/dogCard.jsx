@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/dogcard.css";
@@ -14,6 +14,7 @@ function DogCard({ dog, removeDogCard }) {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
+  const [source, setSource] = useState('');
 
   const likeDog = async () => {
     var obj = {
@@ -98,6 +99,45 @@ function DogCard({ dog, removeDogCard }) {
     removeDogCard(dog._id);
   }
 
+  useEffect(() => {
+    // Update the document title using the getPhoto API
+    getPhoto();
+  }, []);
+  
+  const getPhoto = async (event) => {
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("getSingleImage/" + dog._id),
+        headers: {
+          "Content-Type": "application/json",
+        },
+  
+        data: ''
+      };
+  
+      console.log(bp.buildPath("getSingleImage/" + userID));
+  
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            setSource(res);
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
   return (
     <>
       {!isFlipped ? (
@@ -105,11 +145,7 @@ function DogCard({ dog, removeDogCard }) {
           <div
             className="dog-card"
             style={{
-              backgroundImage: `url(${
-                process.env.NODE_ENV === "production"
-                  ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id
-                  : "http://localhost:5000/getSingleImage/" + dog._id
-              })`,
+              backgroundImage: `url(${source})`,
             }}
           >
             <h3 className="dog-card-title">{dog.Name}</h3>
@@ -166,5 +202,6 @@ function DogCard({ dog, removeDogCard }) {
     </>
   );
 }
+
 
 export default DogCard;

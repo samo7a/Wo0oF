@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Button, Card, Modal, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -10,6 +10,7 @@ import ImageUploading from "react-images-uploading";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
 
+
 function DogProfile({ dog, dispatch }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
@@ -17,6 +18,7 @@ function DogProfile({ dog, dispatch }) {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
+  const [source, setSource] = useState('');
 
   const doEditDog = async () => {
     console.log(dog.id);
@@ -148,39 +150,6 @@ function DogProfile({ dog, dispatch }) {
     }
   };
 
-  const getPhoto = async (event) => {
-    try {
-      // Axios code follows
-      var config = {
-        method: "post",
-        url: bp.buildPath("/getSingleImage/" + dog.id),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      axios(config)
-        .then(function (response) {
-          var res = response.data;
-
-          console.log("getphoto res: " + res);
-
-          if (res.error) {
-            console.log(res);
-          } else {
-            return res;
-          }
-        })
-        .catch(function (error) {
-          // setMessage(error);
-          console.log(error);
-        });
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
-
   // Dog state variables
   const dog_id = dog.id;
   if (dog_id == null) console.log("dogid " + dog_id);
@@ -224,15 +193,53 @@ function DogProfile({ dog, dispatch }) {
     });
   };
 
+  const getPhoto = async (event) => {
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("getSingleImage/" + dog.id),
+        headers: {
+          "Content-Type": "application/json",
+        },
+  
+        data: ''
+      };
+  
+      console.log(bp.buildPath("getSingleImage/" + dog.id));
+  
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            setSource(res);
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+          console.log(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
+  useEffect(() => {
+    // Update the document title using the getPhoto API
+    getPhoto();
+  }, []);
+  
+
   return (
     <>
       <Button className="dog-profile-btn" onClick={showDetails}>
         <div
           className="dog-profile-card"
           style={{
-            backgroundImage: `url(${
-              getPhoto()
-            })`,
+            backgroundImage: `url(${source})`,
           }}
         >
           <h3>{dog.name}</h3>
@@ -348,9 +355,7 @@ function DogProfile({ dog, dispatch }) {
               <Row className="justify-content-center">
                 <img
                   className="dog-img-details"
-                  src={
-                    getPhoto()
-                  }
+                  src={source}
                   alt=""
                 />
               </Row>

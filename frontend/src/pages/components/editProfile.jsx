@@ -231,7 +231,7 @@ function EditProfile() {
               className="profile-pic"
               alt="Profile"
               id="userProfilePic"
-              src={source}
+              src={source==''?defProfilePic:source}
             />
           </Row>
           <div>
