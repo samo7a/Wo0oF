@@ -12,15 +12,7 @@ export default function DogBanner({ dog }) {
       <Col sm={2} className="mt-2">
         {/* dog pic on click open profile*/}
         <button className="dog-btn" onClick={() => setOpenModal(true)}>
-          <img
-            className="liked-img"
-            src={
-              process.env.NODE_ENV === "production"
-                ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id
-                : "http://localhost:5000/getSingleImage/" + dog._id
-            }
-            alt=""
-          />
+          <img className="liked-img" src={"https://wo0of.s3.amazonaws.com/" + dog._id} alt="" />
         </button>
       </Col>
       <Col sm={6} className="mt-3 pl-0">
@@ -45,15 +37,7 @@ export default function DogBanner({ dog }) {
         </Modal.Header>
         <Modal.Body style={{ right: "10vh !important" }}>
           <Row className="justify-content-center">
-            <img
-              className="liked-img-details"
-              src={
-                process.env.NODE_ENV === "production"
-                  ? "https://wo0of.herokuapp.com/getSingleImage/" + dog._id
-                  : "http://localhost:5000/getSingleImage/" + dog._id
-              }
-              alt=""
-            />
+            <img className="liked-img-details" src={"https://wo0of.s3.amazonaws.com/" + dog._id} alt="" />
           </Row>
           <div>
             <br />

@@ -3,9 +3,8 @@ import { Container, Row, Form, Button, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../css/editProfile.css";
 import defProfilePic from "../../img/def-pic.jpg";
-import ImageUploading from "react-images-uploading";
 import axios from "axios";
-import {uploadFile} from "../images.js";
+import { uploadFile } from "../images.js";
 
 function EditProfile() {
   const bp = require("../../bp.js");
@@ -14,7 +13,7 @@ function EditProfile() {
 
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
-  const [source, setSource] = useState('');
+  const [source, setSource] = useState("");
 
   var userID = ud.payload.userId;
   var tokenFirstName = ud.payload.firstName;
@@ -79,7 +78,7 @@ function EditProfile() {
           "Content-Type": "application/json",
         },
 
-        data: ''
+        data: "",
       };
 
       console.log(bp.buildPath("getSingleImage/" + userID));
@@ -104,15 +103,14 @@ function EditProfile() {
   };
 
   const uploadPhoto = async (event) => {
-
     var files = document.getElementById("profilePic").files;
     var file = files[0];
     uploadFile(file, userID);
   };
 
   useEffect(() => {
-   // Update the document title using the getPhoto API
- }, []);
+    // Update the document title using the getPhoto API
+  }, []);
 
   const [isEditing, setEditMode] = useState(false);
 
@@ -193,12 +191,7 @@ function EditProfile() {
       ) : (
         <>
           <Row className="justify-content-center">
-            <img
-              className="profile-pic"
-              alt="Profile"
-              id="userProfilePic"
-              src={"https://wo0of.s3.amazonaws.com/" + userID}
-            />
+            <img className="profile-pic" alt="Profile" id="userProfilePic" src={"https://wo0of.s3.amazonaws.com/" + userID} />
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>

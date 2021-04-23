@@ -4,13 +4,10 @@ import { useState, useEffect } from "react";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
 import "font-awesome/css/font-awesome.min.css";
-// import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
-import ImageUploading from "react-images-uploading";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
-import {uploadFile} from "../images.js";
-
+import { uploadFile } from "../images.js";
 
 function DogProfile({ dog, dispatch }) {
   const bp = require("../../bp.js");
@@ -19,7 +16,7 @@ function DogProfile({ dog, dispatch }) {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
-  const [source, setSource] = useState('');
+  const [source, setSource] = useState("");
 
   const doEditDog = async () => {
     console.log(dog.id);
@@ -116,7 +113,6 @@ function DogProfile({ dog, dispatch }) {
     var formData = new FormData();
     var imagefile = document.getElementById("dogProfilePic");
     uploadFile(imagefile.files[0], dog.id);
-    
   };
 
   // Dog state variables
@@ -162,11 +158,9 @@ function DogProfile({ dog, dispatch }) {
     });
   };
 
-
   useEffect(() => {
     // Update the document title using the getPhoto API
   }, []);
-  
 
   return (
     <>
@@ -288,11 +282,7 @@ function DogProfile({ dog, dispatch }) {
 
             <Modal.Body>
               <Row className="justify-content-center">
-                <img
-                  className="dog-img-details"
-                  src={("https://wo0of.s3.amazonaws.com/" + dog.id)}
-                  alt=""
-                />
+                <img className="dog-img-details" src={"https://wo0of.s3.amazonaws.com/" + dog.id} alt="" />
               </Row>
               <div>
                 <br />
