@@ -1,4 +1,4 @@
-exports.uploadFile = async (file, name) => {
+export const uploadFile = async (file, name) => {
 
     const AWS = require('aws-sdk');
     AWS.config.region = 'us-east-1';
