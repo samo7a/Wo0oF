@@ -230,6 +230,8 @@ function DogManager() {
   const [isNeutered, setIsNeutered] = useState(false);
   const [size, setSize] = useState("");
   const [bio, setBio] = useState("");
+  const [isAddingDog, setAddingDog] = useState(false);
+  const [resmsg, setResmsg] = useState('')
 
   // Fetching dogs from API on load once
   useEffect(() => {
@@ -239,7 +241,7 @@ function DogManager() {
 
   function handleAddDog() {
     doCreateDog();
-    hideAddDogModal();
+    // hideAddDogModal();
     setName("");
     setSex("");
     setBreed("");
@@ -248,11 +250,16 @@ function DogManager() {
     setIsNeutered(false);
     setSize("");
     setBio("");
+    setResmsg('DOG ADDED');
+    setTimeout(() => {
+      setAddingDog(false)
+    }, 400);
+    
   }
 
   return (
-    <>
-      {/* Main Dog Manager Page */}
+    
+      !isAddingDog ? (
       <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
         {/* Dog Manager Header */}
         <Row className="justify-content-center">
@@ -261,7 +268,7 @@ function DogManager() {
             <h2 className="title-text-dm">Dogs</h2>
           </Col>
           <Col sm={4}>
-            <Button className="add-button" onClick={showAddDogModal}>
+            <Button className="add-button" onClick={() => setAddingDog(true)}>
               Add Dog <i className="fa fa-plus-square"></i>
             </Button>
           </Col>
@@ -281,14 +288,11 @@ function DogManager() {
           </div>
         </Row>
       </Container>
-
-      {/* Add dog modal */}
-      <Modal show={addDogModal} onHide={hideAddDogModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Dog</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="justify-content-center">
+      )
+      :
+      (
+        <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
+          <Row className="justify-content-center " >
             <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
               {({ onImageUpload }) => (
                 <>
@@ -302,6 +306,10 @@ function DogManager() {
             </ImageUploading>
           </Row>
           <br />
+          <Row className="justify-content-center">
+
+          <Form style={{width: "50%"}}>
+
           <Form.Group>
             <Form.Label>Name: </Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
@@ -341,14 +349,22 @@ function DogManager() {
           <Form.Group>
             <textarea className="form-control" rows="2" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
           </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
+          </Form>
+          </Row>
+          <Row  className="justify-content-center">
+
           <Button className="edit-prof-btn" onClick={handleAddDog}>
             Add
           </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+          <Button className="add-button" onClick={() => {
+            setResmsg('')
+            setAddingDog(false)}}>
+              back
+            </Button>
+          </Row>
+          </Container>  
+      )
+    
   );
 }
 
