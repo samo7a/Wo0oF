@@ -127,6 +127,9 @@ function EditProfile() {
             </Form.Group>
           </Form>
           <Row className="justify-content-center">
+            <Button className="edit-prof-btn" onClick={() => setEditMode(false)}>
+              Cancel
+            </Button>
             <Button className="edit-prof-btn" onClick={onEdit}>
               Confirm Edits
             </Button>
@@ -144,7 +147,11 @@ function EditProfile() {
       ) : (
         <>
           <Row className="justify-content-center">
-            <img className="profile-pic" alt="Profile" id="userProfilePic" src={"https://wo0of.s3.amazonaws.com/" + userID} />
+            {/* <img className="profile-pic" alt="Profile" id="userProfilePic" src={"https://wo0of.s3.amazonaws.com/" + userID} /> */}
+            <div className="profile-pic"
+                    style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${userID})`, backgroundSize: "cover" }}>
+
+            </div>
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>
