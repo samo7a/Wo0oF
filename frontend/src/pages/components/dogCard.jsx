@@ -137,7 +137,7 @@ function DogCard({ dog, removeDogCard }) {
               <ListGroupItem>
                 <p>Size: </p>
                 {dog.Size}
-              </ListGroupItem> 
+              </ListGroupItem>
               <ListGroupItem>
                 <p>Potty Trained: </p>
                 {dog.isPottyTrained ? "Yes" : "No"}
