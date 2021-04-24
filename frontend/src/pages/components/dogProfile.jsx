@@ -10,7 +10,7 @@ import { ACTIONS } from "./dogManager";
 import { uploadFile } from "../images.js";
 import ImageUploading from "react-images-uploading";
 
-function DogProfile({ dog, dispatch }) {
+function DogProfile({ dog, dispatch, getOwnerDogs }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -69,6 +69,8 @@ function DogProfile({ dog, dispatch }) {
                 bio: obj.Bio,
               },
             });
+            setImageChanged(false);
+            setImages([]);
           }
         })
         .catch(function (error) {});
@@ -111,13 +113,6 @@ function DogProfile({ dog, dispatch }) {
     }
   };
 
-  const uploadPhoto = async (event) => {
-    var formData = new FormData();
-    var imagefile = document.getElementById("dogProfilePic");
-    console.log(imagefile.files[0]);
-    uploadFile(imagefile.files[0], dog.id);
-  };
-
   // Dog state variables
   const dog_id = dog.id;
   if (dog_id == null) console.log("dogid " + dog_id);
@@ -139,13 +134,19 @@ function DogProfile({ dog, dispatch }) {
   const [isEditingDog, setEditingDog] = useState(false);
 
   // Profile picture upload
+  const [images, setImages] = useState([]);
+  const [isImageChanged, setImageChanged] = useState(false);
   const onUpload = (image) => {
+    setImages(image);
     uploadFile(image[0].file, dog_id);
+    setImageChanged(true);
   };
 
   const handleEditDog = () => {
-    setEditingDog(false);
     doEditDog();
+    dispatch("default");
+    getOwnerDogs();
+    setEditingDog(false);
   };
 
   const handleDeleteDog = () => {
@@ -178,13 +179,16 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Header>
             <Modal.Body>
               <Row className="justify-content-center">
-                <ImageUploading single onChange={onUpload} dataURLKey="data_url">
+                <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
                   {({ onImageUpload }) => (
                     <>
                       <button
-                        className="pic-button"
+                        className="dog-pic-btn"
                         onClick={onImageUpload}
-                        style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${dog.id})`, backgroundSize: "cover" }}
+                        style={{
+                          backgroundImage: `url(${isImageChanged ? images[0].data_url : "https://wo0of.s3.amazonaws.com/" + dog.id})`,
+                          backgroundSize: "cover",
+                        }}
                       ></button>
                     </>
                   )}
@@ -272,6 +276,9 @@ function DogProfile({ dog, dispatch }) {
             <Modal.Footer className="justify-content-center">
               <Button className="edit-prof-btn" onClick={handleEditDog}>
                 Confirm Edits
+              </Button>
+              <Button className="edit-prof-btn" onClick={() => setEditingDog(false)}>
+                Cancel
               </Button>
             </Modal.Footer>
           </>
