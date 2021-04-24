@@ -39,5 +39,8 @@
 		"react-bootstrap": "^1.5.2",
 		"react-dom": "^17.0.1",
 		"reactstrap": "^8.9.0"
+	},
+	"devDependencies": {
+		"frisby": "^2.1.3",
 	}
 }
