@@ -1,20 +1,146 @@
 .profile-pic {
-  margin-top: 5% !important;
-  width: 10rem !important;
+  background-color: inherit !important;
+  border: none !important;
+  margin-top: 25px !important;
+  min-width: 150px !important;
+  min-height: 150px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
   border-radius: 50% !important;
+  box-shadow: 0px 0px 5px black;
+  background-position: center;
 }
 
-.first_name {
+.profile-color {
+  /* background-color: #2b2d42; */
+  background-color: white;
+}
+
+.dog-added {
+  font-size: 30px;
+  color: white;
+  margin-top: 40px;
+}
+
+.animated {
+  animation-duration: 2.5s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+}
+
+.pic-button {
+  background-color: inherit !important;
+  border: none !important;
+  margin-top: 25px !important;
+  background-position: center;
+  min-width: 150px !important;
+  min-height: 150px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 0px 5px black;
+}
+
+.pic-button:hover {
+  transition: 0.3s;
+  box-shadow: 0px 0px 10px black;
+}
+
+.dog-pic-btn {
+  background-color: inherit !important;
+  border: none !important;
+  margin-top: 25px !important;
+  background-position: center;
+  min-width: 250px !important;
+  min-height: 250px !important;
+  max-width: 250px !important;
+  max-height: 250px !important;
+  border-radius: 15% !important;
+  box-shadow: 0px 0px 5px black !important;
+}
+
+.dog-pic-btn:hover {
+  transition: 0.3s !important;
+  box-shadow: 0px 0px 10px black !important;
+}
+
+.profile-text {
+  color: #2b2d42;
+  font-size: 17px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-bottom: 2px #2b2d42 solid;
+}
+
+.modal-text {
+  color: #2b2d42;
+  font-size: 17px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-bottom: 2px #2b2d42 solid;
+  margin-bottom: 20px;
+}
+
+.bio-text {
+  color: black;
+  font-size: 16px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.forms-margin {
   margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-.update_profile_button {
-  background-color: #ba5b5b !important;
-  color: black !important;
+.confirm-upload {
+  padding: 5px 15px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #ef233c;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px rgb(131, 131, 131);
+  margin-left: 15px;
+}
+
+.confirm-upload:hover {
+  background-color: rgb(204, 27, 48) !important;
+}
+
+.confirm-upload:active {
+  background-color: rgb(204, 27, 48);
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
+}
+
+.edit-prof-btn {
+  background-color: #ef233c !important;
+  color: white !important;
   border: none !important;
   font-size: 20px !important;
-  padding-right: 57px !important;
-  padding-left: 57px !important;
+  padding-right: 42px !important;
+  padding-left: 42px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   margin-top: 15px !important;
@@ -22,9 +148,119 @@
   margin-right: 15px !important;
   margin-left: 15px !important;
   border-radius: 30px !important;
+  text-align: center !important;
 }
 
-.update_profile_button-btn:hover {
-  background-color: #d62137 !important;
-  box-shadow: 0px 0px 2px black !important;
+.edit-prof-btn:hover {
+  background-color: rgb(204, 27, 48) !important;
+  box-shadow: 0px 0px 10px black !important;
+  transition: 0.3s;
+}
+
+.edit-prof-btn:focus {
+  box-shadow: none !important;
+}
+
+.profile-htext {
+  color: #ef233c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1%;
+  margin-top: 35px;
+  margin-left: 1%;
+}
+
+.profile-htext-top {
+  color: #ef233c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1%;
+  margin-top: 3%;
+  margin-left: 1%;
+}
+
+.dog-img-details {
+  max-width: 350px;
+  max-height: 300px;
+  border-radius: 2%;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
+}
+
+.profile-img-file {
+  padding-right: 0px;
+}
+
+.profile-img-inp {
+  background-color: #ef233c !important;
+  color: white !important;
+  border: none !important;
+  font-size: 15px !important;
+  padding-right: 40px !important;
+  padding-left: 40px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  margin-top: 15px !important;
+  margin-bottom: 10px !important;
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+  border-radius: 30px !important;
+  text-align: center !important;
+}
+
+@media only screen and (max-height: 900px) {
+  .profile-htext {
+    color: #ef233c;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 1%;
+    margin-top: 25px;
+    margin-left: 1%;
+  }
+
+  .profile-htext-top {
+    color: #ef233c;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    margin-left: 1%;
+  }
+
+  .pic-button {
+    background-color: inherit !important;
+    border: none !important;
+    margin-top: 4% !important;
+    border-radius: 50%;
+  }
+
+  .profile-pic {
+    margin-top: 5% !important;
+    width: 7rem !important;
+    border-radius: 50% !important;
+  }
+
+  .modal-text {
+    color: #2b2d42;
+    font-size: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 14px;
+    border-bottom: 2px #2b2d42 solid;
+  }
+
+  .dog-img-details {
+    max-width: 250px;
+    max-height: 200px;
+    border-radius: 2%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+  }
+
+  .profile-pic {
+    margin-top: 5% !important;
+    min-width: 125px !important;
+    min-height: 125px !important;
+    max-width: 125px !important;
+    max-height: 125px !important;
+    border-radius: 50% !important;
+  }
 }

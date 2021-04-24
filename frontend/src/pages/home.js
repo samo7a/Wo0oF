@@ -1,19 +1,40 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
-import DogCard from './components/dogCard';
-import Header from './components/header';
-import NavbarProfile from './components/navbar';
+import { Container, Row, Col } from "react-bootstrap";
+import ProfileHeader from "./components/profileHeader";
+import NavbarProfile from "./components/navbar";
+import DogAdopter from "./components/dogAdopter";
+import DogManager from "./components/dogManager";
 
 function Home() {
-    return(
-        <Container fluid className="vh-100">
-            <Header name="Iwanna Dog" />
-            <NavbarProfile /> 
-            <Row>
-                <DogCard name="Max" />  
-            </Row>
-        </Container>
-    );
+  const storage = require("../tokenStorage.js");
+  const jwt = require("jsonwebtoken");
+
+  var tok = storage.retrieveToken();
+  var ud = jwt.decode(tok, { complete: true });
+
+  var userID = ud.payload.userId;
+  var firstName = ud.payload.firstName;
+  var lastName = ud.payload.lastName;
+  const fullName = firstName + " " + lastName;
+  var isOwner = ud.payload.isOwner;
+
+  return (
+    <Container fluid className="vh-100 overflow-hidden">
+      <Row>
+        <ProfileHeader name={fullName} page="Woof" />
+      </Row>
+      <Row>
+        {/* Left column displaying The navigation bar
+                and profile or chat under it*/}
+        <Col sm={4}>
+          <NavbarProfile isOwner={isOwner} />
+        </Col>
+        {/* Right Column showing home for owner or adopter*/}
+        <Col sm={8}>
+          <Row>{isOwner === false ? <DogAdopter /> : <DogManager />}</Row>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
 export default Home;

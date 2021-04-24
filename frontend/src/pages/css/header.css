@@ -1,56 +1,97 @@
 .header-logo {
   border-radius: 50%;
-  border-color: rgb(255, 255, 255);
+  border-color: white;
   border-style: solid;
-  max-width: 5%;
-  display: inline;
-  margin: 15px;
-  float: right;
-}
-
-.app-title {
-  font-size: 48px;
-  text-align: right;
-  color: white;
-  display: inline;
-  margin-top: 10px;
+  width: 30px;
+  margin: 10px 10px;
 }
 
 .profile-header-name {
-  font-size: 24px;
-  margin-right: 20px;
   color: white;
-  margin-top: 2%;
-  display: inline;
-  float: right;
+  font-size: 20px;
+  align-items: center;
+  text-align: center;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 0%;
 }
 
 .header-name {
-  font-size: 24px;
+  font-size: 30px;
   color: white;
-  align-items: center;
   text-align: center;
-  display: inline;
-  float: right;
-  margin-top: 15px;
-}
-
-.signout {
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  padding-left: 5px !important;
-  padding-right: 5px !important;
-  border-radius: 5%;
-  margin: 15px !important;
-  font-size: 20px;
-  color: #ba5b5b;
-  background-color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .bkgd-color1 {
-  background-color: inherit;
+  background-color: #ef233c;
 }
 
 .bkgd-color2 {
-  background-color: #ba5b5b;
+  background-color: #ffffff;
+}
+
+.sign-out-btn {
+  color: white !important;
+  background-color: #2b2d42 !important;
+  padding: 5px 10px !important;
+  margin-top: 5px !important;
+  border-color: white !important;
+  font-size: 15px !important;
+  border-style: solid !important;
+  border-width: 2px;
+  border-radius: 5px !important;
+  float: right !important;
+  display: inline !important;
+}
+
+.sign-out-btn:hover {
+  transition: 0.3s;
+  text-decoration: none !important;
+  border-color: #2b2d42 !important;
+  color: #2b2d42 !important;
+  background-color: white !important;
+}
+
+@media only screen and (max-height: 900px) {
+  .profile-header-name {
+    color: white;
+    font-size: 18px;
+    align-items: center;
+    text-align: center;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 0%;
+  }
+
+  .header-name {
+    font-size: 28px;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .sign-out-btn {
+    color: white !important;
+    background-color: #2b2d42 !important;
+    padding: 5px 10px !important;
+    margin-top: 3px !important;
+    border-color: white !important;
+    font-size: 15px !important;
+    border-style: solid !important;
+    border-width: 2px;
+    border-radius: 5px !important;
+    float: right !important;
+    display: inline !important;
+  }
+
+  .sign-out-btn:hover {
+    transition: 0.3s;
+    text-decoration: none !important;
+    border-color: #2b2d42 !important;
+    color: #2b2d42 !important;
+    background-color: white !important;
+  }
 }

@@ -3,44 +3,193 @@
 }
 
 .dog-card {
-  width: 30rem !important;
-  min-height: 40rem !important;
-  margin-top: 5%;
-  box-shadow: 0px 0px 20px black;
+  position: relative;
+  background-color: #fff;
+  width: 80vw;
+  max-width: 32rem;
+  height: 32rem;
+  box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  text-align: left !important;
 }
 
-.dog-card-title {
-  font-size: 30px;
-  text-align: center;
+.dog-card h3 {
+  position: absolute;
+  bottom: 0;
+  font-size: 35px;
+  margin: 10px;
+  color: #fff;
+  text-shadow: 0px 0px 5px black;
 }
 
-.dog-card-text {
-  font-size: 24px;
-}
-
-@media only screen and (max-height: 1080px) {
-  .dog-card {
-    width: 18rem !important;
-    min-height: 28rem !important;
-    margin-top: 2%;
-    box-shadow: 0px 0px 20px black;
-  }
-
-  .dog-card-title {
-    font-size: 28px;
-    text-align: center;
-  }
-
-  .dog-card-text {
-    font-size: 16px;
-  }
+.dog-card p {
+  color: #ef233c;
+  display: inline;
+  font-weight: 500;
 }
 
 .flip-btn {
-  /* display: inline !important; */
-  /* right: 50% !important; */
-  font-size: 25px;
-  background-color: inherit !important;
-  color: rgb(0, 0, 0) !important;
-  border: none !important;
+  background-color: inherit;
+  color: rgb(0, 0, 0);
+  border: none;
+  top: 15vh;
+  /* left: 25vw; */
+  position: absolute;
+}
+
+.card-container {
+  position: absolute;
+}
+
+.like-button {
+  border-radius: 50%;
+  display: inline;
+  background-color: white;
+  color: #dd3838;
+  border: none;
+  box-shadow: 0px 0px 2px black;
+  font-size: 45px;
+  padding: 9px 20px;
+  position: relative;
+  top: 75vh;
+  margin-right: 40px;
+}
+
+.like-button:hover {
+  transition-duration: 0.25s;
+  background-color: #dd3838;
+  color: white;
+  box-shadow: 0px 0px 15px black;
+}
+
+.dislike-button {
+  border-radius: 50%;
+  display: inline;
+  background-color: white;
+  color: #2b2d42;
+  border: none;
+  margin-left: 40px;
+  box-shadow: 0px 0px 2px black;
+  font-size: 45px;
+  padding-top: 2.5px;
+  padding-bottom: 7.5px;
+  padding-left: 24px;
+  padding-right: 22.5px;
+  position: relative;
+  top: 75vh;
+  margin-left: 40px;
+}
+
+.dislike-button:hover {
+  transition-duration: 0.2s;
+  background-color: #2b2d42;
+  color: white;
+  box-shadow: 0px 0px 15px black;
+}
+
+.list-text {
+  font-size: 20px;
+}
+
+@media only screen and (max-height: 900px) {
+  .dog-card {
+    position: relative;
+    background-color: #fff;
+    width: 80vw;
+    max-width: 26rem;
+    height: 26rem;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    text-align: left !important;
+  }
+
+  .dog-card h3 {
+    position: absolute;
+    bottom: 0;
+    font-size: 30px;
+    margin: 10px;
+    color: #fff;
+    text-shadow: 0px 0px 5px black;
+  }
+
+  .dog-card p {
+    color: #ef233c;
+    display: inline;
+    font-weight: 500;
+  }
+
+  .flip-btn {
+    background-color: inherit;
+    color: rgb(0, 0, 0);
+    border: none;
+    top: 10vh;
+    /* left: 25vw; */
+    position: absolute;
+  }
+
+  .list-text {
+    font-size: 16px;
+  }
+
+  .like-button {
+    border-radius: 50%;
+    display: inline;
+    background-color: white;
+    color: #dd3838;
+    border: none;
+    box-shadow: 0px 0px 2px black;
+    font-size: 45px;
+    padding: 5px 16px;
+    position: relative;
+    top: 75vh;
+    margin-right: 40px;
+  }
+
+  .like-button:hover {
+    transition-duration: 0.25s;
+    background-color: #dd3838;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+  }
+
+  .dislike-button {
+    border-radius: 50%;
+    display: inline;
+    background-color: white;
+    color: #2b2d42;
+    border: none;
+    margin-left: 40px;
+    box-shadow: 0px 0px 2px black;
+    font-size: 45px;
+    padding-top: 2.5px;
+    padding-bottom: 7.5px;
+    padding-left: 20px;
+    padding-right: 18.5px;
+    position: relative;
+    top: 75vh;
+    margin-left: 40px;
+  }
+
+  .dislike-button:hover {
+    transition-duration: 0.2s;
+    background-color: #2b2d42;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+  }
+}
+
+.no-dogs {
+  font-size: 26px;
+  color: white;
+  margin-top: 30vh;
+  text-align: center;
+}
+
+.sad-face {
+  font-size: 90px;
+  margin-bottom: 15px;
 }
