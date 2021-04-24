@@ -14,7 +14,7 @@ const jwt = require("../createJWT");
 
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
-exports.signup = async function (req, res) {
+exports.signup = function (req, res) {
   // incoming: Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio
   // outgoing: error, email
 
@@ -670,7 +670,7 @@ exports.getLikedDogs = function (req, res) {
 exports.s3Upload = function (req, res) {
 
   const AWS = require('aws-sdk');
-  
+
   var albumBucketName = "wo0of";
   var bucketRegion = "Regions.US_EAST_1";
   var IdentityPoolId = "us-east-1:0a08c10f-2ff9-4818-be28-4af04d0e440a";
