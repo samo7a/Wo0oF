@@ -13,10 +13,10 @@ const crypto = require("crypto");
 const jwt = require("../createJWT");
 
 // Signup Function
-// Almost complete, need to use GridFS to upload ProfilePicture
-exports.signup = async function (req, res) {
-  // incoming: Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio
-  // outgoing: error, email
+exports.signup = function (req, res) {
+
+  // Incoming: Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio
+  // Outgoing: Email
 
   var error = "";
 
@@ -123,8 +123,9 @@ exports.signup = async function (req, res) {
 
 // Complete Login API
 exports.login = function (req, res) {
-  // incoming: login, password
-  // outgoing: id, firstName, lastName, error
+
+  // Incoming: login, Password
+  // Outgoing: JWT
 
   const { Email, Password } = req.body;
 
@@ -138,7 +139,7 @@ exports.login = function (req, res) {
       // This line of code gives a header error.
       return res.status(500).send({ msg: "This email address is not associated with any account" });
     }
-    // comapre user's password if user is find in above step
+    // compare user's password if user is found in above step
     else if (!bcrypt.compareSync(Password, user.Password)) {
       return res.status(500).send({ msg: "Wrong Password!" });
     }
@@ -169,8 +170,9 @@ exports.login = function (req, res) {
 
 // Complete editUser API
 exports.editUser = function (req, res) {
-  // incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
-  // outgoing: error, jwt
+
+  // Incoming: FirstName, LastName, Email, Phone, Location, ProfilePicture, ShortBio
+  // Outgoing: Error, Updated JWT
 
   var { UserID, FirstName, LastName, Phone, Location, ProfilePicture, ShortBio } = req.body;
   console.log(req.body);
@@ -205,6 +207,9 @@ exports.editUser = function (req, res) {
 
 // Complete Verify Email API
 exports.verifyEmail = function (req, res) {
+
+  // Incoming: emailToken
+  // Outgoing: Verification MSG
 
   const { emailToken } = req.body;
 
@@ -249,8 +254,9 @@ exports.verifyEmail = function (req, res) {
 
 // Complete Reset Password API
 exports.resetPassword = function (req, res) {
-  // incoming: Email
-  // outcoming: email
+
+  // Incoming: Email
+  // Outcoming: Email
 
   const { Email } = req.body;
 
@@ -324,6 +330,10 @@ exports.resetPassword = function (req, res) {
 
 // Complete confirmResetPassword API
 exports.confirmResetPassword = function (req, res) {
+
+  // Incoming: resetToken, newPassword
+  // Outgoing: Email
+
   var { resetToken, newPassword } = req.body;
 
   User.findOne({ ResetPasswordToken: resetToken }, function (err, user) {
@@ -378,6 +388,10 @@ exports.confirmResetPassword = function (req, res) {
 
 // Complete reportAccounts API
 exports.reportAccounts = function (req, res) {
+
+  // Incoming: UserID, Description
+  // Outgoing: Success MSG
+
   var { UserID, Description } = req.body;
 
   const newReport = { Description: Description, Date: Date.now() };
@@ -397,8 +411,9 @@ exports.reportAccounts = function (req, res) {
 
 // Create Dog Function
 exports.createDog = function (req, res) {
-  // incoming: Dog Name, password
-  // outgoing: id, firstName, lastName, error
+
+  // Incoming: Dog Name, password
+  // Outgoing: dogID
 
   var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered } = req.body;
 
@@ -431,6 +446,10 @@ exports.createDog = function (req, res) {
 
 // Complete deleteDog API
 exports.deleteDog = function (req, res) {
+
+  // Incoming UserID, DogID
+  // Success MSG
+
   var { UserID, DogID } = req.body;
 
   // Forgive me Papa Szum for going over 100 characters
@@ -448,6 +467,10 @@ exports.deleteDog = function (req, res) {
 
 // Complete editDog API
 exports.editDog = function (req, res) {
+
+  // Incoming: Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered, DogID
+  // Outgoing: Success MSG
+
   var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered, DogID } = req.body;
 
   console.log(req.body);
@@ -670,7 +693,7 @@ exports.getLikedDogs = function (req, res) {
 exports.s3Upload = function (req, res) {
 
   const AWS = require('aws-sdk');
-  
+
   var albumBucketName = "wo0of";
   var bucketRegion = "Regions.US_EAST_1";
   var IdentityPoolId = "us-east-1:0a08c10f-2ff9-4818-be28-4af04d0e440a";
@@ -705,8 +728,5 @@ exports.s3Upload = function (req, res) {
         }
         console.log(`File uploaded successfully. ${data.Location}`);
     });
-};
-
-
-
+  };
 }
