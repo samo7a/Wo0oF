@@ -568,26 +568,27 @@ exports.likeDog = function (req, res) {
 
   if (IsLiked === true) {
     console.log("dog liked");
-    // Create a new chat with that user's information
-    const newChat = new Chat({
-      AdopterID: UserID,
-      Dog: Dog,
-      OwnerID: Dog.OwnerID,
-    });
 
-    // create and save the new chat
-    newChat.save(function (err) {
+    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: Dog } }, function (err) {
       if (err) {
         console.log(err);
         return res.status(500);
       } else {
-        // Add the dog to the user's liked dogs
-        User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: Dog } }, function (err) {
+        User.findOne({ _id: ObjectId(UserID) }, function (err, user) {
           if (err) {
             console.log(err);
             return res.status(500);
           } else {
-            return res.status(200);
+            const liker = {FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Phone: user.Phone, ShortBio: user.ShortBio}
+            User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
+              if (err) {
+                console.log(err);
+                return res.status(500);
+              } else {
+                console.log("////////////// USER IS//////////////" + liker)
+                return res.status(200);
+              }
+            });
           }
         });
       }
@@ -667,46 +668,14 @@ exports.getLikedDogs = function (req, res) {
   });
 };
 
-exports.s3Upload = function (req, res) {
-
-  const AWS = require('aws-sdk');
-
-  var albumBucketName = "wo0of";
-  var bucketRegion = "Regions.US_EAST_1";
-  var IdentityPoolId = "us-east-1:0a08c10f-2ff9-4818-be28-4af04d0e440a";
-
-  AWS.config.update({
-    region: bucketRegion,
-    credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: IdentityPoolId
-    })
+exports.getOwner = function (req, res) {
+  var { OwnerID } = req.body;
+  User.findOne({ _id: OwnerID }, function (err, founduser) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Technical error while attempting to find User information.");
+    } else {
+      res.send(founduser);
+    }
   });
-
-  var s3 = new AWS.S3({
-    apiVersion: "2006-03-01",
-    params: { Bucket: albumBucketName }
-  });
-
-  const uploadFile = (fileName) => {
-    // Read content from the file
-    const fileContent = fs.readFileSync(fileName);
-
-    // Setting up S3 upload parameters
-    const params = {
-        Bucket: albumBucketName,
-        Key: 'cat.jpg', // File name you want to save as in S3
-        Body: fileContent
-    };
-
-    // Uploading files to the bucket
-    s3.upload(params, function(err, data) {
-        if (err) {
-            throw err;
-        }
-        console.log(`File uploaded successfully. ${data.Location}`);
-    });
 };
-
-
-
-}

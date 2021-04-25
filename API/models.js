@@ -92,6 +92,15 @@ const UserSchema = new Schema({
       OwnerID: String,
     },
   ],
+  LikedAdopters: [
+    {
+      FirstName: String,
+      LastName: String,
+      Email: String,
+      Phone: String,
+      ShortBio: String,
+    },
+  ],
   DislikedDogs: [
     {
       DogID: String,
