@@ -1,52 +1,35 @@
-/* .row-border {
-  border-bottom: 1px solid !important; 
-   border-bottom: 2px solid !important;
-  border-color: black !important;
-} */
-
-/* .top-row {
-  border-bottom: 2px solid !important;
-  border-color: black !important;
-} */
-
 .liked-dogs-text {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 400;
   margin-left: 0px;
 }
 
-.liked-dogs-btn-m {
+.owner-btn {
   font-size: 17px;
   font-weight: 500;
-  padding: 10px 20px;
+  padding: 10px 10px;
   float: right;
   background-color: #2b2d42 !important;
 }
 
 .dog-btn {
-  background-color: inherit;
-  border: none;
-}
-
-.liked-dogs-btn {
-  font-size: 17px;
-  font-weight: 500;
-  padding: 10px 20px;
-}
-
-.liked-dogs-btn-m:hover {
-  color: rgb(204, 204, 204) !important;
-}
-
-.liked-img {
-  width: 50px;
-  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
   border-radius: 50%;
   background-color: inherit !important;
   border: none !important;
   border-radius: 50% !important;
-  box-shadow: 0px 0px 5px black;
+  box-shadow: 0px 0px 4px black;
   background-position: center;
+  background-size: cover;
+  border: none;
+}
+
+.dog-btn:hover {
+  transition: 0.3s;
+  box-shadow: 0px 0px 8px black;
 }
 
 .liked-img-details {
@@ -57,24 +40,19 @@
 }
 
 @media only screen and (max-height: 900px) {
-  .liked-dogs-btn {
-    font-size: 15px;
+  .owner-btn {
+    font-size: 17px;
     font-weight: 500;
-    padding: 10px 20px;
-  }
-
-  .liked-dogs-btn-m {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 10px 20px;
+    padding: 10px 10px;
     float: right;
     background-color: #2b2d42 !important;
   }
 
   .liked-dogs-text {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     margin-left: 10px;
+    margin-top: 5px;
   }
 
   .liked-img-details {

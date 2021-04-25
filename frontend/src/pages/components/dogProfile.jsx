@@ -302,7 +302,7 @@ function DogProfile({ dog, dispatch, getOwnerDogs }) {
                 <p className="modal-text ">Size: {dog.size}</p>
                 <p className="modal-text ">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
                 <p className="modal-text ">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-                <p className="bio-text mb-4">Bio: {dog.bio}</p>
+                <p className="modal-text mb-4">Bio: {dog.bio}</p>
               </div>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">

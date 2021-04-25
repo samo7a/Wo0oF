@@ -8,7 +8,7 @@ import LikedPage from "./likedPage";
 function NavbarProfile({ isOwner, updateLikedDogs }) {
   const [showProfile, setShowProfile] = useState(false);
   const [isProfileClicked, setProfileClicked] = useState(false);
-  const [isLikedClicked, setLikedClicked] = useState(false);
+  const [isLikedClicked, setLikedClicked] = useState(true);
 
   return isOwner ? (
     <>

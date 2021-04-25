@@ -39,7 +39,7 @@ export default function LikedPage({ updateLikedDogs }) {
           if (res.error) {
             console.log(res);
           } else {
-            console.log(res);
+            // console.log(res);
             setLikedDogsArr(res);
           }
         })
@@ -57,6 +57,7 @@ export default function LikedPage({ updateLikedDogs }) {
     getLikedDogs();
   }, []);
 
+  // When a user likes a dog, call getLikedDogs()
   useEffect(() => {
     getLikedDogs();
   }, [updateLikedDogs]);
