@@ -99,6 +99,7 @@ const UserSchema = new Schema({
       Email: String,
       Phone: String,
       ShortBio: String,
+      UserID: String,
       Dog:{
           DogID: String,
           Name: String,
