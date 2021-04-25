@@ -41,6 +41,8 @@ function DogCard({ dog, removeDogCard, doUpdateLikedDogs }) {
           if (res.error) {
             console.log(res);
           }
+          doUpdateLikedDogs();
+          // console.log("hello");
         })
         .catch(function (error) {});
     } catch (e) {
@@ -90,7 +92,6 @@ function DogCard({ dog, removeDogCard, doUpdateLikedDogs }) {
   function handleLike() {
     likeDog();
     removeDogCard(dog._id);
-    doUpdateLikedDogs();
   }
 
   function handleSkip() {

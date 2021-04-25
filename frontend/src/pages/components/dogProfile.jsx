@@ -295,14 +295,36 @@ function DogProfile({ dog, dispatch, getOwnerDogs }) {
               </Row>
               <div>
                 <br />
-                <p className="modal-text ">Name: {dog.name}</p>
-                <p className="modal-text ">Sex: {dog.sex}</p>
-                <p className="modal-text ">Breed: {dog.breed}</p>
-                <p className="modal-text ">Age: {dog.age}</p>
-                <p className="modal-text ">Size: {dog.size}</p>
-                <p className="modal-text ">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
-                <p className="modal-text ">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-                <p className="modal-text mb-4">Bio: {dog.bio}</p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Name:</p>
+                  {dog.name}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Sex:</p>
+                  {dog.sex}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Breed:</p>
+                  {dog.breed}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Age:</p>
+                  {dog.age}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Size:</p>
+                  {dog.size}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Potty Trained:</p>
+                  {dog.isPottyTrained ? "Yes" : "No"}
+                </p>
+                <p className="modal-text ">
+                  <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Neutered:</p>
+                  {dog.isNeutered ? "Yes" : "No"}
+                </p>
+                <p style={{ fontWeight: "500", fontSize: "17px", marginLeft: "5%", marginBottom: "2px" }}>Bio:</p>
+                <p className="modal-text ">{dog.bio}</p>
               </div>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">

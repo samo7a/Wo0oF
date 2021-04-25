@@ -92,14 +92,36 @@ export default function DogBanner({ dog }) {
           </Row>
           <div>
             <br />
-            <p className="modal-text ">Name: {dog.Name}</p>
-            <p className="modal-text ">Sex: {dog.Sex}</p>
-            <p className="modal-text ">Breed: {dog.Breed}</p>
-            <p className="modal-text ">Age: {dog.Age}</p>
-            <p className="modal-text ">Size: {dog.Size}</p>
-            <p className="modal-text ">Potty Trained: {dog.isPottyTrained ? "Yes" : "No"}</p>
-            <p className="modal-text ">Neutered: {dog.isNeutered ? "Yes" : "No"}</p>
-            <p className="modal-text ">Bio: {dog.Bio}</p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Name:</p>
+              {dog.Name}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Sex:</p>
+              {dog.Sex}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Breed:</p>
+              {dog.Breed}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Age:</p>
+              {dog.Age}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Size:</p>
+              {dog.Size}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Potty Trained:</p>
+              {dog.isPottyTrained ? "Yes" : "No"}
+            </p>
+            <p className="modal-text ">
+              <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Neutered:</p>
+              {dog.isNeutered ? "Yes" : "No"}
+            </p>
+            <p style={{ fontWeight: "500", fontSize: "17px", marginLeft: "5%", marginBottom: "2px" }}>Bio:</p>
+            <p className="modal-text ">{dog.Bio}</p>
           </div>
         </Modal.Body>
       </Modal>

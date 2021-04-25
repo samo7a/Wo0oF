@@ -21,7 +21,7 @@ exports.signup = function (req, res) {
   var error = "";
 
   var { Email, Password, Location, FirstName, LastName, isOwner } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   User.findOne({ Email: Email }, function (err, user) {
     // Check if error occurs
@@ -113,7 +113,7 @@ exports.signup = function (req, res) {
             console.log("error is " + err);
             return res.status(500);
           } else {
-            console.log("Verification Email sent");
+            // console.log("Verification Email sent");
             res.status(200).send({ msg: "Verification Email Sent! :)" });
           }
         });
@@ -151,16 +151,7 @@ exports.login = function (req, res) {
     }
     // user successfully logged in
     else {
-      const ret = jwt.createToken(
-        user._id,
-        user.FirstName,
-        user.LastName,
-        user.isOwner,
-        user.Email,
-        user.Phone,
-        user.Location,
-        user.ShortBio,
-      );
+      const ret = jwt.createToken(user._id, user.FirstName, user.LastName, user.isOwner, user.Email, user.Phone, user.Location, user.ShortBio);
       console.log("Inside of Login: " + JSON.stringify(ret));
 
       res.status(200).json(ret);
@@ -174,7 +165,7 @@ exports.editUser = function (req, res) {
   // outgoing: error, jwt
 
   var { UserID, FirstName, LastName, Phone, Location, ProfilePicture, ShortBio } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   // Forgive me Papa Szum for going over 100 characters
   User.findOneAndUpdate(
@@ -196,7 +187,7 @@ exports.editUser = function (req, res) {
       // Update JWT and send confirmation message.
       else {
         const ret = jwt.createToken(UserID, FirstName, LastName, user.isOwner, user.Email, Phone, Location, ShortBio);
-        console.log(JSON.stringify(ret));
+        // console.log(JSON.stringify(ret));
 
         res.status(200).json(ret);
       }
@@ -206,7 +197,6 @@ exports.editUser = function (req, res) {
 
 // Complete Verify Email API
 exports.verifyEmail = function (req, res) {
-
   const { emailToken } = req.body;
 
   Token.findOne({ token: emailToken }, function (err, token) {
@@ -272,7 +262,7 @@ exports.resetPassword = function (req, res) {
         },
       };
 
-      console.log(JSON.stringify(options));
+      // console.log(JSON.stringify(options));
 
       // Send email (use credentials in .env file)
       var transporter = nodemailer.createTransport(sendGridTransport(options));
@@ -307,13 +297,13 @@ exports.resetPassword = function (req, res) {
         };
       }
 
-      console.log("Sending mail");
+      // console.log("Sending mail");
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
-          console.log("Recovery Email sent: " + info.response);
+          // console.log("Recovery Email sent: " + info.response);
           res.status(200).send({
             msg: "A password recovery email has been sent. It will expire after one hour.",
           });
@@ -337,7 +327,7 @@ exports.confirmResetPassword = function (req, res) {
     }
     // If token is found then reset password
     else {
-      console.log("Resetting password now");
+      // console.log("Resetting password now");
 
       // Password hashing for saving it into databse
       newPassword = bcrypt.hashSync(newPassword, 10);
@@ -363,13 +353,13 @@ exports.confirmResetPassword = function (req, res) {
         text: "Hi,\nWe would like to confirm that the following Woof account, " + user.Email + " has had their password reset recently.\n",
       };
 
-      console.log("Sending mail");
+      // console.log("Sending mail");
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
-          console.log("Recovery Email sent: " + info.response);
+          // console.log("Recovery Email sent: " + info.response);
           res.status(200).send({ msg: "Password successfully reset!" });
         }
       });
@@ -451,7 +441,7 @@ exports.deleteDog = function (req, res) {
 exports.editDog = function (req, res) {
   var { Name, UserID, Bio, Breed, Size, Age, Sex, isPottyTrained, isNeutered, DogID } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
   // Find user then find the dog and update
   User.findOneAndUpdate(
     { _id: ObjectId(UserID), "Dogs._id": ObjectId(DogID) },
@@ -487,7 +477,7 @@ exports.displayDogs = function (req, res) {
   var useDog = true;
   var yeetnum = 0;
 
-  if(Location ==''){
+  if (Location == "") {
     return res.send(dogarray);
   }
 
@@ -567,12 +557,12 @@ exports.likeDog = function (req, res) {
   // Imports: UserID, OwnerID, DogID, isLiked
   var { UserID, Dog, IsLiked } = req.body;
 
-  console.log(IsLiked);
+  // console.log(IsLiked);
   OwnerID = Dog.OwnerID;
-  console.log(Dog.OwnerID);
+  // console.log(Dog.OwnerID);
 
   if (IsLiked === true) {
-    console.log("dog liked");
+    // console.log("dog liked");
 
     User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: Dog } }, function (err) {
       if (err) {
@@ -584,13 +574,21 @@ exports.likeDog = function (req, res) {
             console.log(err);
             return res.status(500);
           } else {
-            const liker = {FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Phone: user.Phone, ShortBio: user.ShortBio, Dog: Dog, UserID: user.id,}
+            const liker = {
+              FirstName: user.FirstName,
+              LastName: user.LastName,
+              Email: user.Email,
+              Phone: user.Phone,
+              ShortBio: user.ShortBio,
+              Dog: Dog,
+              UserID: user.id,
+            };
             User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
               if (err) {
                 console.log(err);
                 return res.status(500);
               } else {
-                console.log("////////////// USER IS//////////////" + liker)
+                // console.log("////////////// USER IS//////////////" + liker)
                 return res.status(200);
               }
             });
@@ -601,7 +599,7 @@ exports.likeDog = function (req, res) {
   } else {
     // Add the dog to the user's disliked dogs
     const DislikedDog = { DogID: Dog._id };
-    console.log(DislikedDog);
+    // console.log(DislikedDog);
     User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { DislikedDogs: DislikedDog } }, function (err) {
       if (err) {
         console.log(err);
