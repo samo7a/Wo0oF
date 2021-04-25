@@ -584,7 +584,7 @@ exports.likeDog = function (req, res) {
             console.log(err);
             return res.status(500);
           } else {
-            const liker = {FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Phone: user.Phone, ShortBio: user.ShortBio, Dog: Dog, _id: user.id}
+            const liker = {FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Phone: user.Phone, ShortBio: user.ShortBio, Dog: Dog, UserID: user.id}
             User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
               if (err) {
                 console.log(err);
