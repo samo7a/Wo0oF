@@ -20,7 +20,7 @@
   font-size: 30px;
   color: white;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 2px;
   margin-bottom: 5px;
 }
 
@@ -36,7 +36,8 @@
   color: white !important;
   background-color: #2b2d42 !important;
   padding: 5px 10px !important;
-  margin-top: 5px !important;
+  margin-top: 2.5px !important;
+  margin-bottom: 2.5px !important;
   border-color: white !important;
   font-size: 15px !important;
   border-style: solid !important;

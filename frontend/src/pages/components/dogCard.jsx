@@ -97,10 +97,6 @@ function DogCard({ dog, removeDogCard }) {
     removeDogCard(dog._id);
   }
 
-  useEffect(() => {
-    // Update the document title using the getPhoto API
-  }, []);
-
   return (
     <>
       {!isFlipped ? (

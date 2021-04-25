@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
 import "font-awesome/css/font-awesome.min.css";
-import defProfilePic from "../../img/def-pic.jpg";
+import defProfilePic from "../../img/dogAvatar.jpg";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
 import { uploadFile } from "../images.js";

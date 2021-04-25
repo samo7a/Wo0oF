@@ -19,14 +19,14 @@ function Home() {
 
   return (
     <Container fluid className="vh-100 overflow-hidden">
-      <Row>
+      <Row style={{ height: "5vh" }}>
         <ProfileHeader name={fullName} page="Woof" />
       </Row>
-      <Row>
+      <Row style={{ height: "95vh" }}>
         {/* Left column displaying The navigation bar
                 and profile or chat under it*/}
-        <Col sm={4}>
-          <NavbarProfile isOwner={isOwner} />
+        <Col style={{ height: "95vh" }} sm={4}>
+          <NavbarProfile style={{ height: "95vh" }} isOwner={isOwner} />
         </Col>
         {/* Right Column showing home for owner or adopter*/}
         <Col sm={8}>

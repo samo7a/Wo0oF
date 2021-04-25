@@ -42,6 +42,11 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background-color: inherit !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 0px 5px black;
+  background-position: center;
 }
 
 .liked-img-details {

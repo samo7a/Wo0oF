@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Spinner } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTimeout } from "react";
 import DogCard from "./dogCard";
 import "../css/dogcard.css";
 import axios from "axios";
@@ -24,6 +24,8 @@ function DogAdopter() {
       Location: zipCode,
       id: userID,
     };
+
+    // setTimeout(() => {}, 1000);
 
     var js = JSON.stringify(obj);
 
@@ -70,15 +72,19 @@ function DogAdopter() {
     setDogs(dogs.filter((dog) => dog._id !== id));
   }
 
+  // console.log(dogs);
+
   return (
-    <Container fluid className="vh-100 bkgd-card-color">
+    <Container fluid className=" bkgd-card-color" style={{ overflow: "auto", height: "95vh" }}>
       <Row className="justify-content-center">
         {dogs.length !== 0 ? (
-          dogs.map((dog) => (
-            <Row className="justify-content-center card-container">
-              <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
-            </Row>
-          ))
+          dogs
+            .map((dog) => (
+              <Row className="justify-content-center card-container">
+                <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
+              </Row>
+            ))
+            .reverse()
         ) : (
           <div className="no-dogs">
             <br />

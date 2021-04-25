@@ -13,7 +13,7 @@ function ProfileHeader(props) {
   return (
     <>
       <Col sm={12} className="bkgd-color1">
-        <Row className="justify-content-start h-100">
+        <Row className="justify-content-start ">
           <Col sm={4}>
             <p className="profile-header-name">{props.name}</p>
           </Col>
