@@ -184,4 +184,7 @@ module.exports = function (app) {
 
   // Get owner route
   app.route("/getOwner").post(controller.getOwner);
+
+  // Get likers route
+  app.route("/getLikers").post(controller.getOwner);
 };

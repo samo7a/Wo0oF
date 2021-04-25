@@ -110,6 +110,7 @@ exports.signup = function (req, res) {
         transporter.sendMail(mailOptions, function (err) {
           if (err) {
             // return res.status(500).send({msg: "Technical Error sending Email :("});
+            console.log("error is " + err);
             return res.status(500);
           } else {
             console.log("Verification Email sent");
@@ -676,6 +677,18 @@ exports.getOwner = function (req, res) {
       return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       res.send(founduser);
+    }
+  });
+};
+
+exports.getLikers = function (req, res) {
+  var { id } = req.body;
+  User.findOne({ _id: id }, function (err, founduser) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Technical error while attempting to find User information.");
+    } else {
+      res.send(founduser.LikedAdopters);
     }
   });
 };
