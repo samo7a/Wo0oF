@@ -13,7 +13,7 @@ function NavbarProfile({ isOwner }) {
   return isOwner ? (
     <>
       <Row className="bkgd-color justify-content-center" style={{ height: "5vh" }}>
-        <Col sm={3} className="center">
+        <Col sm={4} className="center">
           <Button
             className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
             onClick={() => {
@@ -25,7 +25,7 @@ function NavbarProfile({ isOwner }) {
             Profile
           </Button>
         </Col>
-        <Col sm={3} className="center">
+        <Col sm={4} className="center">
           <Button
             className={isLikedClicked ? "nav-btn-clicked " : "nav-btn "}
             onClick={() => {
@@ -43,7 +43,7 @@ function NavbarProfile({ isOwner }) {
   ) : (
     <>
       <Row className="bkgd-color justify-content-center" style={{ height: "5vh" }}>
-        <Col sm={3} className="center">
+        <Col sm={4} className="center">
           <Button
             className={isProfileClicked ? "nav-btn-clicked" : "nav-btn"}
             onClick={() => {
@@ -55,7 +55,7 @@ function NavbarProfile({ isOwner }) {
             Profile
           </Button>
         </Col>
-        <Col sm={3} className="center">
+        <Col sm={4} className="center">
           <Button
             className={isLikedClicked ? "nav-btn-clicked " : "nav-btn "}
             onClick={() => {

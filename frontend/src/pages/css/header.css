@@ -62,7 +62,7 @@
     align-items: center;
     text-align: center;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-bottom: 0%;
   }
 
@@ -70,7 +70,7 @@
     font-size: 28px;
     color: white;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 0px;
     margin-bottom: 5px;
   }
 
@@ -78,7 +78,8 @@
     color: white !important;
     background-color: #2b2d42 !important;
     padding: 5px 10px !important;
-    margin-top: 3px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
     border-color: white !important;
     font-size: 15px !important;
     border-style: solid !important;

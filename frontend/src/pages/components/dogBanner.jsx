@@ -15,20 +15,12 @@ export default function DogBanner({ dog }) {
           <img className="liked-img" src={"https://wo0of.s3.amazonaws.com/" + dog._id} alt="" />
         </button>
       </Col>
-      <Col sm={6} className="mt-3 pl-0">
+      <Col sm={8} className="mt-3 pl-4">
         <p className="pt-1 liked-dogs-text">{dog.Name}</p>
       </Col>
       <Col sm={2} className="mt-2 mb-2">
         {/* ON click send a message request from user to owner */}
-        <Button className="btn-sm liked-dogs-btn-m">
-          <i className="fa fa-envelope"></i>
-        </Button>
-      </Col>
-      <Col sm={2} className="mt-2 mb-2">
-        {/* ON click remove dog users likes */}
-        <Button className="btn-sm btn-danger liked-dogs-btn">
-          <i className="fa fa-times" aria-hidden="true"></i>
-        </Button>
+        <Button className="btn-sm liked-dogs-btn-m"></Button>
       </Col>
 
       <Modal centered contentClassName="modal-view" show={openModal} onHide={() => setOpenModal(false)}>

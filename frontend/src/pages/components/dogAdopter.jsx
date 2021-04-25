@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Spinner } from "react-bootstrap";
-import { useEffect, useState, useTimeout } from "react";
+import { useEffect, useState } from "react";
 import DogCard from "./dogCard";
 import "../css/dogcard.css";
 import axios from "axios";
@@ -24,8 +24,6 @@ function DogAdopter() {
       Location: zipCode,
       id: userID,
     };
-
-    // setTimeout(() => {}, 1000);
 
     var js = JSON.stringify(obj);
 

@@ -58,7 +58,7 @@ export default function LikedPage() {
   }, []);
 
   return (
-    <Container style={{ overflow: "auto", height: "90vh" }}>
+    <Container style={{ overflow: "auto", height: "90vh", padding: "0" }}>
       <ListGroup className="w-100">
         {likedDogsArr.map((dog) => (
           <ListGroup.Item>
@@ -66,16 +66,6 @@ export default function LikedPage() {
           </ListGroup.Item>
         ))}
       </ListGroup>
-      <Row>
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </div>
-      </Row>
     </Container>
   );
 }
