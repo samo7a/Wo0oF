@@ -5,7 +5,7 @@ import "../css/dogcard.css";
 import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
 
-function DogCard({ dog, removeDogCard }) {
+function DogCard({ dog, removeDogCard, doUpdateLikedDogs }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -90,6 +90,7 @@ function DogCard({ dog, removeDogCard }) {
   function handleLike() {
     likeDog();
     removeDogCard(dog._id);
+    doUpdateLikedDogs();
   }
 
   function handleSkip() {

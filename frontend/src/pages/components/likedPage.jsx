@@ -4,7 +4,7 @@ import "../css/likedDogs.css";
 import DogBanner from "./dogBanner";
 import axios from "axios";
 
-export default function LikedPage() {
+export default function LikedPage({ updateLikedDogs }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -56,6 +56,10 @@ export default function LikedPage() {
   useEffect(() => {
     getLikedDogs();
   }, []);
+
+  useEffect(() => {
+    getLikedDogs();
+  }, [updateLikedDogs]);
 
   return (
     <Container style={{ overflow: "auto", height: "90vh", padding: "0" }}>

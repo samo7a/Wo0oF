@@ -53,3 +53,28 @@
     box-shadow: none !important;
   }
 }
+
+@media only screen and (max-height: 760px) {
+  .nav-btn {
+    background-color: inherit !important;
+    color: rgb(196, 196, 196) !important;
+    border: none !important;
+    font-size: 18px;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .nav-btn:hover {
+    color: white !important;
+  }
+
+  .nav-btn-clicked {
+    background-color: inherit !important;
+    color: white !important;
+    border: none !important;
+    font-size: 18px;
+    text-decoration: underline #ef233c !important;
+    text-underline-offset: 5px;
+    box-shadow: none !important;
+  }
+}

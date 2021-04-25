@@ -5,7 +5,7 @@ import DogCard from "./dogCard";
 import "../css/dogcard.css";
 import axios from "axios";
 
-function DogAdopter() {
+function DogAdopter({ doUpdateLikedDogs }) {
   // Backend stuff
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
@@ -79,7 +79,7 @@ function DogAdopter() {
           dogs
             .map((dog) => (
               <Row className="justify-content-center card-container">
-                <DogCard key={dog._id} dog={dog} removeDogCard={removeDogCard} />
+                <DogCard doUpdateLikedDogs={doUpdateLikedDogs} key={dog._id} dog={dog} removeDogCard={removeDogCard} />
               </Row>
             ))
             .reverse()

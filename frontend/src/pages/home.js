@@ -1,4 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
 import ProfileHeader from "./components/profileHeader";
 import NavbarProfile from "./components/navbar";
 import DogAdopter from "./components/dogAdopter";
@@ -17,6 +18,12 @@ function Home() {
   const fullName = firstName + " " + lastName;
   var isOwner = ud.payload.isOwner;
 
+  // This updates the dogs liked page on like
+  const [updateLikedDogs, setUpdateLikedDogs] = useState(false);
+  const doUpdateLikedDogs = () => {
+    setUpdateLikedDogs(!updateLikedDogs);
+  };
+
   return (
     <Container fluid className="vh-100 overflow-hidden">
       <Row style={{ height: "5vh" }}>
@@ -26,11 +33,11 @@ function Home() {
         {/* Left column displaying The navigation bar
                 and profile or chat under it*/}
         <Col style={{ height: "95vh" }} sm={3}>
-          <NavbarProfile style={{ height: "95vh" }} isOwner={isOwner} />
+          <NavbarProfile updateLikedDogs={updateLikedDogs} style={{ height: "95vh" }} isOwner={isOwner} />
         </Col>
         {/* Right Column showing home for owner or adopter*/}
         <Col sm={9}>
-          <Row>{isOwner === false ? <DogAdopter /> : <DogManager />}</Row>
+          <Row>{isOwner === false ? <DogAdopter doUpdateLikedDogs={doUpdateLikedDogs} /> : <DogManager />}</Row>
         </Col>
       </Row>
     </Container>
