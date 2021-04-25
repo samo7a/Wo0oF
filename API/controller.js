@@ -488,7 +488,7 @@ exports.displayDogs = function (req, res) {
   var yeetnum = 0;
 
   if(Location ==''){
-    return res.send("no");
+    return res.send(dogarray);
   }
 
   // Grab the users liked and disliked dogs
