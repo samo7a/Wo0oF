@@ -16,6 +16,7 @@ export default function ChatScreen({ chat, handleCloseChat }) {
   function handleSubmit(e) {
     // e.preventDefault();
     // sendMessage();
+    setMessages([...messages, messages]);
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import "../css/likedDogs.css";
 import DogBanner from "./dogBanner";
 import axios from "axios";
@@ -57,9 +57,7 @@ export default function LikedPage() {
     getLikedDogs();
   }, []);
 
-  // console.log(likedDogsArr);
   return (
-    // <Container fluid className="" style={{ overflow: "auto" }}>
     <ListGroup className="w-100" style={{ overflow: "auto" }}>
       {likedDogsArr.map((dog) => (
         <ListGroup.Item>
@@ -67,6 +65,5 @@ export default function LikedPage() {
         </ListGroup.Item>
       ))}
     </ListGroup>
-    // </Container>
   );
 }

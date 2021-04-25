@@ -14,7 +14,7 @@ const jwt = require("../createJWT");
 
 // Signup Function
 // Almost complete, need to use GridFS to upload ProfilePicture
-exports.signup = async function (req, res) {
+exports.signup = function (req, res) {
   // incoming: Email, Password, Location, FirstName, LastName, userID, isOwner, ProfilePicture, ShortBio
   // outgoing: error, email
 

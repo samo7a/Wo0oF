@@ -4,25 +4,24 @@ import { useState, useEffect } from "react";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
 import "font-awesome/css/font-awesome.min.css";
-// import goodDog from "../../img/good-dog.jpeg";
 import defProfilePic from "../../img/def-pic.jpg";
-import ImageUploading from "react-images-uploading";
 import axios from "axios";
 import { ACTIONS } from "./dogManager";
-import {uploadFile} from "../images.js";
+import { uploadFile } from "../images.js";
+import ImageUploading from "react-images-uploading";
 
-
-function DogProfile({ dog, dispatch }) {
+function DogProfile({ dog, dispatch, getOwnerDogs }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
-  const [source, setSource] = useState('');
+  const [source, setSource] = useState("");
+  // setSource("a");
 
   const doEditDog = async () => {
-    console.log(dog.id);
+    // console.log(dog.id);
     var obj = {
       UserID: userID,
       Name: name,
@@ -35,7 +34,7 @@ function DogProfile({ dog, dispatch }) {
       Age: age,
       Sex: sex,
     };
-    console.log(obj.DogID);
+    // console.log(obj.DogID);
     var js = JSON.stringify(obj);
 
     try {
@@ -70,6 +69,8 @@ function DogProfile({ dog, dispatch }) {
                 bio: obj.Bio,
               },
             });
+            setImageChanged(false);
+            setImages([]);
           }
         })
         .catch(function (error) {});
@@ -112,13 +113,6 @@ function DogProfile({ dog, dispatch }) {
     }
   };
 
-  const uploadPhoto = async (event) => {
-    var formData = new FormData();
-    var imagefile = document.getElementById("dogProfilePic");
-    uploadFile(imagefile.files[0], dog.id);
-    
-  };
-
   // Dog state variables
   const dog_id = dog.id;
   if (dog_id == null) console.log("dogid " + dog_id);
@@ -139,17 +133,20 @@ function DogProfile({ dog, dispatch }) {
   // Edit state
   const [isEditingDog, setEditingDog] = useState(false);
 
-  // Profile picture states
+  // Profile picture upload
   const [images, setImages] = useState([]);
   const [isImageChanged, setImageChanged] = useState(false);
   const onUpload = (image) => {
     setImages(image);
+    uploadFile(image[0].file, dog_id);
     setImageChanged(true);
   };
 
   const handleEditDog = () => {
-    setEditingDog(false);
     doEditDog();
+    dispatch("default");
+    getOwnerDogs();
+    setEditingDog(false);
   };
 
   const handleDeleteDog = () => {
@@ -161,12 +158,6 @@ function DogProfile({ dog, dispatch }) {
       },
     });
   };
-
-
-  useEffect(() => {
-    // Update the document title using the getPhoto API
-  }, []);
-  
 
   return (
     <>
@@ -188,11 +179,20 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Header>
             <Modal.Body>
               <Row className="justify-content-center">
-                <p style={{ display: "inline" }}>Change Profile Pic</p>
-                <form>
-                  <input type="file" name="file" id="dogProfilePic" accept="image/*" />
-                  <input type="button" value="Upload Photo" onClick={() => uploadPhoto()} />
-                </form>
+                <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
+                  {({ onImageUpload }) => (
+                    <>
+                      <button
+                        className="dog-pic-btn"
+                        onClick={onImageUpload}
+                        style={{
+                          backgroundImage: `url(${isImageChanged ? images[0].data_url : "https://wo0of.s3.amazonaws.com/" + dog.id})`,
+                          backgroundSize: "cover",
+                        }}
+                      ></button>
+                    </>
+                  )}
+                </ImageUploading>
               </Row>
               <br />
               <Form.Group className="dog-name">
@@ -275,7 +275,10 @@ function DogProfile({ dog, dispatch }) {
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
               <Button className="edit-prof-btn" onClick={handleEditDog}>
-                Confirm
+                Confirm Edits
+              </Button>
+              <Button className="edit-prof-btn" onClick={() => setEditingDog(false)}>
+                Cancel
               </Button>
             </Modal.Footer>
           </>
@@ -288,11 +291,7 @@ function DogProfile({ dog, dispatch }) {
 
             <Modal.Body>
               <Row className="justify-content-center">
-                <img
-                  className="dog-img-details"
-                  src={("https://wo0of.s3.amazonaws.com/" + dog.id)}
-                  alt=""
-                />
+                <img className="dog-img-details" src={"https://wo0of.s3.amazonaws.com/" + dog.id} alt="" />
               </Row>
               <div>
                 <br />

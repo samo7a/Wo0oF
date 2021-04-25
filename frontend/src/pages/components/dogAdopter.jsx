@@ -46,8 +46,9 @@ function DogAdopter() {
           if (res.error) {
             console.log(res);
           } else {
-            // Use setDogs to point dogs to the new array
-            setDogs(res);
+            if (!dogs.length) {
+              setDogs(res);
+            }
           }
         })
         .catch(function (error) {
@@ -59,11 +60,10 @@ function DogAdopter() {
     }
   };
 
-  // console.log(dogs.length);
-  console.log(dogs);
-  if (dogs.length === 0) {
+  // Get dogs
+  useEffect(() => {
     getDogs();
-  }
+  }, [dogs.length]);
 
   // When user clicks like or skip, dog is removed from dogs array
   function removeDogCard(id) {
@@ -81,10 +81,14 @@ function DogAdopter() {
           ))
         ) : (
           <div className="no-dogs">
-            <i className="fa fa-frown-o sad-face"></i>
-            <Spinner animation="grow" />
-            <p>Sorry there are no more dogs for adoption in your area.</p>
-            <p>Expand your area or come back later.</p>
+            <br />
+            <Spinner style={{ width: "100px", height: "100px" }} animation="grow" />
+            <br />
+            <br />
+            <p>
+              Sorry there are no more dogs up for adoption in your area <i className="fa fa-frown-o "></i>.
+            </p>
+            <p>Change your search area or come back later.</p>
           </div>
         )}
       </Row>

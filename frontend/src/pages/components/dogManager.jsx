@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../css/dogmanager.css";
 import "../css/editProfile.css";
+import { uploadFile } from "../images.js";
 
 export const ACTIONS = {
   ADD_DOG: "add-dog",
@@ -53,7 +54,7 @@ function reducer(dogs, action) {
     case ACTIONS.DELETE_DOG:
       return dogs.filter((dog) => dog.id !== action.payload.id);
     default:
-      return dogs;
+      return [];
   }
 }
 
@@ -78,6 +79,7 @@ function DogManager() {
   var tok = storage.retrieveToken();
   var ud = jwt.decode(tok, { complete: true });
   var userID = ud.payload.userId;
+  const [render, setRender] = useState(false);
 
   const doCreateDog = async () => {
     var obj = {
@@ -123,7 +125,10 @@ function DogManager() {
             tempID = tempID1 + tempID2;
             // DONT TOUCH THAT ^
 
-            console.log(tempID);
+            if (images.length != 0) {
+              uploadFile(images[0].file, tempID);
+            }
+
             dispatch({
               type: ACTIONS.ADD_DOG,
               payload: {
@@ -138,6 +143,8 @@ function DogManager() {
                 isPottyTrained: obj.isPottyTrained,
               },
             });
+            setImageChanged(false);
+            setImages([]);
           }
         })
         .catch(function (error) {
@@ -202,11 +209,6 @@ function DogManager() {
     }
   };
 
-  // Modal state variables
-  const [addDogModal, setAddDogModal] = useState(false);
-  const showAddDogModal = () => setAddDogModal(true);
-  const hideAddDogModal = () => setAddDogModal(false);
-
   // Profile picture state variables
   const [images, setImages] = useState([]);
   const [isImageChanged, setImageChanged] = useState(false);
@@ -225,15 +227,17 @@ function DogManager() {
   const [isNeutered, setIsNeutered] = useState(false);
   const [size, setSize] = useState("");
   const [bio, setBio] = useState("");
+  const [isAddingDog, setAddingDog] = useState(false);
+  const [resmsg, setResmsg] = useState("");
 
   // Fetching dogs from API on load once
   useEffect(() => {
+    dispatch("default");
     getOwnerDogs();
   }, []);
 
   function handleAddDog() {
     doCreateDog();
-    hideAddDogModal();
     setName("");
     setSex("");
     setBreed("");
@@ -242,58 +246,62 @@ function DogManager() {
     setIsNeutered(false);
     setSize("");
     setBio("");
+    setResmsg("DOG ADDED");
+    setTimeout(() => {
+      setResmsg("");
+    }, 2000);
   }
 
-  return (
-    <>
-      {/* Main Dog Manager Page */}
-      <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
-        {/* Dog Manager Header */}
-        <Row className="justify-content-center">
-          <Col sm={4}></Col>
-          <Col sm={4}>
-            <h2 className="title-text-dm">Dogs</h2>
-          </Col>
-          <Col sm={4}>
-            <Button className="add-button" onClick={showAddDogModal}>
-              Add Dog <i className="fa fa-plus-square"></i>
-            </Button>
-          </Col>
-        </Row>
-        {/* Where dog proles are displayed */}
-        <Row className="justify-content-center">
-          {dogs.map((dog) => {
-            return <DogProfile key={dog.id} dog={dog} dispatch={dispatch} />;
-          })}
-        </Row>
-        <Row>
-          <div>
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
-        </Row>
-      </Container>
-
-      {/* Add dog modal */}
-      <Modal show={addDogModal} onHide={hideAddDogModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Dog</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="justify-content-center">
-            <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
-              {({ onImageUpload }) => (
-                <>
-                  <button className="profile-button" onClick={onImageUpload}>
-                    <img className="profile-pic" src={isImageChanged ? images[0].data_url : defProfilePic} alt="" />
-                  </button>
-                </>
-              )}
-            </ImageUploading>
-          </Row>
+  return !isAddingDog ? (
+    <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
+      {/* Dog Manager Header */}
+      <Row className="justify-content-center">
+        <Col sm={4}></Col>
+        <Col sm={4}>
+          <h2 className="title-text-dm">Dogs</h2>
+        </Col>
+        <Col sm={4}>
+          <Button className="add-button" onClick={() => setAddingDog(true)}>
+            Add Dog <i className="fa fa-plus-square"></i>
+          </Button>
+        </Col>
+      </Row>
+      {/* Where dog proles are displayed */}
+      <Row className="justify-content-center">
+        {dogs.map((dog) => {
+          return <DogProfile key={dog.id} dog={dog} dispatch={dispatch} getOwnerDogs={getOwnerDogs} />;
+        })}
+      </Row>
+      <Row>
+        <div>
           <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      </Row>
+    </Container>
+  ) : (
+    <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
+      <Row className="justify-content-center">
+        <h3 style={{ marginTop: "20px", color: "white" }}>Add Dog</h3>
+      </Row>
+      <Row className="justify-content-center ">
+        <ImageUploading single value={images} onChange={onUpload} dataURLKey="data_url">
+          {({ onImageUpload }) => (
+            <>
+              <button
+                className="dog-pic-btn"
+                onClick={onImageUpload}
+                style={{ backgroundImage: `url(${isImageChanged ? images[0].data_url : defProfilePic})`, backgroundSize: "cover" }}
+              ></button>
+            </>
+          )}
+        </ImageUploading>
+      </Row>
+      <br />
+      <Row className="justify-content-center">
+        <Form style={{ width: "60%", color: "white", fontSize: "18px" }}>
           <Form.Group>
             <Form.Label>Name: </Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
@@ -333,14 +341,29 @@ function DogManager() {
           <Form.Group>
             <textarea className="form-control" rows="2" type="text" placeholder="Bio" onChange={(e) => setBio(e.target.value)}></textarea>
           </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-          <Button className="edit-prof-btn" onClick={handleAddDog}>
-            Add
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+        </Form>
+      </Row>
+      <Row className="justify-content-center">
+        <Button className="edit-prof-btn" onClick={handleAddDog}>
+          Add
+        </Button>
+        <Button
+          className="edit-prof-btn"
+          onClick={() => {
+            setResmsg("");
+            setAddingDog(false);
+          }}
+        >
+          Back
+        </Button>
+        <div>
+          <br />
+        </div>
+      </Row>
+      <Row className="justify-content-center">
+        <span className="dog-added animated pulse ">{resmsg}</span>
+      </Row>
+    </Container>
   );
 }
 
