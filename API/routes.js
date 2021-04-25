@@ -181,4 +181,7 @@ module.exports = function (app) {
 
   // Get likedDogs route
   app.route("/getLikedDogs").post(controller.getLikedDogs);
+
+  // Get owner route
+  app.route("/getOwner").post(controller.getOwner);
 };
