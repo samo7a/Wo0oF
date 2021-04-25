@@ -68,8 +68,12 @@ function EditProfile() {
   };
 
   // Profile picture upload
+  const [images, setImages] = useState([]);
+  const [isImageChanged, setImageChanged] = useState(false);
   const onUpload = (image) => {
+    setImages(image);
     uploadFile(image[0].file, userID);
+    setImageChanged(true);
   };
 
   const [isEditing, setEditMode] = useState(false);
@@ -84,7 +88,7 @@ function EditProfile() {
   };
 
   return (
-    <Container fluid className="profile-color vh-100" style={{ overflow: "auto" }}>
+    <Container fluid className="profile-color" style={{ overflow: "auto", height: "90vh" }}>
       {isEditing ? (
         <>
           <Row className="justify-content-center">
@@ -94,7 +98,10 @@ function EditProfile() {
                   <button
                     className="pic-button"
                     onClick={onImageUpload}
-                    style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${userID})`, backgroundSize: "cover" }}
+                    style={{
+                      backgroundImage: `url(${isImageChanged ? images[0].data_url : "https://wo0of.s3.amazonaws.com/" + userID})`,
+                      backgroundSize: "cover",
+                    }}
                   ></button>
                 </>
               )}
@@ -134,24 +141,12 @@ function EditProfile() {
               Confirm Edits
             </Button>
           </Row>
-          <Row>
-            <div>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-            </div>
-          </Row>
         </>
       ) : (
         <>
           <Row className="justify-content-center">
             {/* <img className="profile-pic" alt="Profile" id="userProfilePic" src={"https://wo0of.s3.amazonaws.com/" + userID} /> */}
-            <div className="profile-pic"
-                    style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${userID})`, backgroundSize: "cover" }}>
-
-            </div>
+            <div className="profile-pic" style={{ backgroundImage: `url(https://wo0of.s3.amazonaws.com/${userID})`, backgroundSize: "cover" }}></div>
           </Row>
           <div>
             <p className="profile-htext-top">Name</p>
@@ -169,14 +164,6 @@ function EditProfile() {
             <Button className="edit-prof-btn" onClick={() => setEditMode(true)}>
               Edit Profile
             </Button>
-          </Row>
-          <Row>
-            <div>
-              <br />
-              <br />
-              <br />
-              <br />
-            </div>
           </Row>
         </>
       )}

@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import ImageUploading from "react-images-uploading";
 import DogProfile from "./dogProfile";
-import defProfilePic from "../../img/def-pic.jpg";
+import defDogPic from "../../img/dogAvatar.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../css/dogmanager.css";
@@ -253,7 +253,7 @@ function DogManager() {
   }
 
   return !isAddingDog ? (
-    <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
+    <Container fluid className=" bkgd-manager-color" style={{ overflow: "auto", height: "95vh" }}>
       {/* Dog Manager Header */}
       <Row className="justify-content-center">
         <Col sm={4}></Col>
@@ -275,14 +275,11 @@ function DogManager() {
       <Row>
         <div>
           <br />
-          <br />
-          <br />
-          <br />
         </div>
       </Row>
     </Container>
   ) : (
-    <Container fluid className="vh-100 bkgd-manager-color" style={{ overflow: "auto" }}>
+    <Container fluid className=" bkgd-manager-color" style={{ overflow: "auto", height: "95vh" }}>
       <Row className="justify-content-center">
         <h3 style={{ marginTop: "20px", color: "white" }}>Add Dog</h3>
       </Row>
@@ -293,7 +290,7 @@ function DogManager() {
               <button
                 className="dog-pic-btn"
                 onClick={onImageUpload}
-                style={{ backgroundImage: `url(${isImageChanged ? images[0].data_url : defProfilePic})`, backgroundSize: "cover" }}
+                style={{ backgroundImage: `url(${isImageChanged ? images[0].data_url : defDogPic})`, backgroundSize: "cover" }}
               ></button>
             </>
           )}
@@ -301,7 +298,7 @@ function DogManager() {
       </Row>
       <br />
       <Row className="justify-content-center">
-        <Form style={{ width: "60%", color: "white", fontSize: "18px" }}>
+        <Form style={{ width: "55%", color: "white", fontSize: "18px" }}>
           <Form.Group>
             <Form.Label>Name: </Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
