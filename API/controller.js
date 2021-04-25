@@ -579,12 +579,13 @@ exports.likeDog = function (req, res) {
             console.log(err);
             return res.status(500);
           } else {
-            User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopter: user } }, function (err) {
+            const liker = {FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Phone: user.Phone, ShortBio: user.ShortBio}
+            User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
               if (err) {
                 console.log(err);
                 return res.status(500);
               } else {
-                console.log("////////////// USER IS//////////////" + user)
+                console.log("////////////// USER IS//////////////" + liker)
                 return res.status(200);
               }
             });
