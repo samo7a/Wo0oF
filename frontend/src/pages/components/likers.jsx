@@ -63,23 +63,25 @@ function Likers() {
   return (
     <Container style={{ overflow: "auto", height: "90vh", padding: "0" }}>
       <ListGroup className="w-100">
-        {likes.map(
-          (like) => (
-            (adopter = {
-              id: like.UserID,
-              Fname: like.FirstName,
-              Lname: like.LastName,
-              Email: like.Email,
-              Phone: like.Phone,
-              Bio: like.Bio,
-            }),
-            (
-              <ListGroup.Item>
-                <AdopterBanner key={like._id} adopter={adopter} dog={like.Dog} />
-              </ListGroup.Item>
+        {likes
+          .map(
+            (like) => (
+              (adopter = {
+                id: like.UserID,
+                Fname: like.FirstName,
+                Lname: like.LastName,
+                Email: like.Email,
+                Phone: like.Phone,
+                Bio: like.Bio,
+              }),
+              (
+                <ListGroup.Item>
+                  <AdopterBanner key={like._id} adopter={adopter} dog={like.Dog} />
+                </ListGroup.Item>
+              )
             )
           )
-        )}
+          .reverse()}
       </ListGroup>
     </Container>
   );
