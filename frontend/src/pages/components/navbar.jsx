@@ -4,6 +4,7 @@ import { Row, Button, Col } from "react-bootstrap";
 import EditProfile from "./editProfile";
 import "font-awesome/css/font-awesome.min.css";
 import LikedPage from "./likedPage";
+import Likers from "./likers";
 
 function NavbarProfile({ isOwner, updateLikedDogs }) {
   const [showProfile, setShowProfile] = useState(false);
@@ -38,7 +39,7 @@ function NavbarProfile({ isOwner, updateLikedDogs }) {
           </Button>
         </Col>
       </Row>
-      <Row>{showProfile ? <EditProfile /> : <LikedPage />}</Row>
+      <Row>{showProfile ? <EditProfile /> : <Likers />}</Row>
     </>
   ) : (
     <>

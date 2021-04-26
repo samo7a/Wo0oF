@@ -181,7 +181,7 @@ function DogManager() {
           if (res.error) {
             console.log(res);
           } else {
-            console.log(res);
+            // console.log(res);
             res.map((dog) => {
               dispatch({
                 type: ACTIONS.ADD_DOG,
