@@ -39,7 +39,7 @@ export default function AdopterBanner({ adopter, dog }) {
             <div
               className="profile-pic"
               style={{
-                backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + dog.OwnerID})`,
+                backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + adopter.id})`,
                 backgroundSize: "cover",
               }}
             ></div>
