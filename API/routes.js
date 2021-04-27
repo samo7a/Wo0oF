@@ -187,4 +187,7 @@ module.exports = function (app) {
 
   // Get likers route
   app.route("/getLikers").post(controller.getLikers);
+
+  // Get dogs route
+  app.route("/getDog").post(controller.getDog);
 };

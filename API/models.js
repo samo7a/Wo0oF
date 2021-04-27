@@ -64,15 +64,6 @@ const UserSchema = new Schema({
   LikedDogs: [
     {
       DogID: String,
-      Name: String,
-      Bio: String,
-      Breed: String,
-      Weight: mongoose.Schema.Types.Decimal128,
-      Size: String,
-      Age: Int32,
-      Sex: String,
-      isPottyTrained: Boolean,
-      isNeutered: Boolean,
       OwnerID: String,
     },
   ],
@@ -94,25 +85,8 @@ const UserSchema = new Schema({
   ],
   LikedAdopters: [
     {
-      FirstName: String,
-      LastName: String,
-      Email: String,
-      Phone: String,
-      ShortBio: String,
-      UserID: String,
-      Dog:{
-          DogID: String,
-          Name: String,
-          Bio: String,
-          Breed: String,
-          Weight: mongoose.Schema.Types.Decimal128,
-          Size: String,
-          Age: Int32,
-          Sex: String,
-          isPottyTrained: Boolean,
-          isNeutered: Boolean,
-          OwnerID: String,
-      },
+      DogID: String,
+      UserID: String
     },
   ],
   DislikedDogs: [

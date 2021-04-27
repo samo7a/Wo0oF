@@ -488,7 +488,7 @@ exports.displayDogs = function (req, res) {
       return res.status(500).send("Technical error while attempting to find User information.");
     } else {
       for (j = 0; j < user.LikedDogs.length; j++) {
-        ignoreDogs.push(String(user.LikedDogs[j]._id));
+        ignoreDogs.push(user.LikedDogs[j].DogID);
       }
       for (j = 0; j < user.DislikedDogs.length; j++) {
         ignoreDogs.push(user.DislikedDogs[j].DogID);
@@ -564,39 +564,31 @@ exports.likeDog = function (req, res) {
   if (IsLiked === true) {
     // console.log("dog liked");
 
-    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: Dog } }, function (err) {
+    const LikedDog = {OwnerID: Dog.OwnerID, DogID: Dog._id}
+
+    User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: LikedDog } }, function (err) {
       if (err) {
         console.log(err);
         return res.status(500);
       } else {
-        User.findOne({ _id: ObjectId(UserID) }, function (err, user) {
+        const liker = {
+          DogID: Dog._id,
+          UserID: UserID,
+        };
+        User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
           if (err) {
             console.log(err);
             return res.status(500);
           } else {
-            const liker = {
-              FirstName: user.FirstName,
-              LastName: user.LastName,
-              Email: user.Email,
-              Phone: user.Phone,
-              ShortBio: user.ShortBio,
-              Dog: Dog,
-              UserID: user.id,
-            };
-            User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
-              if (err) {
-                console.log(err);
-                return res.status(500);
-              } else {
-                // console.log("////////////// USER IS//////////////" + liker)
-                return res.status(200);
-              }
-            });
+            // console.log("////////////// USER IS//////////////" + liker)
+            return res.status(200);
           }
         });
+       }
+        });
+      
       }
-    });
-  } else {
+    else{
     // Add the dog to the user's disliked dogs
     const DislikedDog = { DogID: Dog._id };
     // console.log(DislikedDog);
@@ -693,4 +685,16 @@ exports.getLikers = function (req, res) {
       res.send(founduser.LikedAdopters);
     }
   });
+};
+
+exports.getDog = function (req, res) {
+  var { DogID } = req.body;
+  User.findOne({Dogs: {$elemMatch: {_id: DogID}}}, function (err, foundDog){
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Technical error while attempting to find User information.");
+    } else {
+      res.send(foundDog.Dogs[0]);
+    }
+  }).select({Dogs: {$elemMatch: {_id: DogID}}});
 };
