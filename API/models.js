@@ -86,7 +86,8 @@ const UserSchema = new Schema({
   LikedAdopters: [
     {
       DogID: String,
-      UserID: String
+      UserID: String,
+      Date: Date
     },
   ],
   DislikedDogs: [

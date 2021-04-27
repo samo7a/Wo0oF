@@ -591,6 +591,7 @@ exports.likeDog = function (req, res) {
         const liker = {
           DogID: Dog._id,
           UserID: UserID,
+          Date: Date.Now()
         };
         User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
           if (err) {
