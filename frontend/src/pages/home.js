@@ -20,8 +20,13 @@ function Home() {
 
   // This updates the dogs liked page on like
   const [updateLikedDogs, setUpdateLikedDogs] = useState(false);
+  const [updateLikers, setUpdateLikers] = useState(false);
+
   const doUpdateLikedDogs = () => {
     setUpdateLikedDogs(!updateLikedDogs);
+  };
+  const doUpdateLikers = () => {
+    setUpdateLikers(!updateLikers);
   };
 
   return (
@@ -33,11 +38,11 @@ function Home() {
         {/* Left column displaying The navigation bar
                 and profile or chat under it*/}
         <Col style={{ height: "95vh" }} sm={3}>
-          <NavbarProfile updateLikedDogs={updateLikedDogs} style={{ height: "95vh" }} isOwner={isOwner} />
+          <NavbarProfile updateLikedDogs={updateLikedDogs} updateLikers={updateLikers} style={{ height: "95vh" }} isOwner={isOwner} />
         </Col>
         {/* Right Column showing home for owner or adopter*/}
         <Col sm={9}>
-          <Row>{isOwner === false ? <DogAdopter doUpdateLikedDogs={doUpdateLikedDogs} /> : <DogManager />}</Row>
+          <Row>{isOwner === false ? <DogAdopter doUpdateLikedDogs={doUpdateLikedDogs} /> : <DogManager doUpdateLikers={doUpdateLikers} />}</Row>
         </Col>
       </Row>
     </Container>

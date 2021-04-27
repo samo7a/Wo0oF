@@ -10,7 +10,7 @@ import { ACTIONS } from "./dogManager";
 import { uploadFile } from "../images.js";
 import ImageUploading from "react-images-uploading";
 
-function DogProfile({ dog, dispatch, getOwnerDogs }) {
+function DogProfile({ dog, dispatch, getOwnerDogs, doUpdateLikers }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -71,6 +71,7 @@ function DogProfile({ dog, dispatch, getOwnerDogs }) {
             });
             setImageChanged(false);
             setImages([]);
+            doUpdateLikers();
           }
         })
         .catch(function (error) {});
@@ -105,6 +106,7 @@ function DogProfile({ dog, dispatch, getOwnerDogs }) {
           if (res.error) {
             console.log(res);
           }
+          doUpdateLikers();
         })
         .catch(function (error) {});
     } catch (e) {

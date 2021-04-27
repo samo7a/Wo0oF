@@ -53,10 +53,6 @@ export default function LikedPage({ updateLikedDogs }) {
   };
 
   // Fetching liked dogs from API on load once
-  useEffect(() => {
-    getLikedDogs();
-  }, []);
-
   // When a user likes a dog, call getLikedDogs()
   useEffect(() => {
     getLikedDogs();
@@ -65,9 +61,9 @@ export default function LikedPage({ updateLikedDogs }) {
   return (
     <Container style={{ overflow: "auto", height: "90vh", padding: "0" }}>
       <ListGroup className="w-100">
-        {likedDogsArr.map((dog) => (
+        {likedDogsArr.map((like) => (
           <ListGroup.Item>
-            <DogBanner key={dog._id} dog={dog} />
+            <DogBanner key={like._id} like={like} />
           </ListGroup.Item>
         ))}
       </ListGroup>

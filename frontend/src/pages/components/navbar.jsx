@@ -6,7 +6,7 @@ import "font-awesome/css/font-awesome.min.css";
 import LikedPage from "./likedPage";
 import Likers from "./likers";
 
-function NavbarProfile({ isOwner, updateLikedDogs }) {
+function NavbarProfile({ isOwner, updateLikedDogs, updateLikers }) {
   const [showProfile, setShowProfile] = useState(false);
   const [isProfileClicked, setProfileClicked] = useState(false);
   const [isLikedClicked, setLikedClicked] = useState(true);
@@ -39,7 +39,7 @@ function NavbarProfile({ isOwner, updateLikedDogs }) {
           </Button>
         </Col>
       </Row>
-      <Row>{showProfile ? <EditProfile /> : <Likers />}</Row>
+      <Row>{showProfile ? <EditProfile /> : <Likers updateLikers={updateLikers} />}</Row>
     </>
   ) : (
     <>

@@ -4,7 +4,7 @@ import "../css/likedDogs.css";
 import axios from "axios";
 import AdopterBanner from "./adopterBanner";
 
-function Likers() {
+function Likers({ updateLikers }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -13,7 +13,6 @@ function Likers() {
   var userID = ud.payload.userId;
 
   const [likes, setlikes] = useState([]);
-  const [people, setPeople] = useState([]);
 
   const getLikers = async () => {
     var obj = {
@@ -40,7 +39,6 @@ function Likers() {
           if (res.error) {
             console.log(res);
           } else {
-            console.log(res);
             setlikes(res);
           }
         })
@@ -56,31 +54,17 @@ function Likers() {
   // Fetching liked dogs from API on load once
   useEffect(() => {
     getLikers();
-  }, []);
-
-  var adopter;
+  }, [updateLikers]);
 
   return (
     <Container style={{ overflow: "auto", height: "90vh", padding: "0" }}>
       <ListGroup className="w-100">
         {likes
-          .map(
-            (like) => (
-              (adopter = {
-                id: like.UserID,
-                Fname: like.FirstName,
-                Lname: like.LastName,
-                Email: like.Email,
-                Phone: like.Phone,
-                Bio: like.Bio,
-              }),
-              (
-                <ListGroup.Item>
-                  <AdopterBanner key={like._id} adopter={adopter} dog={like.Dog} />
-                </ListGroup.Item>
-              )
-            )
-          )
+          .map((like) => (
+            <ListGroup.Item>
+              <AdopterBanner key={like._id} like={like} updateLikers={updateLikers} />
+            </ListGroup.Item>
+          ))
           .reverse()}
       </ListGroup>
     </Container>

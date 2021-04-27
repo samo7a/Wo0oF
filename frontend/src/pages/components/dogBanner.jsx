@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Row, Button, Modal } from "react-bootstrap";
 import FaceIcon from "@material-ui/icons/Face";
 import PhoneIcon from "@material-ui/icons/Phone";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import SubjectIcon from "@material-ui/icons/Subject";
 import "../css/likedDogs.css";
 import "../css/editProfile.css";
 import axios from "axios";
 
-export default function DogBanner({ dog }) {
+export default function DogBanner({ like }) {
   const bp = require("../../bp.js");
   const [openDogModal, setOpenDogModal] = useState(false);
   const [openOwnerModal, setOpenOwnerModal] = useState(false);
@@ -17,10 +16,18 @@ export default function DogBanner({ dog }) {
   const [ownerPhone, setOwnerPhone] = useState("");
   const [ownerEmail, setOwnerEmail] = useState("");
   const [ownerBio, setOwnerBio] = useState("");
+  const [dogName, setDogName] = useState("");
+  const [dogSex, setDogSex] = useState("");
+  const [dogBreed, setDogBreed] = useState("");
+  const [dogAge, setDogAge] = useState("");
+  const [dogSize, setDogSize] = useState("");
+  const [dogisPottyTrained, setDogisPottyTrained] = useState("");
+  const [dogisNeutered, setDogisNeutered] = useState("");
+  const [dogBio, setDogBio] = useState("");
 
   const getOwner = async () => {
     var obj = {
-      OwnerID: dog.OwnerID,
+      OwnerID: like.OwnerID,
     };
 
     var js = JSON.stringify(obj);
@@ -59,6 +66,55 @@ export default function DogBanner({ dog }) {
     }
   };
 
+  const getDog = async () => {
+    var obj = {
+      DogID: like.DogID,
+    };
+
+    var js = JSON.stringify(obj);
+
+    try {
+      // Axios code follows
+      var config = {
+        method: "post",
+        url: bp.buildPath("getDog"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        data: js,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var res = response.data;
+          if (res.error) {
+            console.log(res);
+          } else {
+            setDogName(res.Name);
+            setDogSex(res.Sex);
+            setDogBreed(res.Breed);
+            setDogAge(res.Age);
+            setDogSize(res.Size);
+            setDogisPottyTrained(res.isPottyTrained);
+            setDogisNeutered(res.isNeutered);
+            setDogBio(res.Bio);
+            // console.log(res);
+          }
+        })
+        .catch(function (error) {
+          // setMessage(error);
+        });
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  };
+
+  useEffect(() => {
+    getDog(like.DogID);
+  }, []);
+
   return (
     <Row className="justify-content-start row-border">
       <Col sm={2} className="mt-2">
@@ -67,17 +123,17 @@ export default function DogBanner({ dog }) {
           className="dog-btn"
           onClick={() => setOpenDogModal(true)}
           style={{
-            backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + dog._id})`,
+            backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + like.DogID})`,
             backgroundSize: "cover",
           }}
         ></button>
       </Col>
       <Col sm={8} className=" pl-3">
-        <p className="pt-3 liked-dogs-text">{dog.Name}</p>
+        <p className="pt-3 liked-dogs-text">{dogName}</p>
       </Col>
       <Col sm={2} className="mt-2 mb-2">
         {/* ON click send a message request from user to owner */}
-        <Button className="owner-btn" onClick={() => getOwner(dog.OwnerID)}>
+        <Button className="owner-btn" onClick={() => getOwner(like.OwnerID)}>
           <FaceIcon />
         </Button>
       </Col>
@@ -88,54 +144,54 @@ export default function DogBanner({ dog }) {
         </Modal.Header>
         <Modal.Body style={{ right: "10vh !important" }}>
           <Row className="justify-content-center">
-            <img className="liked-img-details" src={"https://wo0of.s3.amazonaws.com/" + dog._id} alt="" />
+            <img className="liked-img-details" src={"https://wo0of.s3.amazonaws.com/" + like.DogID} alt="" />
           </Row>
           <div>
             <br />
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Name:</p>
-              {dog.Name}
+              {dogName}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Sex:</p>
-              {dog.Sex}
+              {dogSex}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Breed:</p>
-              {dog.Breed}
+              {dogBreed}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Age:</p>
-              {dog.Age}
+              {dogAge}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Size:</p>
-              {dog.Size}
+              {dogSize}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Potty Trained:</p>
-              {dog.isPottyTrained ? "Yes" : "No"}
+              {dogisPottyTrained ? "Yes" : "No"}
             </p>
             <p className="modal-text ">
               <p style={{ fontWeight: "500", display: "inline", marginRight: "7px" }}>Neutered:</p>
-              {dog.isNeutered ? "Yes" : "No"}
+              {dogisNeutered ? "Yes" : "No"}
             </p>
             <p style={{ fontWeight: "500", fontSize: "17px", marginLeft: "5%", marginBottom: "2px" }}>Bio:</p>
-            <p className="modal-text ">{dog.Bio}</p>
+            <p className="modal-text ">{dogBio}</p>
           </div>
         </Modal.Body>
       </Modal>
 
       <Modal centered contentClassName="modal-view" show={openOwnerModal} onHide={() => setOpenOwnerModal(false)}>
         <Modal.Header closeButton onClick={() => setOpenOwnerModal(false)}>
-          <Modal.Title>Owner Information For {dog.Name}</Modal.Title>
+          <Modal.Title>Owner Information For {dogName}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ right: "10vh !important" }}>
           <Row className="justify-content-center">
             <div
               className="profile-pic"
               style={{
-                backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + dog.OwnerID})`,
+                backgroundImage: `url(${"https://wo0of.s3.amazonaws.com/" + like.OwnerID})`,
                 backgroundSize: "cover",
               }}
             ></div>

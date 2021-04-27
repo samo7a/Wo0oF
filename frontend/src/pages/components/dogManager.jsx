@@ -72,7 +72,7 @@ function newDog(id, name, breed, sex, age, size, bio, isPottyTrained, isNeutered
   };
 }
 
-function DogManager() {
+function DogManager({ doUpdateLikers }) {
   const bp = require("../../bp.js");
   const storage = require("../../tokenStorage.js");
   const jwt = require("jsonwebtoken");
@@ -269,7 +269,7 @@ function DogManager() {
       {/* Where dog proles are displayed */}
       <Row className="justify-content-center">
         {dogs.map((dog) => {
-          return <DogProfile key={dog.id} dog={dog} dispatch={dispatch} getOwnerDogs={getOwnerDogs} />;
+          return <DogProfile key={dog.id} dog={dog} dispatch={dispatch} getOwnerDogs={getOwnerDogs} doUpdateLikers={doUpdateLikers} />;
         })}
       </Row>
       <Row>
