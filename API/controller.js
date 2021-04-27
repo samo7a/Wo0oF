@@ -428,17 +428,20 @@ exports.deleteDog = function (req, res) {
   User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $pull: { Dogs: { _id: ObjectId(DogID) } } }, function (err, user) {
     // Check for any technical errors
     if (err) {
+      console.log(err);
       return res.status(500).send("Technical error while attempting to update User information.");
     }
     else {
-    User.findAndUpdate({ _id: /[\s\S]*/ }, { $pull: { LikedDogs: { DogID: ObjectId(DogID) } } }, function (err) {
+    User.updateMany({ $pull: { LikedDogs: { DogID: ObjectId(DogID) } } }, function (err) {
         if (err) {
+          console.log(err);
           return res.status(500).send("Technical error while attempting to update User information.");
         }
         // Update delete message
         else {
-        User.findAndUpdate({ _id: /[\s\S]*/ }, { $pull: { LikedAdopters: { DogID: ObjectId(DogID) } } }, function (err) {
+        User.updateMany({ $pull: { LikedAdopters: { DogID: ObjectId(DogID) } } }, function (err) {
           if (err) {
+            console.log(err);
             return res.status(500).send("Technical error while attempting to update User information.");
           }
           // Update delete message
