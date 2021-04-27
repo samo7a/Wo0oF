@@ -310,6 +310,7 @@ function DogManager({ doUpdateLikers }) {
           <Form.Group style={{ display: "inline" }}>
             <Form.Label style={{ display: "inline" }}> Sex: </Form.Label>
             <Form.Control className="w-25" as="select" custom onChange={(e) => setSex(e.target.value)}>
+              <option></option>
               <option>Male</option>
               <option>Female</option>
               <option>Other</option>
@@ -322,6 +323,7 @@ function DogManager({ doUpdateLikers }) {
           <Form.Group style={{ display: "inline" }}>
             <Form.Label style={{ display: "inline" }}> Size: </Form.Label>
             <Form.Control className="w-25" as="select" custom onChange={(e) => setSize(e.target.value)}>
+              <option></option>
               <option>Small</option>
               <option>Medium</option>
               <option>Large</option>

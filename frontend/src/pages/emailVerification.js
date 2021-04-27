@@ -14,7 +14,7 @@ function EmailVerification() {
   const doVerifyEmail = async (event) => {
     event.preventDefault();
 
-    var obj = { emailToken : code };
+    var obj = { emailToken: code };
     var js = JSON.stringify(obj);
 
     try {
@@ -36,7 +36,7 @@ function EmailVerification() {
           if (res.error) {
             console.log(res);
           } else {
-            window.location.href = "/";
+            setConfirmed(true);
           }
         })
         .catch(function (error) {
@@ -53,7 +53,7 @@ function EmailVerification() {
       <Row className="justify-content-center header-color">
         <img src={logo} className="Login-logo" alt="Woof logo" />
       </Row>
-      <Row>
+      <Row className="justify-content-center">
         <Container fluid className="confirm-container">
           <Row className="justify-content-center">
             <h4 className="instructions">To verify your email enter your confirmation code.</h4>
@@ -62,6 +62,7 @@ function EmailVerification() {
             <Form>
               <Form.Group className="confirmCodeTextbox" controlId="formPassword">
                 {/* u can change the ref to whatever u need*/}
+                {/* <Form.Label style={{ color: "white" }}>Confirmation Code:</Form.Label> */}
                 <Form.Control type="text" placeholder="Confirmation Code" onChange={(c) => setCode(c.target.value)} />
               </Form.Group>
               {/* onClick call the verify email thing, just change the name */}
@@ -71,7 +72,9 @@ function EmailVerification() {
             </Form>
           </Row>
           {/* if is code is confirmed this will result true and display the span, all you have to do is save the response in a variable in and display it inside the span using the jsx {} */}
-          <Row className="justify-content-center">{isConfirmed ? <span></span> : <span className="instructions-alert"> </span>}</Row>
+          <Row className="justify-content-center">
+            {isConfirmed ? <span className="instructions-alert">Your email has been verified, you may now close this page.</span> : <span> </span>}
+          </Row>
         </Container>
       </Row>
     </Container>
