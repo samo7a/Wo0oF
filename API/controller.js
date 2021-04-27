@@ -430,9 +430,23 @@ exports.deleteDog = function (req, res) {
     if (err) {
       return res.status(500).send("Technical error while attempting to update User information.");
     }
-    // Update delete message
     else {
-      return res.status(200).send("Dog successfully deleted!");
+    User.findAndUpdate({ _id: /[\s\S]*/ }, { $pull: { LikedDogs: { DogID: ObjectId(DogID) } } }, function (err) {
+        if (err) {
+          return res.status(500).send("Technical error while attempting to update User information.");
+        }
+        // Update delete message
+        else {
+        User.findAndUpdate({ _id: /[\s\S]*/ }, { $pull: { LikedAdopters: { DogID: ObjectId(DogID) } } }, function (err) {
+          if (err) {
+            return res.status(500).send("Technical error while attempting to update User information.");
+          }
+          // Update delete message
+          else {return res.status(200).send("Dog successfully deleted!");
+          }
+        })
+        }
+      })
     }
   });
 };
