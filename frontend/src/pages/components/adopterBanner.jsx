@@ -102,6 +102,34 @@ export default function AdopterBanner({ like, updateLikers }) {
     getDog(like.DogID);
   }, [updateLikers]);
 
+  var timeSinceLiked;
+  var seconds = Math.floor((new Date() - like.Date * 1000) / 1000);
+
+  timeSinceLiked = Math.floor(seconds) + "s";
+  var interval = seconds / 60;
+  if (interval > 1) {
+    timeSinceLiked = Math.floor(interval) + "m";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    timeSinceLiked = Math.floor(interval) + "h";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    timeSinceLiked = Math.floor(interval) + "d";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    timeSinceLiked = Math.floor(interval) + "mths";
+  }
+
+  interval = seconds / 31536000;
+  if (interval > 1) {
+    timeSinceLiked = Math.floor(interval) + "y";
+  }
+
+  // console.log(timeSinceLiked);
+
   return (
     <Row className="justify-content-start row-border">
       <Col sm={2} className="mt-2">
@@ -114,10 +142,13 @@ export default function AdopterBanner({ like, updateLikers }) {
           }}
         ></button>
       </Col>
-      <Col sm={10} className=" pl-3">
+      <Col sm={8} className=" pl-3">
         <p className="pt-3 liked-dogs-text">
-          {ownerFName} likes {dogName}
+          {ownerFName} liked {dogName}
         </p>
+      </Col>
+      <Col sm={2} className="liked-dogs-time" style={{ justifyContent: "center" }}>
+        <p className="pt-3">{timeSinceLiked}</p>
       </Col>
 
       <Modal centered contentClassName="modal-view" show={openOwnerModal} onHide={() => setOpenOwnerModal(false)}>

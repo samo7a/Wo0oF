@@ -40,7 +40,7 @@
 .dog-profile-card {
   position: relative;
   background-color: #fff;
-  width: 400px;
+  width: 350px;
   max-width: 350px;
   height: 350px;
   border: solid 1px black;
@@ -49,7 +49,7 @@
   background-size: cover;
   background-position: center;
   text-align: left !important;
-  margin: 30px 15px;
+  margin: 20px 14px;
 }
 
 .dog-profile-card h3 {

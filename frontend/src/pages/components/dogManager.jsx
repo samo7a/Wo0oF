@@ -353,9 +353,6 @@ function DogManager({ doUpdateLikers }) {
         >
           Back
         </Button>
-        <div>
-          <br />
-        </div>
       </Row>
       <Row className="justify-content-center">
         <span className="dog-added animated pulse ">{resmsg}</span>

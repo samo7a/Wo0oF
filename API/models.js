@@ -87,7 +87,7 @@ const UserSchema = new Schema({
     {
       DogID: String,
       UserID: String,
-      Date: Date
+      Date: Int32,
     },
   ],
   DislikedDogs: [

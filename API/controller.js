@@ -430,26 +430,26 @@ exports.deleteDog = function (req, res) {
     if (err) {
       console.log(err);
       return res.status(500).send("Technical error while attempting to update User information.");
-    }
-    else {
-    User.updateMany({},{ $pull: { LikedDogs: { DogID: ObjectId(DogID) } } }, function (err) {
+    } else {
+      User.updateMany({}, { $pull: { LikedDogs: { DogID: ObjectId(DogID) } } }, function (err) {
         if (err) {
           console.log(err);
           return res.status(500).send("Technical error while attempting to update User information.");
         }
         // Update delete message
         else {
-        User.updateMany({},{ $pull: { LikedAdopters: { DogID: ObjectId(DogID) } } }, function (err) {
-          if (err) {
-            console.log(err);
-            return res.status(500).send("Technical error while attempting to update User information.");
-          }
-          // Update delete message
-          else {return res.status(200).send("Dog successfully deleted!");
-          }
-        })
+          User.updateMany({}, { $pull: { LikedAdopters: { DogID: ObjectId(DogID) } } }, function (err) {
+            if (err) {
+              console.log(err);
+              return res.status(500).send("Technical error while attempting to update User information.");
+            }
+            // Update delete message
+            else {
+              return res.status(200).send("Dog successfully deleted!");
+            }
+          });
         }
-      })
+      });
     }
   });
 };
@@ -581,7 +581,7 @@ exports.likeDog = function (req, res) {
   if (IsLiked === true) {
     // console.log("dog liked");
 
-    const LikedDog = {OwnerID: Dog.OwnerID, DogID: Dog._id}
+    const LikedDog = { OwnerID: Dog.OwnerID, DogID: Dog._id };
 
     User.findOneAndUpdate({ _id: ObjectId(UserID) }, { $push: { LikedDogs: LikedDog } }, function (err) {
       if (err) {
@@ -591,7 +591,7 @@ exports.likeDog = function (req, res) {
         const liker = {
           DogID: Dog._id,
           UserID: UserID,
-          Date: Date.Now()
+          Date: Date.now() / 1000,
         };
         User.findOneAndUpdate({ _id: ObjectId(OwnerID) }, { $push: { LikedAdopters: liker } }, function (err) {
           if (err) {
@@ -602,11 +602,9 @@ exports.likeDog = function (req, res) {
             return res.status(200);
           }
         });
-       }
-        });
-      
       }
-    else{
+    });
+  } else {
     // Add the dog to the user's disliked dogs
     const DislikedDog = { DogID: Dog._id };
     // console.log(DislikedDog);
@@ -707,17 +705,16 @@ exports.getLikers = function (req, res) {
 
 exports.getDog = function (req, res) {
   var { DogID } = req.body;
-  User.findOne({Dogs: {$elemMatch: {_id: DogID}}}, function (err, foundDog){
+  User.findOne({ Dogs: { $elemMatch: { _id: DogID } } }, function (err, foundDog) {
     if (err) {
       console.log(err);
       return res.status(500).send("Technical error while attempting to find User information.");
     } else {
-      if(foundDog){
-      res.send(foundDog.Dogs[0]);
-      }
-      else{
+      if (foundDog) {
+        res.send(foundDog.Dogs[0]);
+      } else {
         res.send(foundDog);
       }
     }
-  }).select({Dogs: {$elemMatch: {_id: DogID}}});
+  }).select({ Dogs: { $elemMatch: { _id: DogID } } });
 };

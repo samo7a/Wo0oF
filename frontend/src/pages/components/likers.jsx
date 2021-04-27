@@ -39,6 +39,7 @@ function Likers({ updateLikers }) {
           if (res.error) {
             console.log(res);
           } else {
+            console.log(res);
             setlikes(res);
           }
         })
